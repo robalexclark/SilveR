@@ -1,7 +1,7 @@
 Package: labelled
 Type: Package
 Title: Manipulating Labelled Data
-Version: 2.14.0
+Version: 2.16.0
 Maintainer: Joseph Larmarange <joseph@larmarange.net>
 Authors@R: c(
   person("Joseph", "Larmarange", email = "joseph@larmarange.net", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-7097-700X")),
@@ -18,26 +18,27 @@ License: GPL (>= 3)
 Encoding: UTF-8
 Depends: R (>= 3.2)
 Imports: haven (>= 2.4.1), cli, dplyr (>= 1.1.0), lifecycle, rlang (>=
-        1.1.0), vctrs, stringr, tidyr, tidyselect
-Suggests: testthat (>= 3.2.0), knitr, rmarkdown, questionr, snakecase,
-        spelling
+        1.1.0), vctrs, stringr, tidyr (>= 1.3.0), tidyselect
+Suggests: gt, knitr, rmarkdown, purrr, questionr, snakecase, spelling,
+        survey, testthat (>= 3.2.0)
 Enhances: memisc
 URL: https://larmarange.github.io/labelled/,
         https://github.com/larmarange/labelled
 BugReports: https://github.com/larmarange/labelled/issues
 VignetteBuilder: knitr
 LazyData: true
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Language: en-US
 Config/testthat/edition: 3
 Config/Needs/check: memisc
 NeedsCompilation: no
-Packaged: 2025-01-08 08:12:06 UTC; josep
-Author: Joseph Larmarange [aut, cre] (<https://orcid.org/0000-0001-7097-700X>),
+Packaged: 2025-10-22 16:33:32 UTC; josep
+Author: Joseph Larmarange [aut, cre] (ORCID:
+    <https://orcid.org/0000-0001-7097-700X>),
   Daniel Ludecke [ctb],
   Hadley Wickham [ctb],
   Michal Bojanowski [ctb],
   François Briatte [ctb]
 Repository: CRAN
-Date/Publication: 2025-01-08 08:50:02 UTC
-Built: R 4.3.3; ; 2025-01-18 04:46:12 UTC; windows
+Date/Publication: 2025-10-22 17:00:02 UTC
+Built: R 4.5.2; ; 2025-12-03 05:43:50 UTC; windows

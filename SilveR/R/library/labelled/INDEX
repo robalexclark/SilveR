@@ -1,5 +1,8 @@
 copy_labels             Copy variable and value labels and SPSS-style
                         missing value
+dictionary_to_variable_labels
+                        Convert a dictionary data frame into a list of
+                        variable / value labels
 drop_unused_value_labels
                         Drop unused value labels
 is_prefixed             Check if a factor is prefixed

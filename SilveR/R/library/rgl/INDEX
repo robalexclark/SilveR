@@ -64,15 +64,15 @@ pch3d                   Plot symbols similar to base graphics
 persp3d                 Surface plots
 persp3d.deldir          Plot a Delaunay triangulation
 persp3d.function        Plot a function of two variables
-persp3d.triSht          Plot an interp or tripack Delaunay
-                        triangulation
+persp3d.triSht          Plot an interp Delaunay triangulation
 planes3d                Add planes
 play3d                  Play animation of RGL scene
 playwidget              Add a widget to play animations
 plot3d                  3D scatterplot
 plot3d.formula          Methods for formulas
 plot3d.lm               Method for plotting simple linear fit
-plotmath3d              Draw text using base graphics math plotting
+plotmath3d              Draw text using base graphics math plotting or
+                        LaTeX
 polygon3d               Draw a polygon in three dimensions
 primitives              Add primitive shape
 propertyControl         Controls to use with playwidget()

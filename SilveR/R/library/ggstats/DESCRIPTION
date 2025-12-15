@@ -1,7 +1,7 @@
 Package: ggstats
 Type: Package
 Title: Extension to 'ggplot2' for Plotting Stats
-Version: 0.10.0
+Version: 0.11.0
 Authors@R: c(
     person(
       "Joseph", "Larmarange", ,
@@ -18,7 +18,7 @@ URL: https://larmarange.github.io/ggstats/,
         https://github.com/larmarange/ggstats
 BugReports: https://github.com/larmarange/ggstats/issues
 Depends: R (>= 4.2)
-Imports: cli, dplyr, forcats, ggplot2 (>= 3.4.0), lifecycle, patchwork,
+Imports: cli, dplyr, forcats, ggplot2 (>= 4.0.0), lifecycle, patchwork,
         purrr, rlang, scales, stats, stringr, utils, tidyr
 Suggests: betareg, broom, broom.helpers (>= 1.20.0), emmeans, glue,
         gtsummary, knitr, labelled (>= 2.11.0), reshape, rmarkdown,
@@ -30,10 +30,10 @@ Config/testthat/edition: 3
 Language: en-US
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2025-07-02 15:59:33 UTC; josep
+Packaged: 2025-09-15 14:27:48 UTC; josep
 Author: Joseph Larmarange [aut, cre] (ORCID:
     <https://orcid.org/0000-0001-7097-700X>)
 Maintainer: Joseph Larmarange <joseph@larmarange.net>
 Repository: CRAN
-Date/Publication: 2025-07-02 22:40:05 UTC
-Built: R 4.5.1; ; 2025-08-04 02:39:54 UTC; windows
+Date/Publication: 2025-09-15 15:20:02 UTC
+Built: R 4.5.2; ; 2025-12-03 05:44:06 UTC; windows

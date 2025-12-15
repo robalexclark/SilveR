@@ -1,5 +1,5 @@
 Package: mgcv
-Version: 1.9-3
+Version: 1.9-4
 Authors@R: person(given = "Simon",
                     family = "Wood",
                     role = c("aut", "cre"),
@@ -9,23 +9,23 @@ Title: Mixed GAM Computation Vehicle with Automatic Smoothness
 Description: Generalized additive (mixed) models, some of their extensions and 
              other generalized ridge regression with multiple smoothing 
              parameter estimation by (Restricted) Marginal Likelihood, 
-             Generalized Cross Validation and similar, or using iterated 
-             nested Laplace approximation for fully Bayesian inference. See 
-             Wood (2017) <doi:10.1201/9781315370279> for an overview. 
-             Includes a gam() function, a wide variety of smoothers, 'JAGS' 
-             support and distributions beyond the exponential family. 
+             Cross Validation and similar, or using iterated nested Laplace
+	     approximation for fully Bayesian inference. See Wood (2025)
+	     <doi:10.1146/annurev-statistics-112723-034249> for an overview.
+	     Includes a gam() function, a wide variety of smoothers, 'JAGS'
+	     support and distributions beyond the exponential family. 
 Priority: recommended
-Depends: R (>= 3.6.0), nlme (>= 3.1-64)
+Depends: R (>= 4.4.0), nlme (>= 3.1-64)
 Imports: methods, stats, graphics, Matrix, splines, utils
 Suggests: parallel, survival, MASS
 LazyLoad: yes
 ByteCompile: yes
 License: GPL (>= 2)
 NeedsCompilation: yes
-Packaged: 2025-04-03 13:22:13 UTC; sw283
+Packaged: 2025-11-06 12:01:15 UTC; sw283
 Author: Simon Wood [aut, cre]
 Maintainer: Simon Wood <simon.wood@r-project.org>
 Repository: CRAN
-Date/Publication: 2025-04-04 05:40:02 UTC
-Built: R 4.5.1; x86_64-w64-mingw32; 2025-06-13 07:58:51 UTC; windows
+Date/Publication: 2025-11-07 16:30:02 UTC
+Built: R 4.5.2; x86_64-w64-mingw32; 2025-12-03 04:28:37 UTC; windows
 Archs: x64

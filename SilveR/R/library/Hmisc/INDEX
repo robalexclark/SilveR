@@ -58,6 +58,7 @@ dotchart2               Enhanced Dot Chart
 dotchart3               Enhanced Version of dotchart Function
 dotchartpl              Enhanced Version of dotchart Function for
                         plotly
+dualSD                  Dual Standard Deviations
 ebpcomp                 ebpcomp
 ecdfSteps               ecdfSteps
 equalBins               Multicolumn Formating

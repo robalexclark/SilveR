@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head><title>R: Helpers for Model Coefficients Tibbles</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-<link rel="stylesheet" type="text/css" href="R.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<link rel="stylesheet" type="text/css" href="R.css">
 </head><body><div class="container">
 <h1> Helpers for Model Coefficients Tibbles
-<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]" />
+<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]">
 </h1>
-<hr/>
+<hr>
 <div style="text-align: center;">
-<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
-<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
-</div><h2>Documentation for package &lsquo;broom.helpers&rsquo; version 1.18.0</h2>
+<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]"></a>
+<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]"></a>
+</div><h2>Documentation for package &lsquo;broom.helpers&rsquo; version 1.22.0</h2>
 
-<ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
+<ul><li><a href="../DESCRIPTION" type="text/plain; charset=utf-8">DESCRIPTION file</a>.</li>
 <li><a href="../doc/index.html">User guides, package vignettes and other documentation.</a></li>
-<li><a href="../NEWS">Package NEWS</a>.</li>
+<li><a href="../NEWS.md">Package NEWS</a>.</li>
 </ul>
 
 <h2>Help Pages</h2>
@@ -54,6 +54,8 @@
 <td>Select helper functions</td></tr>
 <tr><td style="width: 25%;"><a href="assert_package.html">assert_package</a></td>
 <td>Check a package installation status or minimum required version</td></tr>
+<tr><td style="width: 25%;"><a href="tidy_group_by.html">auto_group_by</a></td>
+<td>Group results by selected columns</td></tr>
 </table>
 
 <h2><a id="M">-- M --</a></h2>
@@ -67,7 +69,11 @@
 <td>Get the assign attribute of model matrix of a model</td></tr>
 <tr><td style="width: 25%;"><a href="model_get_assign.html">model_get_assign.default</a></td>
 <td>Get the assign attribute of model matrix of a model</td></tr>
+<tr><td style="width: 25%;"><a href="model_get_assign.html">model_get_assign.fixest</a></td>
+<td>Get the assign attribute of model matrix of a model</td></tr>
 <tr><td style="width: 25%;"><a href="model_get_assign.html">model_get_assign.model_fit</a></td>
+<td>Get the assign attribute of model matrix of a model</td></tr>
+<tr><td style="width: 25%;"><a href="model_get_assign.html">model_get_assign.svy_vglm</a></td>
 <td>Get the assign attribute of model matrix of a model</td></tr>
 <tr><td style="width: 25%;"><a href="model_get_assign.html">model_get_assign.vglm</a></td>
 <td>Get the assign attribute of model matrix of a model</td></tr>
@@ -109,15 +115,25 @@
 <td>Get coefficient type</td></tr>
 <tr><td style="width: 25%;"><a href="model_get_coefficients_type.html">model_get_coefficients_type.svyolr</a></td>
 <td>Get coefficient type</td></tr>
+<tr><td style="width: 25%;"><a href="model_get_coefficients_type.html">model_get_coefficients_type.svy_vglm</a></td>
+<td>Get coefficient type</td></tr>
 <tr><td style="width: 25%;"><a href="model_get_coefficients_type.html">model_get_coefficients_type.tidycrr</a></td>
+<td>Get coefficient type</td></tr>
+<tr><td style="width: 25%;"><a href="model_get_coefficients_type.html">model_get_coefficients_type.vgam</a></td>
+<td>Get coefficient type</td></tr>
+<tr><td style="width: 25%;"><a href="model_get_coefficients_type.html">model_get_coefficients_type.vglm</a></td>
 <td>Get coefficient type</td></tr>
 <tr><td style="width: 25%;"><a href="model_get_contrasts.html">model_get_contrasts</a></td>
 <td>Get contrasts used in the model</td></tr>
 <tr><td style="width: 25%;"><a href="model_get_contrasts.html">model_get_contrasts.betareg</a></td>
 <td>Get contrasts used in the model</td></tr>
+<tr><td style="width: 25%;"><a href="model_get_contrasts.html">model_get_contrasts.fixest</a></td>
+<td>Get contrasts used in the model</td></tr>
 <tr><td style="width: 25%;"><a href="model_get_contrasts.html">model_get_contrasts.hurdle</a></td>
 <td>Get contrasts used in the model</td></tr>
 <tr><td style="width: 25%;"><a href="model_get_contrasts.html">model_get_contrasts.model_fit</a></td>
+<td>Get contrasts used in the model</td></tr>
+<tr><td style="width: 25%;"><a href="model_get_contrasts.html">model_get_contrasts.svy_vglm</a></td>
 <td>Get contrasts used in the model</td></tr>
 <tr><td style="width: 25%;"><a href="model_get_contrasts.html">model_get_contrasts.zeroinfl</a></td>
 <td>Get contrasts used in the model</td></tr>
@@ -143,6 +159,8 @@
 <td>Get the model frame of a model</td></tr>
 <tr><td style="width: 25%;"><a href="model_get_model_frame.html">model_get_model_frame.svycoxph</a></td>
 <td>Get the model frame of a model</td></tr>
+<tr><td style="width: 25%;"><a href="model_get_model_frame.html">model_get_model_frame.svy_vglm</a></td>
+<td>Get the model frame of a model</td></tr>
 <tr><td style="width: 25%;"><a href="model_get_model_matrix.html">model_get_model_matrix</a></td>
 <td>Get the model matrix of a model</td></tr>
 <tr><td style="width: 25%;"><a href="model_get_model_matrix.html">model_get_model_matrix.betareg</a></td>
@@ -157,8 +175,6 @@
 <td>Get the model matrix of a model</td></tr>
 <tr><td style="width: 25%;"><a href="model_get_model_matrix.html">model_get_model_matrix.default</a></td>
 <td>Get the model matrix of a model</td></tr>
-<tr><td style="width: 25%;"><a href="model_get_model_matrix.html">model_get_model_matrix.fixest</a></td>
-<td>Get the model matrix of a model</td></tr>
 <tr><td style="width: 25%;"><a href="model_get_model_matrix.html">model_get_model_matrix.glmmTMB</a></td>
 <td>Get the model matrix of a model</td></tr>
 <tr><td style="width: 25%;"><a href="model_get_model_matrix.html">model_get_model_matrix.LORgee</a></td>
@@ -168,6 +184,12 @@
 <tr><td style="width: 25%;"><a href="model_get_model_matrix.html">model_get_model_matrix.multinom</a></td>
 <td>Get the model matrix of a model</td></tr>
 <tr><td style="width: 25%;"><a href="model_get_model_matrix.html">model_get_model_matrix.plm</a></td>
+<td>Get the model matrix of a model</td></tr>
+<tr><td style="width: 25%;"><a href="model_get_model_matrix.html">model_get_model_matrix.svy_vglm</a></td>
+<td>Get the model matrix of a model</td></tr>
+<tr><td style="width: 25%;"><a href="model_get_model_matrix.html">model_get_model_matrix.vgam</a></td>
+<td>Get the model matrix of a model</td></tr>
+<tr><td style="width: 25%;"><a href="model_get_model_matrix.html">model_get_model_matrix.vglm</a></td>
 <td>Get the model matrix of a model</td></tr>
 <tr><td style="width: 25%;"><a href="model_get_n.html">model_get_n</a></td>
 <td>Get the number of observations</td></tr>
@@ -192,6 +214,8 @@
 <tr><td style="width: 25%;"><a href="model_get_nlevels.html">model_get_nlevels</a></td>
 <td>Get the number of levels for each factor used in 'xlevels'</td></tr>
 <tr><td style="width: 25%;"><a href="model_get_nlevels.html">model_get_nlevels.default</a></td>
+<td>Get the number of levels for each factor used in 'xlevels'</td></tr>
+<tr><td style="width: 25%;"><a href="model_get_nlevels.html">model_get_nlevels.svy_vglm</a></td>
 <td>Get the number of levels for each factor used in 'xlevels'</td></tr>
 <tr><td style="width: 25%;"><a href="model_get_offset.html">model_get_offset</a></td>
 <td>Get model offset</td></tr>
@@ -229,15 +253,21 @@
 <td>Get the terms of a model</td></tr>
 <tr><td style="width: 25%;"><a href="model_get_terms.html">model_get_terms.model_fit</a></td>
 <td>Get the terms of a model</td></tr>
+<tr><td style="width: 25%;"><a href="model_get_terms.html">model_get_terms.svy_vglm</a></td>
+<td>Get the terms of a model</td></tr>
 <tr><td style="width: 25%;"><a href="model_get_weights.html">model_get_weights</a></td>
 <td>Get sampling weights used by a model</td></tr>
 <tr><td style="width: 25%;"><a href="model_get_weights.html">model_get_weights.default</a></td>
+<td>Get sampling weights used by a model</td></tr>
+<tr><td style="width: 25%;"><a href="model_get_weights.html">model_get_weights.fixest</a></td>
 <td>Get sampling weights used by a model</td></tr>
 <tr><td style="width: 25%;"><a href="model_get_weights.html">model_get_weights.model_fit</a></td>
 <td>Get sampling weights used by a model</td></tr>
 <tr><td style="width: 25%;"><a href="model_get_weights.html">model_get_weights.svrepglm</a></td>
 <td>Get sampling weights used by a model</td></tr>
 <tr><td style="width: 25%;"><a href="model_get_weights.html">model_get_weights.svyglm</a></td>
+<td>Get sampling weights used by a model</td></tr>
+<tr><td style="width: 25%;"><a href="model_get_weights.html">model_get_weights.svy_vglm</a></td>
 <td>Get sampling weights used by a model</td></tr>
 <tr><td style="width: 25%;"><a href="model_get_xlevels.html">model_get_xlevels</a></td>
 <td>Get xlevels used in the model</td></tr>
@@ -257,6 +287,8 @@
 <td>Get xlevels used in the model</td></tr>
 <tr><td style="width: 25%;"><a href="model_get_xlevels.html">model_get_xlevels.plm</a></td>
 <td>Get xlevels used in the model</td></tr>
+<tr><td style="width: 25%;"><a href="model_get_xlevels.html">model_get_xlevels.svy_vglm</a></td>
+<td>Get xlevels used in the model</td></tr>
 <tr><td style="width: 25%;"><a href="model_identify_variables.html">model_identify_variables</a></td>
 <td>Identify for each coefficient of a model the corresponding variable</td></tr>
 <tr><td style="width: 25%;"><a href="model_identify_variables.html">model_identify_variables.aov</a></td>
@@ -274,6 +306,8 @@
 <tr><td style="width: 25%;"><a href="model_identify_variables.html">model_identify_variables.logitr</a></td>
 <td>Identify for each coefficient of a model the corresponding variable</td></tr>
 <tr><td style="width: 25%;"><a href="model_identify_variables.html">model_identify_variables.model_fit</a></td>
+<td>Identify for each coefficient of a model the corresponding variable</td></tr>
+<tr><td style="width: 25%;"><a href="model_identify_variables.html">model_identify_variables.svy_vglm</a></td>
 <td>Identify for each coefficient of a model the corresponding variable</td></tr>
 <tr><td style="width: 25%;"><a href="model_list_contrasts.html">model_list_contrasts</a></td>
 <td>List contrasts used by a model</td></tr>
@@ -358,12 +392,14 @@
 <td>Attach a full model to the tibble of model terms</td></tr>
 <tr><td style="width: 25%;"><a href="tidy_ggpredict.html">tidy_ggpredict</a></td>
 <td>Marginal Predictions with 'ggeffects::ggpredict()'</td></tr>
+<tr><td style="width: 25%;"><a href="tidy_group_by.html">tidy_group_by</a></td>
+<td>Group results by selected columns</td></tr>
 <tr><td style="width: 25%;"><a href="tidy_identify_variables.html">tidy_identify_variables</a></td>
 <td>Identify the variable corresponding to each model coefficient</td></tr>
 <tr><td style="width: 25%;"><a href="tidy_marginal_contrasts.html">tidy_marginal_contrasts</a></td>
 <td>Marginal Contrasts with 'marginaleffects::avg_comparisons()'</td></tr>
 <tr><td style="width: 25%;"><a href="tidy_marginal_means.html">tidy_marginal_means</a></td>
-<td>Marginal Means with 'marginaleffects::marginal_means()'</td></tr>
+<td>Marginal Means with deprecated 'marginaleffects::marginal_means()'</td></tr>
 <tr><td style="width: 25%;"><a href="tidy_marginal_predictions.html">tidy_marginal_predictions</a></td>
 <td>Marginal Predictions with 'marginaleffects::avg_predictions()'</td></tr>
 <tr><td style="width: 25%;"><a href="tidy_margins.html">tidy_margins</a></td>
@@ -378,6 +414,10 @@
 <td>Remove intercept(s)</td></tr>
 <tr><td style="width: 25%;"><a href="tidy_select_variables.html">tidy_select_variables</a></td>
 <td>Select variables to keep/drop</td></tr>
+<tr><td style="width: 25%;"><a href="tidy_svy_vglm.html">tidy_svy_vglm</a></td>
+<td>Tidy a 'svy_vglm' model</td></tr>
+<tr><td style="width: 25%;"><a href="tidy_vgam.html">tidy_vgam</a></td>
+<td>Tidy a 'vglm' or a 'vgam' model</td></tr>
 <tr><td style="width: 25%;"><a href="tidy_with_broom_or_parameters.html">tidy_with_broom_or_parameters</a></td>
 <td>Tidy a model with broom or parameters</td></tr>
 <tr><td style="width: 25%;"><a href="tidy_zeroinfl.html">tidy_zeroinfl</a></td>

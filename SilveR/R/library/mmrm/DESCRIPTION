@@ -1,7 +1,7 @@
 Type: Package
 Package: mmrm
 Title: Mixed Models for Repeated Measures
-Version: 0.3.15
+Version: 0.3.16
 Authors@R: c(
     person("Daniel", "Sabanes Bove", , "daniel.sabanes_bove@rconis.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-0176-9239")),
@@ -46,15 +46,15 @@ License: Apache License 2.0
 URL: https://openpharma.github.io/mmrm/
 BugReports: https://github.com/openpharma/mmrm/issues
 Depends: R (>= 4.1)
-Imports: checkmate (>= 2.0), generics, lifecycle, Matrix, methods,
-        nlme, parallel, Rcpp, Rdpack, stats, stringr, tibble, TMB (>=
-        1.9.1), utils
-Suggests: broom.helpers, car (>= 3.1.2), cli, clubSandwich,
+Imports: checkmate (>= 2.0), generics, lifecycle, MASS, Matrix,
+        methods, nlme, parallel, Rcpp, Rdpack, stats, stringr, tibble,
+        TMB (>= 1.9.1), utils
+Suggests: broom, broom.helpers, car (>= 3.1.2), cli, clubSandwich,
         clusterGeneration, dplyr, emmeans (>= 1.6), estimability,
-        ggplot2, glmmTMB, hardhat, knitr, lme4, MASS, microbenchmark,
-        mockery, parallelly (>= 1.32.0), parsnip (>= 1.1.0), purrr,
-        rmarkdown, sasr, scales, testthat (>= 3.0.0), tidymodels,
-        withr, xml2
+        ggplot2, glmmTMB, hardhat, knitr, lme4, lmerTest,
+        microbenchmark, mockery, parallelly (>= 1.32.0), parsnip (>=
+        1.1.0), purrr, rmarkdown, sasr, scales, testthat (>= 3.0.0),
+        tidymodels, withr, xml2
 LinkingTo: Rcpp, RcppEigen, testthat, TMB (>= 1.9.1)
 VignetteBuilder: knitr
 RdMacros: Rdpack
@@ -63,14 +63,14 @@ Encoding: UTF-8
 Language: en-US
 LazyData: true
 NeedsCompilation: yes
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Collate: 'between-within.R' 'catch-routine-registration.R'
         'component.R' 'cov_struct.R' 'data.R' 'empirical.R' 'fit.R'
         'kenwardroger.R' 'mmrm-methods.R' 'mmrm-package.R' 'utils.R'
         'residual.R' 'utils-nse.R' 'utils-formula.R' 'satterthwaite.R'
         'skipping.R' 'tidiers.R' 'testing.R' 'tmb-methods.R' 'tmb.R'
         'interop-emmeans.R' 'interop-parsnip.R' 'interop-car.R' 'zzz.R'
-Packaged: 2025-06-10 09:46:41 UTC; Daniel
+Packaged: 2025-12-09 14:16:01 UTC; Daniel
 Author: Daniel Sabanes Bove [aut, cre] (ORCID:
     <https://orcid.org/0000-0002-0176-9239>),
   Liming Li [aut] (ORCID: <https://orcid.org/0009-0008-6870-0878>),
@@ -97,6 +97,6 @@ Author: Daniel Sabanes Bove [aut, cre] (ORCID:
   inferential.biostatistics GmbH [cph, fnd]
 Maintainer: Daniel Sabanes Bove <daniel.sabanes_bove@rconis.com>
 Repository: CRAN
-Date/Publication: 2025-06-10 10:50:02 UTC
-Built: R 4.5.1; x86_64-w64-mingw32; 2025-08-04 02:01:17 UTC; windows
+Date/Publication: 2025-12-09 15:20:02 UTC
+Built: R 4.5.2; x86_64-w64-mingw32; 2025-12-13 00:53:05 UTC; windows
 Archs: x64

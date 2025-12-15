@@ -21,4 +21,5 @@ mmrm_tmb_methods        Methods for 'mmrm_tmb' Objects
 print.cov_struct        Print a Covariance Structure Object
 refit_multiple_optimizers
                         Refitting MMRM with Multiple Optimizers
+stats_anova             Analysis of Variance for 'mmrm' Fits
 std_start               Standard Starting Value

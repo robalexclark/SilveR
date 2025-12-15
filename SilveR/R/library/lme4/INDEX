@@ -15,27 +15,29 @@ Penicillin              Variation in penicillin testing
 VarCorr                 Extract Variance and Correlation Components
 VerbAgg                 Verbal Aggression item responses
 allFit                  Refit a fitted model with all available
-                        optimizers
+                        optimizers to check convergence
 bootMer                 Model-based (Semi-)Parametric Bootstrap for
                         Mixed Models
 cake                    Breakage Angle of Chocolate Cakes
 cbpp                    Contagious bovine pleuropneumonia
+cbpp2                   Contagious bovine pleuropneumonia (extended
+                        version)
 checkConv               Extended Convergence Checking
 confint.merMod          Compute Confidence Intervals for Parameters of
                         a [ng]lmer Fit
 convergence             Assessing Convergence for Fitted Models
+culcitalogreg           Coral-eating seastar Culcita novaeguineae data
+                        (binary predation version)
+culcitalvolume          Coral-eating seastar Culcita novaeguineae data
+                        (volume loss version)
 devcomp                 Extract the deviance component list
 devfun2                 Deviance Function in Terms of Standard
                         Deviations/Correlations
 drop1.merMod            Drop all possible single fixed-effect terms
                         from a mixed effect model
 dummy                   Dummy variables (experimental)
-expandDoubleVerts       Expand terms with "||" notation into separate
-                        "|" terms
 factorize               Attempt to convert grouping variables to
                         factors
-findbars                Determine random-effects expressions from a
-                        formula
 fixef                   Extract fixed-effects estimates
 fortify                 add information to data based on a fitted model
 getME                   Extract or Get Generalized Components from a
@@ -48,11 +50,11 @@ glmer.nb                Fitting Negative Binomial GLMMs
 glmerLaplaceHandle      Handle for 'glmerLaplace'
 golden-class            Class '"golden"' and Generator for Golden
                         Search Optimizer Class
+gopherdat2              Gopher tortoises shell remains
 grouseticks             Data on red grouse ticks from Elston et al.
                         2001
 hatvalues.merMod        Diagonal elements of the hat matrix
 influence.merMod        Influence Diagnostics for Mixed-Effects Models
-isNested                Is f1 nested within f2?
 isREML                  Check characteristics of models
 isSingular              Test Fitted Model for (Near) Singularity
 lmList                  Fit List of lm or glm Objects with a Common
@@ -72,10 +74,9 @@ merPredD                Generator object for the 'merPredD' class
 merPredD-class          Class '"merPredD"' - a Dense Predictor
                         Reference Class
 mkMerMod                Create a 'merMod' Object
+mkNewReTrms             Make new random effect terms for prediction
 mkParsTemplate          Make templates suitable for guiding mixed model
                         simulations
-mkReTrms                Make Random Effect Terms: Create Z, Lambda,
-                        Lind, etc.
 mkRespMod               Create an lmerResp, glmResp or nlsResp instance
 mkVarCorr               Make Variance and Correlation Matrices from
                         'theta'
@@ -86,8 +87,6 @@ ngrps                   Number of Levels of a Factor or a "merMod"
 nlformula               Manipulate a Nonlinear Model Formula
 nlmer                   Fitting Nonlinear Mixed-Effects Models
 nloptwrap               Wrappers for additional optimizers
-nobars                  Omit terms separated by vertical bars in a
-                        formula
 plot.merMod             Diagnostic Plots for 'merMod' Fits
 predict.merMod          Predictions from a model at new data values
 profile-methods         Profile method for merMod objects
@@ -101,12 +100,18 @@ refit                   Refit a (merMod) Model with a Different
                         Response
 refitML                 Refit a Model by Maximum Likelihood Criterion
 residuals.merMod        residuals of merMod objects
+salamander              Mountain dusky salamander mating
+schizophrenia           National Institute of Mental Health
+                        Schizophrenia Collaborative Study
 sigma                   Extract Residual Standard Deviation 'Sigma'
 simulate.formula        A 'simulate' Method for 'formula' objects that
                         dispatches based on the Left-Hand Side
 simulate.merMod         Simulate Responses From 'merMod' Object
 sleepstudy              Reaction times in a sleep deprivation study
-subbars                 "Sub[stitute] Bars"
+subbars                 (deprecated) formula-processing functions
+summary                 Summary for a [ng]lmer Fit
+toenail                 Toenail onychomycosis data from dermatophyte
+                        infections
 troubleshooting         Troubleshooting
 vcconv                  Convert between representations of
                         (co-)variance structures

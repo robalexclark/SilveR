@@ -4,5 +4,6 @@ rbibutils-package       Read 'Bibtex' Files and Convert Between
                         Bibliography Formats
 rbibutils_formats       Supported bibliography formats
 readBib                 Read and write bibtex files
-readBibentry            Read and write bibentry files
+readBibentry            Read and write bibentry files or read bibtex
+                        strings
 register_JSSextra       Create and register bibstyle JSSextra

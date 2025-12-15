@@ -1,6 +1,6 @@
 Package: rprojroot
 Title: Finding Files in Project Subdirectories
-Version: 2.1.0
+Version: 2.1.1
 Authors@R: 
     person(given = "Kirill",
            family = "M\u00fcller",
@@ -24,10 +24,10 @@ Config/autostyle/scope: line_breaks
 Config/autostyle/strict: true
 Config/Needs/website: tidyverse/tidytemplate
 NeedsCompilation: no
-Packaged: 2025-07-12 07:59:07 UTC; kirill
+Packaged: 2025-08-26 15:22:42 UTC; kirill
 Author: Kirill Müller [aut, cre] (ORCID:
     <https://orcid.org/0000-0002-1416-3412>)
 Maintainer: Kirill Müller <kirill@cynkra.com>
 Repository: CRAN
-Date/Publication: 2025-07-12 09:00:02 UTC
-Built: R 4.5.1; ; 2025-08-04 00:20:26 UTC; windows
+Date/Publication: 2025-08-26 16:20:02 UTC
+Built: R 4.5.2; ; 2025-12-03 03:14:45 UTC; windows

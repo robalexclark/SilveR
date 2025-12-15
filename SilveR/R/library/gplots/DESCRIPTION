@@ -22,11 +22,12 @@ Description: Various R programming tools for plotting data, including:
   - spacing points in an x-y plot so they don't overlap ('space').
 Depends: R (>= 3.0)
 Imports: gtools, stats, caTools, KernSmooth, methods
-Suggests: grid, MASS, knitr, rmarkdown, r2d2, nlme
+Suggests: grid, MASS, knitr, rmarkdown, r2d2, nlme, dendextend,
+        heatmaply, RColorBrewer
 LazyData: yes
 VignetteBuilder: knitr
-Version: 3.2.0
-Date: 2024-10-05
+Version: 3.3.0
+Date: 2025-11-29
 Authors@R: c(
     person("Gregory R.", "Warnes", , role = "aut"),
     person("Ben", "Bolker", , role = "aut"),
@@ -47,7 +48,7 @@ URL: https://github.com/talgalili/gplots,
         https://talgalili.github.io/gplots/
 BugReports: https://github.com/talgalili/gplots/issues
 NeedsCompilation: no
-Packaged: 2024-10-05 07:44:32 UTC; talgalili
+Packaged: 2025-11-29 18:15:47 UTC; talgalili
 Author: Gregory R. Warnes [aut],
   Ben Bolker [aut],
   Lodewijk Bonebakker [aut],
@@ -63,5 +64,5 @@ Author: Gregory R. Warnes [aut],
   Tal Galili [aut, cre]
 Maintainer: Tal Galili <tal.galili@gmail.com>
 Repository: CRAN
-Date/Publication: 2024-10-05 23:00:02 UTC
-Built: R 4.5.1; ; 2025-08-04 01:05:26 UTC; windows
+Date/Publication: 2025-11-30 06:10:15 UTC
+Built: R 4.5.2; ; 2025-12-03 00:54:21 UTC; windows

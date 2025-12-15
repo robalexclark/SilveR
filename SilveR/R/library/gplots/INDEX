@@ -15,7 +15,6 @@ ci2d                    Create 2-dimensional empirical confidence
                         regions
 col2hex                 Convert color names to hex RGB strings
 colorpanel              Generate a smoothly varying set of colors
-deprecated              Deprecated functions
 heatmap.2               Enhanced Heat Map
 hist2d                  Compute and Plot a 2-Dimensional Histogram
 lmplot2                 Plots to assess the goodness of fit for the

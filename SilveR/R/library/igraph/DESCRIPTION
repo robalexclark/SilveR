@@ -1,6 +1,6 @@
 Package: igraph
 Title: Network Analysis and Visualization
-Version: 2.1.4
+Version: 2.2.1
 Authors@R: c(
     person("Gábor", "Csárdi", , "csardi.gabor@gmail.com", role = "aut",
            comment = c(ORCID = "0000-0001-7098-9676")),
@@ -15,9 +15,13 @@ Authors@R: c(
     person("Daniel", "Noom", role = "aut"),
     person("Kirill", "Müller", , "kirill@cynkra.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-1416-3412")),
-    person("Maëlle", "Salmon", role = "ctb"),
     person("Michael", "Antonov", role = "ctb"),
-    person("Chan Zuckerberg Initiative", role = "fnd")
+    person("Chan Zuckerberg Initiative", role = "fnd",
+           comment = c(ROR = "02qenvm24")),
+    person("David", "Schoch", , "david.schoch@cynkra.com", role = "aut",
+           comment = c(ORCID = "0000-0003-2952-4812")),
+    person("Maëlle", "Salmon", , "maelle@cynkra.com", role = "aut",
+           comment = c(ORCID = "0000-0002-2815-0399"))
   )
 Description: Routines for simple graphs and network analysis. It can
     handle large graphs very well and provides functions for generating
@@ -29,38 +33,44 @@ URL: https://r.igraph.org/, https://igraph.org/,
 BugReports: https://github.com/igraph/rigraph/issues
 Depends: methods, R (>= 3.5.0)
 Imports: cli, graphics, grDevices, lifecycle, magrittr, Matrix,
-        pkgconfig (>= 2.0.0), rlang, stats, utils, vctrs
+        pkgconfig (>= 2.0.0), rlang (>= 1.1.0), stats, utils, vctrs
 Suggests: ape (>= 5.7-0.1), callr, decor, digest, igraphdata, knitr,
         rgl (>= 1.3.14), rmarkdown, scales, stats4, tcltk, testthat,
         vdiffr, withr
 Enhances: graph
 LinkingTo: cpp11 (>= 0.5.0)
 VignetteBuilder: knitr
-Config/Needs/build: roxygen2, devtools, irlba, pkgconfig,
+Config/build/compilation-database: false
+Config/build/never-clean: true
+Config/comment/compilation-database: Generate manually with
+        pkgload:::generate_db() for faster pkgload::load_all()
+Config/Needs/build: r-lib/roxygen2, devtools, irlba, pkgconfig,
         igraph/igraph.r2cdocs, moodymudskipper/devtag
 Config/Needs/coverage: covr
-Config/Needs/website: readr
+Config/Needs/website: here, readr, tibble, xmlparsedata, xml2
 Config/testthat/edition: 3
 Config/testthat/parallel: true
-Config/testthat/start-first: vs-es, scan, vs-operators, weakref,
-        watts.strogatz.game
+Config/testthat/start-first: aaa-auto, vs-es, scan, vs-operators,
+        weakref, watts.strogatz.game
 Encoding: UTF-8
-RoxygenNote: 7.3.2.9000
+RoxygenNote: 7.3.3.9000
 SystemRequirements: libxml2 (optional), glpk (>= 4.57, optional)
 NeedsCompilation: yes
-Packaged: 2025-01-22 19:28:33 UTC; kirill
-Author: Gábor Csárdi [aut] (<https://orcid.org/0000-0001-7098-9676>),
-  Tamás Nepusz [aut] (<https://orcid.org/0000-0002-1451-338X>),
-  Vincent Traag [aut] (<https://orcid.org/0000-0003-3170-3879>),
-  Szabolcs Horvát [aut] (<https://orcid.org/0000-0002-3100-523X>),
-  Fabio Zanini [aut] (<https://orcid.org/0000-0001-7097-8539>),
+Packaged: 2025-10-27 06:14:50 UTC; kirill
+Author: Gábor Csárdi [aut] (ORCID: <https://orcid.org/0000-0001-7098-9676>),
+  Tamás Nepusz [aut] (ORCID: <https://orcid.org/0000-0002-1451-338X>),
+  Vincent Traag [aut] (ORCID: <https://orcid.org/0000-0003-3170-3879>),
+  Szabolcs Horvát [aut] (ORCID: <https://orcid.org/0000-0002-3100-523X>),
+  Fabio Zanini [aut] (ORCID: <https://orcid.org/0000-0001-7097-8539>),
   Daniel Noom [aut],
-  Kirill Müller [aut, cre] (<https://orcid.org/0000-0002-1416-3412>),
-  Maëlle Salmon [ctb],
+  Kirill Müller [aut, cre] (ORCID:
+    <https://orcid.org/0000-0002-1416-3412>),
   Michael Antonov [ctb],
-  Chan Zuckerberg Initiative [fnd]
+  Chan Zuckerberg Initiative [fnd] (ROR: <https://ror.org/02qenvm24>),
+  David Schoch [aut] (ORCID: <https://orcid.org/0000-0003-2952-4812>),
+  Maëlle Salmon [aut] (ORCID: <https://orcid.org/0000-0002-2815-0399>)
 Maintainer: Kirill Müller <kirill@cynkra.com>
 Repository: CRAN
-Date/Publication: 2025-01-23 10:20:02 UTC
-Built: R 4.5.1; x86_64-w64-mingw32; 2025-08-04 01:38:52 UTC; windows
+Date/Publication: 2025-10-27 09:50:02 UTC
+Built: R 4.5.2; x86_64-w64-mingw32; 2025-12-03 04:28:46 UTC; windows
 Archs: x64

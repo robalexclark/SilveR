@@ -1,12 +1,12 @@
 Package: rbibutils
 Type: Package
 Title: Read 'Bibtex' Files and Convert Between Bibliography Formats
-Version: 2.3
+Version: 2.4
 Authors@R: c( person(given = c("Georgi", "N."), family = "Boshnakov", 
                      role = c("aut", "cre"), 	
                      email = "georgi.boshnakov@manchester.ac.uk",
-		     comment = "R port, R code, new C code and modifications to bibutils' C code, conversion to Bibentry (R and C code)"
-		     ),
+		     comment = c("R port, R code, new C code and modifications to bibutils' C code, conversion to Bibentry (R and C code)",
+		     comment = c(ORCID = "0000-0003-2839-346X")) ),
               person(given = "Chris", family = "Putman",
                      role = "aut",
 		     comment = "src/*, author of the bibutils libraries, https://sourceforge.net/projects/bibutils/"),
@@ -35,10 +35,10 @@ Suggests: testthat
 Encoding: UTF-8
 NeedsCompilation: yes
 Config/Needs/memcheck: devtools, rcmdcheck
-Packaged: 2024-10-04 06:38:09 UTC; georgi
+Packaged: 2025-11-07 14:55:01 UTC; georgi
 Author: Georgi N. Boshnakov [aut, cre] (R port, R code, new C code and
     modifications to bibutils' C code, conversion to Bibentry (R and C
-    code)),
+    code), comment.ORCID: 0000-0003-2839-346X),
   Chris Putman [aut] (src/*, author of the bibutils libraries,
     https://sourceforge.net/projects/bibutils/),
   Richard Mathar [ctb] (src/addsout.c),
@@ -46,6 +46,6 @@ Author: Georgi N. Boshnakov [aut, cre] (R port, R code, new C code and
   R Core Team [ctb] (base R's bibentry and bibstyle implementation)
 Maintainer: Georgi N. Boshnakov <georgi.boshnakov@manchester.ac.uk>
 Repository: CRAN
-Date/Publication: 2024-10-04 08:30:02 UTC
-Built: R 4.5.1; x86_64-w64-mingw32; 2025-08-04 00:19:45 UTC; windows
+Date/Publication: 2025-11-07 16:20:02 UTC
+Built: R 4.5.2; x86_64-w64-mingw32; 2025-12-03 03:14:47 UTC; windows
 Archs: x64

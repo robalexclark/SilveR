@@ -2,19 +2,19 @@
 <html>
 <head><title>R: Mixed GAM Computation Vehicle with Automatic Smoothness
 Estimation</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-<link rel="stylesheet" type="text/css" href="R.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<link rel="stylesheet" type="text/css" href="R.css">
 </head><body><div class="container">
 <h1> Mixed GAM Computation Vehicle with Automatic Smoothness
 Estimation
-<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]" />
+<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]">
 </h1>
-<hr/>
+<hr>
 <div style="text-align: center;">
-<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
-<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
-</div><h2>Documentation for package &lsquo;mgcv&rsquo; version 1.9-3</h2>
+<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]"></a>
+<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]"></a>
+</div><h2>Documentation for package &lsquo;mgcv&rsquo; version 1.9-4</h2>
 
 <ul><li><a href="../DESCRIPTION" type="text/plain">DESCRIPTION file</a>.</li>
 </ul>
@@ -77,6 +77,8 @@ Estimation
 <td>Update a strictly additive bam model for new data.</td></tr>
 <tr><td style="width: 25%;"><a href="bandchol.html">bandchol</a></td>
 <td>Choleski decomposition of a band diagonal matrix</td></tr>
+<tr><td style="width: 25%;"><a href="bcg.html">bcg</a></td>
+<td>Censored Box-Cox Gaussian family</td></tr>
 <tr><td style="width: 25%;"><a href="Beta.html">betar</a></td>
 <td>GAM beta regression family</td></tr>
 <tr><td style="width: 25%;"><a href="blas.thread.test.html">blas.thread.test</a></td>
@@ -143,6 +145,8 @@ Estimation
 <td>Generate from or evaluate multivariate normal or t densities.</td></tr>
 <tr><td style="width: 25%;"><a href="dpnorm.html">dpnorm</a></td>
 <td>Stable evaluation of difference between normal c.d.f.s</td></tr>
+<tr><td style="width: 25%;"><a href="dppois.html">dppois</a></td>
+<td>Stable evaluation of difference between Poisson c.d.f.s</td></tr>
 <tr><td style="width: 25%;"><a href="smooth.construct.ds.smooth.spec.html">Duchon.spline</a></td>
 <td>Low rank Duchon 1977 splines</td></tr>
 </table>
@@ -191,8 +195,6 @@ Estimation
 <td>FELSPLINE test function</td></tr>
 <tr><td style="width: 25%;"><a href="fs.test.html">fs.test</a></td>
 <td>FELSPLINE test function</td></tr>
-<tr><td style="width: 25%;"><a href="full.score.html">full.score</a></td>
-<td>GCV/UBRE score for use within nlm</td></tr>
 <tr><td style="width: 25%;"><a href="linear.functional.terms.html">function.predictors</a></td>
 <td>Linear functionals of a smooth in GAMs</td></tr>
 </table>
@@ -209,7 +211,7 @@ Estimation
 <tr><td style="width: 25%;"><a href="gam.convergence.html">gam.convergence</a></td>
 <td>GAM convergence and performance issues</td></tr>
 <tr><td style="width: 25%;"><a href="gam.fit.html">gam.fit</a></td>
-<td>GAM P-IRLS estimation with GCV/UBRE smoothness estimation</td></tr>
+<td>GAM P-IRLS estimation with GCV/UBRE smoothness estimation (deprecated)</td></tr>
 <tr><td style="width: 25%;"><a href="gam.fit3.html">gam.fit3</a></td>
 <td>P-IRLS GAM estimation with GCV, UBRE/AIC or RE/ML derivative calculation</td></tr>
 <tr><td style="width: 25%;"><a href="gam.fit5.post.proc.html">gam.fit5.post.proc</a></td>
@@ -448,14 +450,14 @@ Estimation
 <td>Predict matrix method functions</td></tr>
 <tr><td style="width: 25%;"><a href="smooth.construct.re.smooth.spec.html">Predict.matrix.random.effect</a></td>
 <td>Simple random effects in GAMs</td></tr>
-<tr><td style="width: 25%;"><a href="Predict.matrix.soap.film.html">Predict.matrix.sf</a></td>
+<tr><td style="width: 25%;"><a href="Predict.matrix.soap.film.html">Predict.matrix.sf.film</a></td>
+<td>Prediction matrix for soap film smooth</td></tr>
+<tr><td style="width: 25%;"><a href="Predict.matrix.soap.film.html">Predict.matrix.sf.wiggly</a></td>
 <td>Prediction matrix for soap film smooth</td></tr>
 <tr><td style="width: 25%;"><a href="Predict.matrix.soap.film.html">Predict.matrix.soap.film</a></td>
 <td>Prediction matrix for soap film smooth</td></tr>
 <tr><td style="width: 25%;"><a href="smooth.construct.sos.smooth.spec.html">Predict.matrix.sos.smooth</a></td>
 <td>Splines on the sphere</td></tr>
-<tr><td style="width: 25%;"><a href="Predict.matrix.soap.film.html">Predict.matrix.sw</a></td>
-<td>Prediction matrix for soap film smooth</td></tr>
 <tr><td style="width: 25%;"><a href="smooth.construct.sz.smooth.spec.html">Predict.matrix.sz.interaction</a></td>
 <td>Constrained factor smooth interactions in GAMs</td></tr>
 <tr><td style="width: 25%;"><a href="Predict.matrix.cr.smooth.html">Predict.matrix.t2.smooth</a></td>
@@ -474,6 +476,8 @@ Estimation
 <td>Approximate hypothesis tests related to GAM fits</td></tr>
 <tr><td style="width: 25%;"><a href="print.gam.html">print.gam</a></td>
 <td>Print a Generalized Additive Model object.</td></tr>
+<tr><td style="width: 25%;"><a href="gam.vcomp.html">print.gam.vcomp</a></td>
+<td>Report gam smoothness estimates as variance components</td></tr>
 <tr><td style="width: 25%;"><a href="summary.gam.html">print.summary.gam</a></td>
 <td>Summary for a GAM fit</td></tr>
 <tr><td style="width: 25%;"><a href="psum.chisq.html">psum.chisq</a></td>
@@ -511,6 +515,8 @@ Estimation
 <table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="s.html">s</a></td>
 <td>Defining smooths in GAM formulae</td></tr>
+<tr><td style="width: 25%;"><a href="scasm.html">scasm</a></td>
+<td>Shape constrained additive smooth models</td></tr>
 <tr><td style="width: 25%;"><a href="scat.html">scat</a></td>
 <td>GAM scaled t family for heavy tailed data</td></tr>
 <tr><td style="width: 25%;"><a href="sdiag.html">sdiag</a></td>
@@ -561,6 +567,10 @@ Estimation
 <td>P-splines in GAMs</td></tr>
 <tr><td style="width: 25%;"><a href="smooth.construct.re.smooth.spec.html">smooth.construct.re.smooth.spec</a></td>
 <td>Simple random effects in GAMs</td></tr>
+<tr><td style="width: 25%;"><a href="smooth.construct.bs.smooth.spec.html">smooth.construct.sc.smooth.spec</a></td>
+<td>Penalized B-splines in GAMs</td></tr>
+<tr><td style="width: 25%;"><a href="smooth.construct.ad.smooth.spec.html">smooth.construct.scad.smooth.spec</a></td>
+<td>Adaptive smooths in GAMs</td></tr>
 <tr><td style="width: 25%;"><a href="smooth.construct.so.smooth.spec.html">smooth.construct.sf.smooth.spec</a></td>
 <td>Soap film smoother constructer</td></tr>
 <tr><td style="width: 25%;"><a href="smooth.construct.so.smooth.spec.html">smooth.construct.so.smooth.spec</a></td>

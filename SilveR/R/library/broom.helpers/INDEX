@@ -70,13 +70,14 @@ tidy_disambiguate_terms
                         Disambiguate terms
 tidy_ggpredict          Marginal Predictions with
                         'ggeffects::ggpredict()'
+tidy_group_by           Group results by selected columns
 tidy_identify_variables
                         Identify the variable corresponding to each
                         model coefficient
 tidy_marginal_contrasts
                         Marginal Contrasts with
                         'marginaleffects::avg_comparisons()'
-tidy_marginal_means     Marginal Means with
+tidy_marginal_means     Marginal Means with deprecated
                         'marginaleffects::marginal_means()'
 tidy_marginal_predictions
                         Marginal Predictions with
@@ -89,6 +90,8 @@ tidy_plus_plus          Tidy a model and compute additional
                         informations
 tidy_remove_intercept   Remove intercept(s)
 tidy_select_variables   Select variables to keep/drop
+tidy_svy_vglm           Tidy a 'svy_vglm' model
+tidy_vgam               Tidy a 'vglm' or a 'vgam' model
 tidy_with_broom_or_parameters
                         Tidy a model with broom or parameters
 tidy_zeroinfl           Tidy a 'zeroinfl' or a 'hurdle' model

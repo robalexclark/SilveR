@@ -1,7 +1,7 @@
 Package: S7
 Title: An Object Oriented System Meant to Become a Successor to S3 and
         S4
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: c(
     person("Object-Oriented Programming Working Group", role = "cph"),
     person("Davis", "Vaughan", role = "aut"),
@@ -38,20 +38,21 @@ Config/testthat/edition: 3
 Config/testthat/parallel: TRUE
 Config/testthat/start-first: external-generic
 Encoding: UTF-8
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 NeedsCompilation: yes
-Packaged: 2024-11-06 17:18:31 UTC; hadleywickham
+Packaged: 2025-11-14 13:45:25 UTC; hadleywickham
 Author: Object-Oriented Programming Working Group [cph],
   Davis Vaughan [aut],
-  Jim Hester [aut] (<https://orcid.org/0000-0002-2739-7082>),
+  Jim Hester [aut] (ORCID: <https://orcid.org/0000-0002-2739-7082>),
   Tomasz Kalinowski [aut],
   Will Landau [aut],
   Michael Lawrence [aut],
-  Martin Maechler [aut] (<https://orcid.org/0000-0002-8685-9910>),
+  Martin Maechler [aut] (ORCID: <https://orcid.org/0000-0002-8685-9910>),
   Luke Tierney [aut],
-  Hadley Wickham [aut, cre] (<https://orcid.org/0000-0003-4757-117X>)
+  Hadley Wickham [aut, cre] (ORCID:
+    <https://orcid.org/0000-0003-4757-117X>)
 Maintainer: Hadley Wickham <hadley@posit.co>
 Repository: CRAN
-Date/Publication: 2024-11-07 12:50:02 UTC
-Built: R 4.5.1; x86_64-w64-mingw32; 2025-08-04 00:21:13 UTC; windows
+Date/Publication: 2025-11-14 19:50:02 UTC
+Built: R 4.5.2; x86_64-w64-mingw32; 2025-12-03 03:14:41 UTC; windows
 Archs: x64

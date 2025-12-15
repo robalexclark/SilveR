@@ -3,7 +3,8 @@ anySpecial              Detect whether there are any 'specials' in a
                         formula term
 expandDoubleVerts       Expand terms with "||" notation into separate
                         "|" terms
-expandGrpVar            apply
+expandGrpVar            apply operator expansion (e.g. a/b -> a + a:b)
+                        to a formula term
 findReTrmClasses        list of specials - taken from enum.R
 isNested                Is f1 nested within f2?
 mkReTrms                Create list of structures needed for models
@@ -11,4 +12,6 @@ mkReTrms                Create list of structures needed for models
 no_specials             Drop 'specials' from a formula
 nobars                  Omit terms separated by vertical bars in a
                         formula
+randint                 Remove all random slopes from a formula, while
+                        retaining random intercepts.
 subbars                 "Substitute bars"

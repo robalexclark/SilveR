@@ -11,6 +11,7 @@
 #include <sstream>
 #include <valarray>
 #include <vector>
+
 #include "config.hpp"
 #include "radix.hpp"
 
@@ -184,15 +185,26 @@ template <class T>
 struct IndirectAccessor {
   const std::vector<T> &x;
   const std::vector<Index> &i;
-  IndirectAccessor(const std::vector<T> &x, const std::vector<Index> &i)
-      : x(x), i(i) {}
-  T operator[](size_t j) const { return x[i[j]]; }
+  Index tail;
+  IndirectAccessor(const std::vector<T> &x, const std::vector<Index> &i,
+                   Index tail = 0)
+      : x(x), i(i), tail(tail) {}
+  T operator[](size_t j) const { return i[j] < tail ? 0 : x[i[j]]; }
   size_t size() const { return i.size(); }
   operator std::vector<T>() const {
     std::vector<T> ans(i.size());
     for (size_t j = 0; j < ans.size(); j++) ans[j] = (*this)[j];
     return ans;
   }
+};
+
+template <class T>
+struct UpdatingAccess {
+  T &x;
+  T &operator+=(const T &other);
+  T &operator-=(const T &other);
+  UpdatingAccess(T &other) : x(other) {}
+  operator T &() { return x; }
 };
 
 /** \brief Provide read/write access to an array segment
@@ -320,7 +332,7 @@ struct ReverseArgs : Args<> {
   Type y(Index j) const { return values[output(j)]; }
   /** \brief Partial derivative of end result wrt. j'th input variable of
       this operator */
-  Type &dx(Index j) { return derivs[input(j)]; }
+  UpdatingAccess<Type> dx(Index j) { return derivs[input(j)]; }
   /** \brief Partial derivative of end result wrt. j'th output variable of
       this operator */
   Type dy(Index j) const { return derivs[output(j)]; }
@@ -386,7 +398,7 @@ struct ForwardArgs<bool> : Args<> {
   /** \brief Helper */
   template <class Operator>
   void mark_all_output(const Operator &op) {
-    if (Operator::updating && op.output_size() == 0) {
+    if (Operator::forward_updating) {
       Dependencies dep;
       op.dependencies_updating(*this, dep);
 
@@ -435,7 +447,7 @@ struct ReverseArgs<bool> : Args<> {
   template <class Operator>
   bool any_marked_output(const Operator &op) {
     if (Operator::elimination_protected) return true;
-    if (Operator::updating && op.output_size() == 0) {
+    if (Operator::forward_updating) {
       Dependencies dep;
       op.dependencies_updating(*this, dep);
       return dep.any(values);
@@ -738,8 +750,8 @@ struct op_info {
   enum op_flag {
     /** \copydoc global::Operator::dynamic */
     dynamic,
-    /** \copydoc global::Operator::smart_pointer */
-    smart_pointer,
+    /** \copydoc global::Operator::is_zero_deriv */
+    is_zero_deriv,
     /** \copydoc global::Operator::is_linear */
     is_linear,
     /** \copydoc global::Operator::is_constant */
@@ -752,8 +764,10 @@ struct op_info {
     allow_remap,
     /** \copydoc global::Operator::elimination_protected */
     elimination_protected,
-    /** \copydoc global::Operator::updating */
-    updating,
+    /** \copydoc global::Operator::forward_updating */
+    forward_updating,
+    /** \copydoc global::Operator::reverse_updating */
+    reverse_updating,
     /** \brief Mark end of enum */
     op_flag_count
   };
@@ -762,14 +776,15 @@ struct op_info {
     return
 
         (op.dynamic * (1 << dynamic)) |
-        (op.smart_pointer * (1 << smart_pointer)) |
+        (op.is_zero_deriv * (1 << is_zero_deriv)) |
         (op.is_linear * (1 << is_linear)) |
         (op.is_constant * (1 << is_constant)) |
         (op.independent_variable * (1 << independent_variable)) |
         (op.dependent_variable * (1 << dependent_variable)) |
         (op.allow_remap * (1 << allow_remap)) |
         (op.elimination_protected * (1 << elimination_protected)) |
-        (op.updating * (1 << updating));
+        (op.forward_updating * (1 << forward_updating)) |
+        (op.reverse_updating * (1 << reverse_updating));
   }
   op_info();
   op_info(op_flag f);
@@ -858,7 +873,7 @@ struct global {
     */
     virtual void dependencies(Args<> &args, Dependencies &dep) = 0;
     /** \brief Get the indices of variables updated by this operator.
-        \details Used only when `Operator::updating` flag is set.
+        \details Used only when `Operator::forward_updating` flag is set.
     */
     virtual void dependencies_updating(Args<> &args, Dependencies &dep) = 0;
     /** \brief Replay operation sequence. \copydoc forward */
@@ -1134,7 +1149,13 @@ struct global {
  */
   void forward_dense(std::vector<bool> &marks);
 
+  intervals<Index> get_intervals(op_info::op_flag flag, bool reverse = true,
+                                 bool forward = false) const;
+
   intervals<Index> updating_intervals() const;
+
+  intervals<Index> get_intervals_sub(op_info::op_flag flag, bool reverse = true,
+                                     bool forward = false) const;
 
   intervals<Index> updating_intervals_sub() const;
 
@@ -1292,11 +1313,15 @@ struct global {
   */
   std::vector<Index> var2op();
   /** \brief Select operators from a subset of variables
-      An operator is selected if it generates any of the selected variables.
-      This is the fast equivalent of
+      An operator is selected if it *generates* or optionally
+      *modifies* any of the selected variables.
+      In absence of 'updating operators', this is the fast equivalent of
       `ans[ var2op() [ which(values) ] ] <- true`
+      However, the code has been updated to also work for 'updating
+      operators' by setting `include_updating=true`.
   */
-  std::vector<bool> var2op(const std::vector<bool> &values);
+  std::vector<bool> var2op(const std::vector<bool> &values,
+                           bool include_updating = true);
   /** \brief Get variables produces by a node seqence */
   std::vector<Index> op2var(const std::vector<Index> &seq);
   /** \brief Get variables produced by a node seqence */
@@ -1342,17 +1367,21 @@ struct global {
       - A connection from Op1 to Op2 is present <==> there exists a *variable*
      which is input to Op2 and output from Op1 \param transpose Flag to reverse
      all edges. \param keep_var Boolean mask of *variables* to be considered as
-     potential edges.
+     potential edges. \param deriv Is the graph to be used for derivative
+     calculations only?
   */
-  graph build_graph(bool transpose, const std::vector<bool> &keep_var);
+  graph build_graph(bool transpose, const std::vector<bool> &keep_var,
+                    bool deriv = false);
   /** \brief Construct operator graph with forward connections
       \details See `build_graph()`
   */
-  graph forward_graph(std::vector<bool> keep_var = std::vector<bool>(0));
+  graph forward_graph(std::vector<bool> keep_var = std::vector<bool>(0),
+                      bool deriv = false);
   /** \brief Construct operator graph with reverse connections
       \details See `build_graph()`
   */
-  graph reverse_graph(std::vector<bool> keep_var = std::vector<bool>(0));
+  graph reverse_graph(std::vector<bool> keep_var = std::vector<bool>(0),
+                      bool deriv = false);
 
   /** \brief Test if two tapes are identical
       \details We say that two tapes are identical if the same input
@@ -1542,36 +1571,40 @@ struct global {
     static const bool is_linear = false;
     /** \brief Is this a constant operator ? */
     static const bool is_constant = false;
-    /** \brief Is this operator a 'smart pointer' (with reference counting) ? */
-    static const bool smart_pointer = false;
+    /** \brief Is this a zero-derivative operator (piecewise constant) ? */
+    static const bool is_zero_deriv = false;
     /** \brief Protect this operator from elimination by the tape optimizer ? */
     static const bool elimination_protected = false;
     /** \brief This operator **may** update existing variables ?
 
-        \details An 'updating' operator is allowed to update
+        \details A 'forward_updating' operator is allowed to update
         (increment/decrement) *certain* ('updatable') variables
         already on the tape.  In general this property breaks basic
         principles of reverse mode AD unless the following extra
         requirement is satisfied:
 
-        - Once an updatable variable have been *read* it may no longer be
+        - Once an updatable variable has been *read* it may no longer be
        updated.
 
         This requrement always holds for the derivative variables during reverse
-       replay. We note that 'updating' operators are considered an extension to
-       the standard AD framework. In particular, a more complex dependency
-       anlysis is required:
+       replay. We note that 'forward_updating' operators are considered an
+       extension to the standard AD framework. In particular, a more complex
+        dependency anlysis is required:
 
-        - Updating operators **must** have `implicit_dependencies=true`.
-        - The `updating` flag **must** be inherited by derivatives.
-        - The `updating` flag signifies that necessary derivative
-          workspaces are added to the tape prior to any reverse
-          replay.
-        - An `updating` operator **must** implement the member
+        - A `forward_updating` operator **must** implement the member
           `dependencies_updating()` defining which variables are
           updated.
+        - Forward updating operators **must** have `implicit_dependencies=true`
+       (FIXME: not sure about this).
     */
-    static const bool updating = false;
+    static const bool forward_updating = false;
+    /** \brief The derivative of this operator is `forward_updating`
+
+        - The `reverse_updating` flag signifies that necessary
+          derivative workspaces are added to the tape prior to any
+          reverse replay.
+    */
+    static const bool reverse_updating = false;
     /** \brief Default implementation of `OperatorPure::dependencies_updating()`
      */
     void dependencies_updating(Args<> &args, Dependencies &dep) const {}
@@ -1621,21 +1654,6 @@ struct global {
     Index input_size() const;
     Index output_size() const;
     static const bool have_input_size_output_size = true;
-  };
-  struct UniqueDynamicOperator : Operator<-1, -1> {
-    /** \copydoc Operator::dynamic */
-    static const bool dynamic = true;
-    /** \copydoc Operator::max_fuse_depth */
-    static const int max_fuse_depth = 0;
-    /** \brief This is an `Operator::smart_pointer` */
-    static const bool smart_pointer = false;
-    /** \brief Must implement `Operator::input_size` and `Operator::output_size`
-     */
-    static const bool have_input_size_output_size = true;
-  };
-  struct SharedDynamicOperator : UniqueDynamicOperator {
-    /** \brief This is an `Operator::smart_pointer` */
-    static const bool smart_pointer = true;
   };
 
   /** \brief Add default implementation of mandatory members:
@@ -1759,22 +1777,6 @@ struct global {
     void forward(ForwardArgs<Type> &args) {
       args.y(0) = this->eval(args.x(0), args.x(1));
     }
-  };
-
-  /** \brief Reference counting */
-  template <bool flag, class dummy>
-  struct ReferenceCounter {
-    void increment() {}
-    void decrement() {}
-    size_t operator()() const { return 0; }
-  };
-  template <class dummy>
-  struct ReferenceCounter<true, dummy> {
-    size_t counter;
-    ReferenceCounter() : counter(0) {}
-    void increment() { counter++; }
-    void decrement() { counter--; }
-    size_t operator()() const { return counter; }
   };
 
   /** \brief Utility for member completion */
@@ -2021,11 +2023,9 @@ struct global {
       int ninp = Op.input_size();
       int nout = Op.output_size();
 
-      w << "for (int count = 0, "
-        << "i[" << ninp << "]=" << inputs << ", "
-        << "di[" << ninp << "]=" << increment_pattern << ", "
-        << "o[" << nout << "]=" << outputs << "; "
-        << "count < " << n << "; count++) {\n";
+      w << "for (int count = 0, " << "i[" << ninp << "]=" << inputs << ", "
+        << "di[" << ninp << "]=" << increment_pattern << ", " << "o[" << nout
+        << "]=" << outputs << "; " << "count < " << n << "; count++) {\n";
 
       w << "    ";
       ForwardArgs<Writer> args_cpy = args;
@@ -2054,11 +2054,9 @@ struct global {
       int ninp = Op.input_size();
       int nout = Op.output_size();
 
-      w << "for (int count = 0, "
-        << "i[" << ninp << "]=" << inputs << ", "
-        << "di[" << ninp << "]=" << increment_pattern << ", "
-        << "o[" << nout << "]=" << outputs << "; "
-        << "count < " << n << "; count++) {\n";
+      w << "for (int count = 0, " << "i[" << ninp << "]=" << inputs << ", "
+        << "di[" << ninp << "]=" << increment_pattern << ", " << "o[" << nout
+        << "]=" << outputs << "; " << "count < " << n << "; count++) {\n";
 
       w << "    ";
       w << "for (int k=0; k<" << ninp << "; k++) i[k] -= di[k];\n";
@@ -2172,24 +2170,18 @@ struct global {
       TMBAD_ASSERT2(OperatorBase::dynamic,
                     "Stack to heap copy only allowed for dynamic operators");
       Complete *pOp = new Complete(*this);
-      TMBAD_ASSERT2(pOp->ref_count() == 0, "Operator already on the heap");
-      pOp->ref_count.increment();
       return get_glob()->add_to_stack<OperatorBase>(pOp, x);
     }
     ad_segment operator()(const ad_segment &x) {
       TMBAD_ASSERT2(OperatorBase::dynamic,
                     "Stack to heap copy only allowed for dynamic operators");
       Complete *pOp = new Complete(*this);
-      TMBAD_ASSERT2(pOp->ref_count() == 0, "Operator already on the heap");
-      pOp->ref_count.increment();
       return get_glob()->add_to_stack<OperatorBase>(pOp, x);
     }
     ad_segment operator()(const ad_segment &x, const ad_segment &y) {
       TMBAD_ASSERT2(OperatorBase::dynamic,
                     "Stack to heap copy only allowed for dynamic operators");
       Complete *pOp = new Complete(*this);
-      TMBAD_ASSERT2(pOp->ref_count() == 0, "Operator already on the heap");
-      pOp->ref_count.increment();
       return get_glob()->add_to_stack<OperatorBase>(pOp, x, y);
     }
     template <class T>
@@ -2236,24 +2228,14 @@ struct global {
     OperatorPure *other_fuse(OperatorPure *other) {
       return Op.other_fuse(this, other);
     }
-    ReferenceCounter<OperatorBase::smart_pointer, void> ref_count;
     OperatorPure *copy() {
-      if (Op.smart_pointer) {
-        ref_count.increment();
-        return this;
-      } else if (Op.dynamic)
+      if (Op.dynamic)
         return new Complete(*this);
       else
         return this;
     }
     void deallocate() {
       if (!Op.dynamic) return;
-      if (Op.smart_pointer) {
-        if (ref_count() > 1) {
-          ref_count.decrement();
-          return;
-        }
-      }
       delete this;
     }
     op_info info() {
@@ -2345,16 +2327,16 @@ struct global {
   };
   /** \brief Add zero allocated workspace to the tape
 
-      Serves as a pre-allocated workspace for `Operator::updating`
+      Serves as a pre-allocated workspace for `Operator::forward_updating`
       operators. In particular
 
       - Operator outputs are not allowed to be remapped (ensured by 'dynamic')
       - Operator persists during forward replay
   */
-  struct ZeroOp : DynamicOutputOperator<0> {
+  struct AllocOp : DynamicOutputOperator<0> {
     typedef DynamicOutputOperator<0> Base;
     static const bool add_forward_replay_copy = true;
-    ZeroOp(Index n);
+    AllocOp(Index n);
     template <class Type>
     void forward(ForwardArgs<Type> &args) {
       for (Index i = 0; i < Base::noutput; i++) args.y(i) = Type(0);
@@ -2367,6 +2349,33 @@ struct global {
      * workspace */
     void operator()(Replay *x, Index n);
   };
+  /** \brief Set allocated workspace to zero */
+  struct ZeroOp : DynamicOperator<1, 0> {
+    static const bool forward_updating = true;
+    static const bool reverse_updating = true;
+    static const bool add_forward_replay_copy = true;
+    static const bool have_dependencies = true;
+    static const bool implicit_dependencies = true;
+    static const bool allow_remap = false;
+    Index n;
+    ZeroOp(Index n);
+    void forward(ForwardArgs<Scalar> &args);
+    void reverse(ReverseArgs<Scalar> &args);
+    template <class Type>
+    void forward(ForwardArgs<Type> &args) {
+      TMBAD_ASSERT2(false, "Unsupported 'ZeroOp' method");
+    }
+    template <class Type>
+    void reverse(ReverseArgs<Type> &args) {
+      TMBAD_ASSERT2(false, "Unsupported 'ZeroOp' method");
+    }
+    const char *op_name();
+    void dependencies(Args<> &args, Dependencies &dep) const;
+    void dependencies_updating(Args<> &args, Dependencies &dep) const;
+    /** \brief Set allocated updatable workspace to zero */
+    void operator()(Replay *x, Index n);
+  };
+
   /** \brief Empty operator **without** inputs or outputs */
   struct NullOp : Operator<0, 0> {
     NullOp();
@@ -2880,7 +2889,7 @@ struct global {
     void override_by(const ad_plain &x) const;
     /** \brief Check if 'glob' exists in the active context stack */
     bool in_context_stack(global *glob) const;
-    /** \brief Deep copy existing ad_aug. Result will be last value of
+    /** \brief Deep copy existing ad_aug Result will be last value of
         the current tape. */
     ad_aug copy() const;
     /** \brief Deep copy existing ad_aug *wihout derivatives*. */
@@ -2899,6 +2908,11 @@ struct global {
         nothing can be concluded (they might be equal, but different,
         expressions on the tape) */
     bool identical(const ad_aug &other) const;
+    static const Index updbit = Index(1) << (sizeof(Index) * 8 - 1);
+    /** \brief Set / unset the 'updatable bit' of this `ad_aug` */
+    void setUpdatable(bool flag);
+    /** \brief Is this `ad_aug` updatable? */
+    bool updatable() const;
     /** \brief Addition \details Included reductions:
         - 0 + x = x
         - x + 0 = x
@@ -2945,6 +2959,83 @@ struct global {
   };
   void Independent(std::vector<ad_aug> &x);
 };
+
+typedef global::ad_aug ad_aug;
+
+template <class T>
+inline T &UpdatingAccess<T>::operator+=(const T &other) {
+  x += other;
+  return x;
+}
+template <class T>
+inline T &UpdatingAccess<T>::operator-=(const T &other) {
+  x -= other;
+  return x;
+}
+
+template <bool accumulate>
+struct AccOp : global::Operator<2, 0> {
+  static const bool is_linear = true;
+  static const bool forward_updating = true;
+
+  static const bool reverse_updating = false;
+  static const bool have_dependencies = true;
+  template <class T>
+  void forward(ForwardArgs<T> &args) {
+    T *x = args.x_ptr(0);
+    T *y = args.x_ptr(1);
+    accumulate ? x[0] += y[0] : x[0] -= y[0];
+  }
+  template <class T>
+  void reverse(ReverseArgs<T> &args) {
+    T *dx = args.dx_ptr(0);
+    T *dy = args.dx_ptr(1);
+    accumulate ? dy[0] += dx[0] : dy[0] -= dx[0];
+  }
+  void forward(ForwardArgs<Writer> &args) { TMBAD_ASSERT(false); }
+  void reverse(ReverseArgs<Writer> &args) { TMBAD_ASSERT(false); }
+  const char *op_name() { return (accumulate ? "AccOp" : "DecOp"); }
+  void operator()(ad_aug &x, const ad_aug &y) {
+    typedef global::ad_plain ad_plain;
+    global *glob = get_glob();
+
+    Index i0 = ad_plain(x).index;
+    Index i1 = ad_plain(y).index;
+
+    glob->inputs.push_back(i0);
+    glob->inputs.push_back(i1);
+
+    global::Complete<AccOp> *pOp = glob->template getOperator<AccOp>();
+    glob->add_to_opstack(pOp);
+    accumulate ? glob->values[i0] += glob->values[i1]
+               : glob->values[i0] -= glob->values[i1];
+  }
+  void dependencies(Args<> &args, Dependencies &dep) const {
+    dep.push_back(args.input(1));
+  }
+  void dependencies_updating(Args<> &args, Dependencies &dep) const {
+    dep.push_back(args.input(0));
+  }
+};
+
+template <>
+inline ad_aug &UpdatingAccess<ad_aug>::operator+=(const ad_aug &other) {
+  if (this->x.updatable()) {
+    AccOp<true>()(this->x, global::ad_plain(other));
+  } else {
+    this->x += other;
+  }
+  return this->x;
+}
+template <>
+inline ad_aug &UpdatingAccess<ad_aug>::operator-=(const ad_aug &other) {
+  if (this->x.updatable()) {
+    AccOp<false>()(this->x, global::ad_plain(other));
+  } else {
+    this->x -= other;
+  }
+  return this->x;
+}
 
 template <class S, class T>
 std::ostream &operator<<(std::ostream &os, const std::pair<S, T> &x) {
@@ -3000,7 +3091,6 @@ struct adaptive : T {
 };
 
 typedef global::ad_plain ad_plain;
-typedef global::ad_aug ad_aug;
 typedef global::Replay Replay;
 typedef adaptive<ad_aug> ad_adapt;
 typedef global::OperatorPure OperatorPure;
@@ -3101,6 +3191,7 @@ using std::floor;
 Writer floor(const Writer &x);
 struct FloorOp : global::UnaryOperator {
   static const bool have_eval = true;
+  static const bool is_zero_deriv = true;
   template <class Type>
   Type eval(Type x) {
     return floor(x);
@@ -3114,6 +3205,7 @@ ad_aug floor(const ad_aug &x);
 Writer ceil(const Writer &x);
 struct CeilOp : global::UnaryOperator {
   static const bool have_eval = true;
+  static const bool is_zero_deriv = true;
   template <class Type>
   Type eval(Type x) {
     return ceil(x);
@@ -3127,6 +3219,7 @@ ad_aug ceil(const ad_aug &x);
 Writer trunc(const Writer &x);
 struct TruncOp : global::UnaryOperator {
   static const bool have_eval = true;
+  static const bool is_zero_deriv = true;
   template <class Type>
   Type eval(Type x) {
     return trunc(x);
@@ -3140,6 +3233,7 @@ ad_aug trunc(const ad_aug &x);
 Writer round(const Writer &x);
 struct RoundOp : global::UnaryOperator {
   static const bool have_eval = true;
+  static const bool is_zero_deriv = true;
   template <class Type>
   Type eval(Type x) {
     return round(x);
@@ -3155,6 +3249,7 @@ double sign(const double &x);
 Writer sign(const Writer &x);
 struct SignOp : global::UnaryOperator {
   static const bool have_eval = true;
+  static const bool is_zero_deriv = true;
   template <class Type>
   Type eval(Type x) {
     return sign(x);
@@ -3171,6 +3266,7 @@ double lt0(const double &x);
 Writer ge0(const Writer &x);
 struct Ge0Op : global::UnaryOperator {
   static const bool have_eval = true;
+  static const bool is_zero_deriv = true;
   template <class Type>
   Type eval(Type x) {
     return ge0(x);
@@ -3184,6 +3280,7 @@ ad_aug ge0(const ad_aug &x);
 Writer lt0(const Writer &x);
 struct Lt0Op : global::UnaryOperator {
   static const bool have_eval = true;
+  static const bool is_zero_deriv = true;
   template <class Type>
   Type eval(Type x) {
     return lt0(x);
@@ -3194,6 +3291,32 @@ struct Lt0Op : global::UnaryOperator {
 };
 ad_plain lt0(const ad_plain &x);
 ad_aug lt0(const ad_aug &x);
+
+template <class T>
+T zeroDeriv(T x) {
+  return x;
+}
+Writer zeroDeriv(const Writer &x);
+struct ZderivOp : global::UnaryOperator {
+  static const bool have_eval = true;
+  static const bool is_zero_deriv = true;
+  template <class Type>
+  Type eval(Type x) {
+    return zeroDeriv(x);
+  }
+  template <class Type>
+  void reverse(ReverseArgs<Type> &args) {}
+  const char *op_name();
+};
+ad_plain zeroDeriv(const ad_plain &x);
+ad_aug zeroDeriv(const ad_aug &x);
+
+struct SderivOp : global::ad_plain::CopyOp {
+  static const bool is_zero_deriv = true;
+  const char *op_name();
+};
+ad_plain sparseDeriv(const ad_plain &x);
+double sparseDeriv(const double &x);
 using ::expm1;
 using ::fabs;
 using ::log1p;
@@ -3532,24 +3655,6 @@ template <class T>
 T abs(const T &x) {
   return fabs(x);
 }
-using std::pow;
-Writer pow(const Writer &x1, const Writer &x2);
-struct PowOp : global::BinaryOperator {
-  static const bool have_eval = true;
-  template <class Type>
-  Type eval(Type x1, Type x2) {
-    return pow(x1, x2);
-  }
-  template <class Type>
-  void reverse(ReverseArgs<Type> &args) {
-    args.dx(0) += args.dy(0) * args.x(1) * pow(args.x(0), args.x(1) - Type(1.));
-    args.dx(1) += args.dy(0) * args.y(0) * log(args.x(0));
-  }
-  const char *op_name();
-};
-ad_plain pow(const ad_plain &x1, const ad_plain &x2);
-ad_aug pow(const ad_aug &x1, const ad_aug &x2);
-ad_adapt pow(const ad_adapt &x1, const ad_adapt &x2);
 using std::atan2;
 Writer atan2(const Writer &x1, const Writer &x2);
 struct Atan2 : global::BinaryOperator {
@@ -3607,6 +3712,40 @@ struct MinOp : global::BinaryOperator {
 ad_plain min(const ad_plain &x1, const ad_plain &x2);
 ad_aug min(const ad_aug &x1, const ad_aug &x2);
 ad_adapt min(const ad_adapt &x1, const ad_adapt &x2);
+using std::pow;
+
+template <class T>
+T asConstant(T x) {
+  return x;
+}
+ad_aug asConstant(ad_aug x);
+Writer pow(const Writer &x1, const Writer &x2);
+template <bool left_var = true, bool right_var = true>
+struct PowOp : global::BinaryOperator {
+  static const bool have_eval = true;
+  template <class Type>
+  Type eval(Type x1, Type x2) {
+    if (!left_var) x1 = asConstant(x1);
+    if (!right_var) x2 = asConstant(x2);
+    return pow(x1, x2);
+  }
+  template <class Type>
+  void reverse(ReverseArgs<Type> &args) {
+    Type X1 = args.x(0);
+    Type X2 = args.x(1);
+    Type Y = args.y(0);
+    if (!left_var) X1 = asConstant(X1);
+    if (!right_var) X2 = asConstant(X2);
+    if (left_var) args.dx(0) += args.dy(0) * (X2 * pow(X1, X2 - Type(1.)));
+    if (right_var) args.dx(1) += args.dy(0) * (Y * log(X1));
+  }
+  const char *op_name() { return "PowOp"; }
+  ad_plain operator()(const ad_plain &x1, const ad_plain &x2) {
+    return get_glob()->add_to_stack<PowOp>(x1, x2);
+  }
+};
+ad_aug pow(const ad_aug &x1, const ad_aug &x2);
+ad_adapt F(const ad_adapt &x1, const ad_adapt &x2);
 Replay CondExpEq(const Replay &x0, const Replay &x1, const Replay &x2,
                  const Replay &x3);
 struct CondExpEqOp : global::Operator<4, 1> {

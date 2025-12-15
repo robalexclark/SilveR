@@ -2,7 +2,7 @@ Package: tinytex
 Type: Package
 Title: Helper Functions to Install and Maintain TeX Live, and Compile
         LaTeX Documents
-Version: 0.57
+Version: 0.58
 Authors@R: c(
   person("Yihui", "Xie", role = c("aut", "cre", "cph"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666")),
   person(given = "Posit Software, PBC", role = c("cph", "fnd")),
@@ -23,16 +23,18 @@ License: MIT + file LICENSE
 URL: https://github.com/rstudio/tinytex
 BugReports: https://github.com/rstudio/tinytex/issues
 Encoding: UTF-8
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 NeedsCompilation: no
-Packaged: 2025-04-15 14:48:13 UTC; yihui
-Author: Yihui Xie [aut, cre, cph] (<https://orcid.org/0000-0003-0645-5666>),
+Packaged: 2025-11-18 19:18:53 UTC; yihui
+Author: Yihui Xie [aut, cre, cph] (ORCID:
+    <https://orcid.org/0000-0003-0645-5666>),
   Posit Software, PBC [cph, fnd],
-  Christophe Dervieux [ctb] (<https://orcid.org/0000-0003-4474-2498>),
-  Devon Ryan [ctb] (<https://orcid.org/0000-0002-8549-0971>),
+  Christophe Dervieux [ctb] (ORCID:
+    <https://orcid.org/0000-0003-4474-2498>),
+  Devon Ryan [ctb] (ORCID: <https://orcid.org/0000-0002-8549-0971>),
   Ethan Heinzen [ctb],
   Fernando Cagua [ctb]
 Maintainer: Yihui Xie <xie@yihui.name>
 Repository: CRAN
-Date/Publication: 2025-04-15 15:50:03 UTC
-Built: R 4.5.1; ; 2025-08-04 01:05:24 UTC; windows
+Date/Publication: 2025-11-19 06:10:02 UTC
+Built: R 4.5.2; ; 2025-12-03 00:54:21 UTC; windows

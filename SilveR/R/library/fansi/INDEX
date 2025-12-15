@@ -2,6 +2,7 @@ dflt_term_cap           Default Arg Helper Funs
 fansi                   Details About Manipulation of Strings
                         Containing Control Sequences
 fansi_lines             Colorize Character Vectors
+fansi_unicode_version   Report Unicode Database Version In-use
 has_ctl                 Check for Presence of Control Sequences
 html_code_block         Format Character Vector for Display as Code in
                         HTML

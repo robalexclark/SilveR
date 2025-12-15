@@ -353,8 +353,10 @@ compressed_input::compressed_input(std::vector<Index> &x, size_t offset,
   input_diff = inputs;
 }
 
-StackOp::StackOp(global *glob, period p, IndexPair ptr,
-                 size_t max_period_size) {
+StackOp::StackOp(global *glob, period p, IndexPair ptr, size_t max_period_size)
+    : shared(std::make_shared<shared_data>()) {
+  global::operation_stack &opstack(shared->opstack);
+  compressed_input &ci(shared->ci);
   opstack.resize(p.size);
   size_t n = 0, m = 0;
   for (size_t i = 0; i < p.size; i++) {
@@ -365,48 +367,43 @@ StackOp::StackOp(global *glob, period p, IndexPair ptr,
   ci = compressed_input(glob->inputs, ptr.first, n, m, p.rep, max_period_size);
 }
 
-StackOp::StackOp(const StackOp &x) : opstack(x.opstack), ci(x.ci) {}
-
 void StackOp::print(global::print_config cfg) {
+  global::operation_stack &opstack(shared->opstack);
+  compressed_input &ci(shared->ci);
   std::vector<const char *> tmp(opstack.size());
   for (size_t i = 0; i < opstack.size(); i++) tmp[i] = opstack[i]->op_name();
   Rcout << cfg.prefix << " opstack = " << tmp << "\n";
 
-  Rcout << cfg.prefix << " "
-        << "nrep"
-        << " = " << ci.nrep << "\n";
+  Rcout << cfg.prefix << " " << "nrep" << " = " << ci.nrep << "\n";
   ;
-  Rcout << cfg.prefix << " "
-        << "increment_pattern"
-        << " = " << ci.increment_pattern << "\n";
+  Rcout << cfg.prefix << " " << "increment_pattern" << " = "
+        << ci.increment_pattern << "\n";
   ;
   if (ci.which_periodic.size() > 0) {
-    Rcout << cfg.prefix << " "
-          << "which_periodic"
-          << " = " << ci.which_periodic << "\n";
+    Rcout << cfg.prefix << " " << "which_periodic" << " = " << ci.which_periodic
+          << "\n";
     ;
-    Rcout << cfg.prefix << " "
-          << "period_sizes"
-          << " = " << ci.period_sizes << "\n";
+    Rcout << cfg.prefix << " " << "period_sizes" << " = " << ci.period_sizes
+          << "\n";
     ;
-    Rcout << cfg.prefix << " "
-          << "period_offsets"
-          << " = " << ci.period_offsets << "\n";
+    Rcout << cfg.prefix << " " << "period_offsets" << " = " << ci.period_offsets
+          << "\n";
     ;
-    Rcout << cfg.prefix << " "
-          << "period_data"
-          << " = " << ci.period_data << "\n";
+    Rcout << cfg.prefix << " " << "period_data" << " = " << ci.period_data
+          << "\n";
     ;
   }
 
   Rcout << "\n";
 }
 
-Index StackOp::input_size() const { return ci.n; }
+Index StackOp::input_size() const { return shared->ci.n; }
 
-Index StackOp::output_size() const { return ci.m * ci.nrep; }
+Index StackOp::output_size() const { return shared->ci.m * shared->ci.nrep; }
 
 void StackOp::forward(ForwardArgs<Writer> &args) {
+  global::operation_stack &opstack(shared->opstack);
+  compressed_input &ci(shared->ci);
   size_t n = ci.n, m = ci.m, nrep = ci.nrep;
   std::vector<Index> inputs(n);
   for (size_t i = 0; i < (size_t)n; i++) inputs[i] = args.input(i);
@@ -417,17 +414,17 @@ void StackOp::forward(ForwardArgs<Writer> &args) {
   size_t sp = ci.period_data.size();
   w << "for (int count = 0, ";
   if (n > 0) {
-    w << "i[" << n << "]=" << inputs << ", "
-      << "ip[" << n << "]=" << ci.increment_pattern << ", ";
+    w << "i[" << n << "]=" << inputs << ", " << "ip[" << n
+      << "]=" << ci.increment_pattern << ", ";
   }
   if (np > 0) {
-    w << "wp[" << np << "]=" << ci.which_periodic << ", "
-      << "ps[" << np << "]=" << ci.period_sizes << ", "
-      << "po[" << np << "]=" << ci.period_offsets << ", "
-      << "pd[" << sp << "]=" << ci.period_data << ", ";
+    w << "wp[" << np << "]=" << ci.which_periodic << ", " << "ps[" << np
+      << "]=" << ci.period_sizes << ", " << "po[" << np
+      << "]=" << ci.period_offsets << ", " << "pd[" << sp
+      << "]=" << ci.period_data << ", ";
   }
-  w << "o[" << m << "]=" << outputs << "; "
-    << "count < " << nrep << "; count++) {\n";
+  w << "o[" << m << "]=" << outputs << "; " << "count < " << nrep
+    << "; count++) {\n";
 
   w << "    ";
   ForwardArgs<Writer> args_cpy = args;
@@ -458,6 +455,8 @@ void StackOp::forward(ForwardArgs<Writer> &args) {
 }
 
 void StackOp::reverse(ReverseArgs<Writer> &args) {
+  global::operation_stack &opstack(shared->opstack);
+  compressed_input &ci(shared->ci);
   size_t n = ci.n, m = ci.m, nrep = ci.nrep;
   std::vector<ptrdiff_t> inputs(input_size());
   for (size_t i = 0; i < inputs.size(); i++) {
@@ -477,17 +476,16 @@ void StackOp::reverse(ReverseArgs<Writer> &args) {
   size_t sp = ci.period_data.size();
   w << "for (int count = " << nrep << ", ";
   if (n > 0) {
-    w << "i[" << n << "]=" << inputs << ", "
-      << "ip[" << n << "]=" << ci.increment_pattern << ", ";
+    w << "i[" << n << "]=" << inputs << ", " << "ip[" << n
+      << "]=" << ci.increment_pattern << ", ";
   }
   if (np > 0) {
-    w << "wp[" << np << "]=" << ci.which_periodic << ", "
-      << "ps[" << np << "]=" << ci.period_sizes << ", "
-      << "po[" << np << "]=" << ci.period_offsets << ", "
-      << "pd[" << sp << "]=" << ci.period_data << ", ";
+    w << "wp[" << np << "]=" << ci.which_periodic << ", " << "ps[" << np
+      << "]=" << ci.period_sizes << ", " << "po[" << np
+      << "]=" << ci.period_offsets << ", " << "pd[" << sp
+      << "]=" << ci.period_data << ", ";
   }
-  w << "o[" << m << "]=" << outputs << "; "
-    << "count > 0 ; ) {\n";
+  w << "o[" << m << "]=" << outputs << "; " << "count > 0 ; ) {\n";
 
   w << "    ";
   w << "count--;\n";
@@ -524,6 +522,7 @@ void StackOp::reverse(ReverseArgs<Writer> &args) {
 }
 
 void StackOp::dependencies(Args<> args, Dependencies &dep) const {
+  compressed_input &ci(shared->ci);
   std::vector<Index> lower;
   std::vector<Index> upper;
   ci.dependencies_intervals(args, lower, upper);
@@ -1071,14 +1070,16 @@ void global::forward_dense(std::vector<bool> &marks) {
   }
 }
 
-intervals<Index> global::updating_intervals() const {
+intervals<Index> global::get_intervals(op_info::op_flag flag, bool reverse,
+                                       bool forward) const {
   Dependencies dep;
   intervals<Index> marked_intervals;
   Args<> args(inputs);
   for (size_t i = 0; i < opstack.size(); i++) {
-    if (opstack[i]->info().test(op_info::updating)) {
+    if (opstack[i]->info().test(flag)) {
       dep.clear();
-      opstack[i]->dependencies(args, dep);
+      if (reverse) opstack[i]->dependencies(args, dep);
+      if (forward) opstack[i]->dependencies_updating(args, dep);
 
       for (size_t i = 0; i < dep.I.size(); i++) {
         Index a = dep.I[i].first;
@@ -1091,7 +1092,12 @@ intervals<Index> global::updating_intervals() const {
   return marked_intervals;
 }
 
-intervals<Index> global::updating_intervals_sub() const {
+intervals<Index> global::updating_intervals() const {
+  return get_intervals(op_info::reverse_updating);
+}
+
+intervals<Index> global::get_intervals_sub(op_info::op_flag flag, bool reverse,
+                                           bool forward) const {
   Dependencies dep;
   intervals<Index> marked_intervals;
   Args<> args(inputs);
@@ -1099,9 +1105,10 @@ intervals<Index> global::updating_intervals_sub() const {
   for (size_t j = 0; j < subgraph_seq.size(); j++) {
     Index i = subgraph_seq[j];
     args.ptr = subgraph_ptr[i];
-    if (opstack[i]->info().test(op_info::updating)) {
+    if (opstack[i]->info().test(flag)) {
       dep.clear();
-      opstack[i]->dependencies(args, dep);
+      if (reverse) opstack[i]->dependencies(args, dep);
+      if (forward) opstack[i]->dependencies_updating(args, dep);
 
       for (size_t i = 0; i < dep.I.size(); i++) {
         Index a = dep.I[i].first;
@@ -1111,6 +1118,10 @@ intervals<Index> global::updating_intervals_sub() const {
     }
   }
   return marked_intervals;
+}
+
+intervals<Index> global::updating_intervals_sub() const {
+  return get_intervals_sub(op_info::reverse_updating);
 }
 
 Replay &global::replay::value_inv(Index i) { return values[orig.inv_index[i]]; }
@@ -1141,9 +1152,17 @@ void global::replay::add_updatable_derivs(const intervals<Index> &I) {
   struct {
     Replay *p;
     void operator()(Index a, Index b) {
+      bool all_updatable = true;
+      for (size_t i = a; i <= b; i++)
+        all_updatable = all_updatable && p[i].updatable();
       Index n = b - a + 1;
-      global::ZeroOp Z(n);
-      Z(p + a, n);
+      if (!all_updatable) {
+        global::AllocOp Z(n);
+        Z(p + a, n);
+      } else {
+        global::ZeroOp Z(n);
+        Z(p + a, n);
+      }
     }
   } F = {derivs.data()};
   I.apply(F);
@@ -1152,11 +1171,6 @@ void global::replay::add_updatable_derivs(const intervals<Index> &I) {
 void global::replay::clear_deriv() {
   derivs.resize(values.size());
   std::fill(derivs.begin(), derivs.end(), Replay(0));
-
-  if (orig.opstack.any.test(op_info::updating)) {
-    intervals<Index> I = orig.updating_intervals();
-    add_updatable_derivs(I);
-  }
 }
 
 void global::replay::forward(bool inv_tags, bool dep_tags, Position start,
@@ -1185,6 +1199,11 @@ void global::replay::reverse(bool dep_tags, bool inv_tags, Position start,
     for (size_t i = 0; i < orig.dep_index.size(); i++)
       deriv_dep(i).Independent();
   }
+
+  if (orig.opstack.any.test(op_info::reverse_updating)) {
+    intervals<Index> I = orig.updating_intervals();
+    add_updatable_derivs(I);
+  }
   ReverseArgs<Replay> args(orig.inputs, values, derivs);
   if (node_filter.size() > 0) {
     TMBAD_ASSERT(node_filter.size() == orig.opstack.size());
@@ -1205,18 +1224,15 @@ void global::replay::forward_sub() {
 }
 
 void global::replay::reverse_sub() {
+  if (orig.opstack.any.test(op_info::reverse_updating)) {
+    intervals<Index> I = orig.updating_intervals_sub();
+    add_updatable_derivs(I);
+  }
   ReverseArgs<Replay> args(orig.inputs, values, derivs);
   orig.reverse_loop_subgraph(args);
 }
 
-void global::replay::clear_deriv_sub() {
-  orig.clear_array_subgraph(derivs);
-
-  if (orig.opstack.any.test(op_info::updating)) {
-    intervals<Index> I = orig.updating_intervals_sub();
-    add_updatable_derivs(I);
-  }
-}
+void global::replay::clear_deriv_sub() { orig.clear_array_subgraph(derivs); }
 
 void global::forward_replay(bool inv_tags, bool dep_tags) {
   global new_glob;
@@ -1335,7 +1351,7 @@ void global::extract_sub_inplace(std::vector<bool> marks) {
     for (size_t j = 0; j < nout; j++) {
       any_marked_output |= args.y(j);
     }
-    if (info.test(op_info::updating) && nout == 0) {
+    if (info.test(op_info::forward_updating)) {
       Dependencies dep;
       opstack[i]->dependencies_updating(args, dep);
       any_marked_output |= dep.any(args.values);
@@ -1419,11 +1435,20 @@ std::vector<Index> global::var2op() {
   return var2op;
 }
 
-std::vector<bool> global::var2op(const std::vector<bool> &values) {
+std::vector<bool> global::var2op(const std::vector<bool> &values,
+                                 bool include_updating) {
+  bool any_upd =
+      include_updating && opstack.any.test(op_info::forward_updating);
   std::vector<bool> ans(opstack.size(), false);
   Args<> args(inputs);
   size_t j = 0;
   for (size_t i = 0; i < opstack.size(); i++) {
+    if (any_upd && opstack[i]->info().test(op_info::forward_updating)) {
+      Dependencies dep;
+      opstack[i]->dependencies_updating(args, dep);
+      ans[i] = ans[i] || dep.any(values);
+    }
+
     opstack[i]->increment(args.ptr);
     for (; j < (size_t)args.ptr.second; j++) {
       ans[i] = ans[i] || values[j];
@@ -1522,7 +1547,8 @@ void global::append_edges::end_iteration() {
   for (size_t j = 0; j < n; j++) op_marks[edges[pos + j].first] = false;
 }
 
-graph global::build_graph(bool transpose, const std::vector<bool> &keep_var) {
+graph global::build_graph(bool transpose, const std::vector<bool> &keep_var,
+                          bool deriv) {
   TMBAD_ASSERT(keep_var.size() == values.size());
 
   std::vector<Index> var2op = this->var2op();
@@ -1535,12 +1561,16 @@ graph global::build_graph(bool transpose, const std::vector<bool> &keep_var) {
   size_t i = 0;
   append_edges F(i, opstack.size(), keep_var, var2op, edges);
   for (; i < opstack.size(); i++) {
-    any_updating |= opstack[i]->info().test(op_info::updating);
-    dep.clear();
-    opstack[i]->dependencies(args, dep);
-    F.start_iteration();
-    dep.apply(F);
-    F.end_iteration();
+    op_info ifo = opstack[i]->info();
+    bool skip_node = deriv && ifo.test(op_info::is_zero_deriv);
+    any_updating |= ifo.test(op_info::forward_updating);
+    if (!skip_node) {
+      dep.clear();
+      opstack[i]->dependencies(args, dep);
+      F.start_iteration();
+      dep.apply(F);
+      F.end_iteration();
+    }
     opstack[i]->increment(args.ptr);
   }
   if (any_updating) {
@@ -1573,20 +1603,20 @@ graph global::build_graph(bool transpose, const std::vector<bool> &keep_var) {
   return G;
 }
 
-graph global::forward_graph(std::vector<bool> keep_var) {
+graph global::forward_graph(std::vector<bool> keep_var, bool deriv) {
   if (keep_var.size() == 0) {
     keep_var.resize(values.size(), true);
   }
   TMBAD_ASSERT(values.size() == keep_var.size());
-  return build_graph(false, keep_var);
+  return build_graph(false, keep_var, deriv);
 }
 
-graph global::reverse_graph(std::vector<bool> keep_var) {
+graph global::reverse_graph(std::vector<bool> keep_var, bool deriv) {
   if (keep_var.size() == 0) {
     keep_var.resize(values.size(), true);
   }
   TMBAD_ASSERT(values.size() == keep_var.size());
-  return build_graph(true, keep_var);
+  return build_graph(true, keep_var, deriv);
 }
 
 bool global::identical(const global &other) const {
@@ -1781,8 +1811,7 @@ void global::print(print_config cfg) {
   Rcout << setw(7) << "OpName:" << setw(7 + have_subgraph)
         << "Node:" << setw(13) << "Value:" << setw(13) << "Deriv:" << setw(13)
         << "Index:";
-  Rcout << "    "
-        << "Inputs:";
+  Rcout << "    " << "Inputs:";
   Rcout << endl;
   for (size_t i = 0; i < opstack.size(); i++) {
     Rcout << cfg.prefix;
@@ -1871,16 +1900,56 @@ const char *global::DataOp::op_name() { return "DataOp"; }
 
 void global::DataOp::forward(ForwardArgs<Writer> &args) { TMBAD_ASSERT(false); }
 
-global::ZeroOp::ZeroOp(Index n) { Base::noutput = n; }
+global::AllocOp::AllocOp(Index n) { Base::noutput = n; }
+
+const char *global::AllocOp::op_name() { return "AllocOp"; }
+
+void global::AllocOp::forward(ForwardArgs<Writer> &args) {
+  TMBAD_ASSERT(false);
+}
+
+void global::AllocOp::operator()(Replay *x, Index n) {
+  Complete<AllocOp> Z(n);
+  ad_segment y = Z(ad_segment());
+  for (size_t i = 0; i < n; i++) {
+    x[i] = y[i];
+    x[i].setUpdatable(true);
+  }
+}
+
+global::ZeroOp::ZeroOp(Index n) : n(n) {}
+
+void global::ZeroOp::forward(ForwardArgs<Scalar> &args) {
+  Scalar *x = args.x_ptr(0);
+  std::fill(x, x + n, Scalar(0));
+}
+
+void global::ZeroOp::reverse(ReverseArgs<Scalar> &args) {
+  Scalar *dx = args.dx_ptr(0);
+  std::fill(dx, dx + n, Scalar(0));
+}
 
 const char *global::ZeroOp::op_name() { return "ZeroOp"; }
 
-void global::ZeroOp::forward(ForwardArgs<Writer> &args) { TMBAD_ASSERT(false); }
+void global::ZeroOp::dependencies(Args<> &args, Dependencies &dep) const {}
+
+void global::ZeroOp::dependencies_updating(Args<> &args,
+                                           Dependencies &dep) const {
+  dep.add_segment(args.input(0), n);
+}
 
 void global::ZeroOp::operator()(Replay *x, Index n) {
+  TMBAD_ASSERT2(n > 0, "'ZeroOp' requires non-zero length");
+  bool all_updatable = true;
+  for (size_t i = 0; i < n; i++)
+    all_updatable = all_updatable && x[i].updatable();
+  TMBAD_ASSERT2(all_updatable, "'ZeroOp' requires updatable workspace");
+  bool consecutive = true;
+  for (size_t i = 1; i < n; i++)
+    consecutive = consecutive && (x[i].index() - x[i - 1].index() == 1);
+  TMBAD_ASSERT2(consecutive, "'ZeroOp' requires consecutive workspace");
   Complete<ZeroOp> Z(n);
-  ad_segment y = Z(ad_segment());
-  for (size_t i = 0; i < n; i++) x[i] = y[i];
+  Z(std::vector<ad_plain>(1, x[0]));
 }
 
 global::NullOp::NullOp() {}
@@ -1913,7 +1982,7 @@ void global::RefOp::forward(ForwardArgs<Replay> &args) {
 
 void global::RefOp::reverse(ReverseArgs<Replay> &args) {
   if (get_glob() == this->glob) {
-    args.dx(0) += args.dy(0);
+    Replay(args.dx(0)) += args.dy(0);
   }
 }
 
@@ -1962,6 +2031,7 @@ global::ad_plain::ad_plain(Scalar x) {
 
 global::ad_plain::ad_plain(ad_aug x) {
   x.addToTape();
+  x.setUpdatable(false);
   *this = x.taped_value;
 }
 
@@ -2267,6 +2337,18 @@ bool global::ad_aug::identical(const ad_aug &other) const {
   return false;
 }
 
+void global::ad_aug::setUpdatable(bool flag) {
+  if (on_some_tape()) {
+    taped_value.index = flag ? (index() | updbit) : (index() & ~updbit);
+  } else {
+    TMBAD_ASSERT2(!flag, "An untaped constant cannot be made 'updatable'");
+  }
+}
+
+bool global::ad_aug::updatable() const {
+  return on_some_tape() && (index() & updbit);
+}
+
 ad_aug global::ad_aug::operator+(const ad_aug &other) const {
   if (bothConstant(other)) return Scalar(this->data.value + other.data.value);
   if (this->identicalZero()) return other;
@@ -2326,6 +2408,7 @@ ad_aug &global::ad_aug::operator/=(const ad_aug &other) {
 }
 
 void global::ad_aug::Dependent() {
+  this->setUpdatable(false);
   this->addToTape();
   taped_value.Dependent();
 }
@@ -2511,6 +2594,30 @@ ad_aug lt0(const ad_aug &x) {
   else
     return lt0(ad_plain(x));
 }
+
+Writer zeroDeriv(const Writer &x) {
+  return "zeroDeriv"
+         "(" +
+         x + ")";
+}
+const char *ZderivOp::op_name() { return "ZderivOp"; }
+ad_plain zeroDeriv(const ad_plain &x) {
+  return get_glob()->add_to_stack<ZderivOp>(x);
+}
+ad_aug zeroDeriv(const ad_aug &x) {
+  if (x.constant())
+    return Scalar(zeroDeriv(x.Value()));
+  else
+    return zeroDeriv(ad_plain(x));
+}
+
+const char *SderivOp::op_name() { return "SderivOp"; }
+
+ad_plain sparseDeriv(const ad_plain &x) {
+  return get_glob()->add_to_stack<SderivOp>(x);
+}
+
+double sparseDeriv(const double &x) { return x; }
 
 Writer fabs(const Writer &x) {
   return "fabs"
@@ -2873,25 +2980,6 @@ ad_aug atanh(const ad_aug &x) {
 }
 ad_adapt atanh(const ad_adapt &x) { return ad_adapt(atanh(ad_aug(x))); }
 
-Writer pow(const Writer &x1, const Writer &x2) {
-  return "pow"
-         "(" +
-         x1 + "," + x2 + ")";
-}
-const char *PowOp::op_name() { return "PowOp"; }
-ad_plain pow(const ad_plain &x1, const ad_plain &x2) {
-  return get_glob()->add_to_stack<PowOp>(x1, x2);
-}
-ad_aug pow(const ad_aug &x1, const ad_aug &x2) {
-  if (x1.constant() && x2.constant())
-    return Scalar(pow(x1.Value(), x2.Value()));
-  else
-    return pow(ad_plain(x1), ad_plain(x2));
-}
-ad_adapt pow(const ad_adapt &x1, const ad_adapt &x2) {
-  return ad_adapt(pow(ad_aug(x1), ad_aug(x2)));
-}
-
 Writer atan2(const Writer &x1, const Writer &x2) {
   return "atan2"
          "(" +
@@ -2947,6 +3035,30 @@ ad_aug min(const ad_aug &x1, const ad_aug &x2) {
 }
 ad_adapt min(const ad_adapt &x1, const ad_adapt &x2) {
   return ad_adapt(min(ad_aug(x1), ad_aug(x2)));
+}
+
+ad_aug asConstant(ad_aug x) { return x.Value(); }
+
+Writer pow(const Writer &x1, const Writer &x2) {
+  return "pow(" + x1 + "," + x2 + ")";
+}
+
+ad_aug pow(const ad_aug &x1, const ad_aug &x2) {
+  if (x1.constant() && x2.constant())
+    return Scalar(pow(x1.Value(), x2.Value()));
+  else if (x2.constant()) {
+    if (x2.Value() == 0.) return 1.;
+    if (x2.Value() == 1.) return x1;
+    return PowOp<1, 0>()(ad_plain(x1), ad_plain(x2));
+  } else if (x1.constant()) {
+    if (x1.Value() == 1.) return 1.;
+    return PowOp<0, 1>()(ad_plain(x1), ad_plain(x2));
+  } else
+    return PowOp<1, 1>()(ad_plain(x1), ad_plain(x2));
+}
+
+ad_adapt F(const ad_adapt &x1, const ad_adapt &x2) {
+  return ad_adapt(F(ad_aug(x1), ad_aug(x2)));
 }
 void CondExpEqOp::forward(ForwardArgs<Scalar> &args) {
   if (args.x(0) == args.x(1)) {
@@ -4454,23 +4566,54 @@ std::vector<Position> inv_positions(global &glob) {
 }
 
 void reorder_graph(global &glob, std::vector<Index> inv_idx) {
-  if (!all_allow_remap(glob)) return;
   for (size_t i = 1; i < inv_idx.size(); i++) {
     TMBAD_ASSERT(inv_idx[i] > inv_idx[i - 1]);
   }
+
   std::vector<bool> marks(glob.values.size(), false);
   for (size_t i = 0; i < inv_idx.size(); i++)
     marks[glob.inv_index[inv_idx[i]]] = true;
   glob.forward_dense(marks);
+
+  intervals<Index> I = glob.get_intervals(op_info::dynamic, true, true);
+  if (I.x.size() > 0) {
+    struct {
+      std::vector<bool> &marks;
+      bool invalid;
+      void operator()(Index a, Index b) {
+        size_t cnt = std::count(marks.begin() + a, marks.begin() + b + 1, true);
+        bool ok = (cnt == 0) || (cnt == b - a + 1);
+        if (!ok) {
+          invalid = true;
+
+          std::fill(marks.begin() + a, marks.begin() + b + 1, true);
+        }
+      }
+    } F = {marks, false};
+
+    I.apply(F);
+    while (F.invalid) {
+      glob.forward_dense(marks);
+
+      F.invalid = false;
+      I.apply(F);
+    }
+  }
   if (false) {
     int c = std::count(marks.begin(), marks.end(), true);
     Rcout << "marked proportion:" << (double)c / (double)marks.size() << "\n";
   }
 
   marks.flip();
-  glob.set_subgraph(marks);
+
+  marks = glob.var2op(marks);
+
+  std::vector<Index> seq1 = which<Index>(marks);
   marks.flip();
-  glob.set_subgraph(marks, true);
+  std::vector<Index> seq2 = which<Index>(marks);
+  seq1.insert(seq1.end(), seq2.begin(), seq2.end());
+  glob.subgraph_seq = seq1;
+
   glob = glob.extract_sub();
 }
 }  // namespace TMBad
@@ -4572,88 +4715,26 @@ void SegmentRef::resize(ad_segment &pack, Index n) {
   p->size = n;
 }
 
-PackOp::PackOp(const Index n) : n(n) {}
-
-void PackOp::forward(ForwardArgs<Scalar> &args) {
-  SegmentRef *y = (SegmentRef *)args.y_ptr(0);
-  y[0] = SegmentRef(args.glob_ptr, args.input(0), n);
-}
-
-void PackOp::forward(ForwardArgs<Replay> &args) {
-  ad_segment x(args.x_ptr(0), n);
-  args.y_segment(0, K) = pack(x);
-}
-
-void PackOp::reverse(ReverseArgs<Scalar> &args) {
-  SegmentRef tmp(args.dy_ptr(0));
-  if (tmp.glob_ptr != NULL) {
-    Scalar *dx = SegmentRef(args.y_ptr(0)).deriv_ptr();
-    Scalar *dy = SegmentRef(args.dy_ptr(0)).deriv_ptr();
-    for (Index i = 0; i < n; i++) dx[i] += dy[i];
+ad_segment pack(const ad_segment &x, bool up) {
+  if (up) {
+    global::Complete<PackOp<true> > F(x.size());
+    return F(x);
+  } else {
+    global::Complete<PackOp<false> > F(x.size());
+    return F(x);
   }
-}
-
-void PackOp::reverse(ReverseArgs<Replay> &args) {
-  ad_segment dy_packed(args.dy_ptr(0), K);
-
-  if (SegmentRef(dy_packed).isNull()) {
-    SegmentRef().resize(dy_packed, n);
-  }
-  ad_segment dy = unpack(dy_packed);
-  ad_segment dx(args.dx_ptr(0), n, true);
-  dx += dy;
-  Replay *pdx = args.dx_ptr(0);
-  for (Index i = 0; i < n; i++) pdx[i] = dx[i];
-}
-
-const char *PackOp::op_name() { return "PackOp"; }
-
-void PackOp::dependencies(Args<> &args, Dependencies &dep) const {
-  dep.add_segment(args.input(0), n);
-}
-
-UnpkOp::UnpkOp(const Index n) : noutput(n) {}
-
-void UnpkOp::forward(ForwardArgs<Scalar> &args) {
-  Scalar *y = args.y_ptr(0);
-  SegmentRef srx(args.x_ptr(0));
-  if (srx.isNull()) {
-    for (Index i = 0; i < noutput; i++) y[i] = 0;
-    return;
-  }
-  Scalar *x = srx.value_ptr();
-  for (Index i = 0; i < noutput; i++) y[i] = x[i];
-
-  ((SegmentRef *)args.x_ptr(0))->glob_ptr = NULL;
-}
-
-void UnpkOp::reverse(ReverseArgs<Scalar> &args) {
-  SegmentRef *dx = (SegmentRef *)args.dx_ptr(0);
-  dx[0] = SegmentRef(args.glob_ptr, args.output(0), noutput);
-}
-
-void UnpkOp::reverse(ReverseArgs<Replay> &args) {
-  ad_segment dy(args.dy_ptr(0), noutput);
-  ad_segment dy_packed = pack(dy);
-  Replay *pdx = args.dx_ptr(0);
-  for (Index i = 0; i < dy_packed.size(); i++) pdx[i] = dy_packed[i];
-}
-
-const char *UnpkOp::op_name() { return "UnpkOp"; }
-
-void UnpkOp::dependencies(Args<> &args, Dependencies &dep) const {
-  dep.add_segment(args.input(0), K);
-}
-
-ad_segment pack(const ad_segment &x) {
-  global::Complete<PackOp> F(x.size());
-  return F(x);
 }
 
 ad_segment unpack(const ad_segment &x) {
   Index n = SegmentRef(x).size;
-  global::Complete<UnpkOp> op(n);
+  global::Complete<UnpkOp<false> > op(n);
   return op(x);
+}
+
+void unpack(const ad_segment &x, ad_segment &y) {
+  Index n = SegmentRef(x).size;
+  global::Complete<UnpkOp<true> > op(n);
+  op(x, y);
 }
 
 Scalar *unpack(const std::vector<Scalar> &x, Index j) {

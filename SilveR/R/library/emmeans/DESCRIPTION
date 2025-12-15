@@ -1,30 +1,32 @@
 Package: emmeans
 Type: Package
 Title: Estimated Marginal Means, aka Least-Squares Means
-Version: 1.11.2
-Date: 2025-07-11
-Authors@R: c(person("Russell V.", "Lenth", role = c("aut", "cre", "cph"), 
-    email = "russell-lenth@uiowa.edu"),
+Version: 2.0.0
+Date: 2025-10-24
+Authors@R: c(person("Russell V.", "Lenth", role = c("aut", "cph"), 
+                    email = "russell-lenth@uiowa.edu"),
+    person("Julia", "Piaskowski", role = c("cre", "aut"),
+           email = "julia.piask@gmail.com"),
     person("Balazs", "Banfai", role = "ctb"),
     person("Ben", "Bolker", role = "ctb"),
     person("Paul", "Buerkner", role = "ctb"),
     person("Iago", "Giné-Vázquez", role = "ctb"),
-    person("Maxime", "Herve", role = "ctb"),
+    person("Maxime", "Hervé", role = "ctb"),
     person("Maarten", "Jung", role = "ctb"),
     person("Jonathon", "Love", role = "ctb"),
     person("Fernando", "Miguez", role = "ctb"),
-    person("Julia", "Piaskowski", role = "ctb"),
     person("Hannes", "Riebl", role = "ctb"),
     person("Henrik", "Singmann", role = "ctb"))
+Maintainer: Julia Piaskowski <julia.piask@gmail.com>
 Depends: R (>= 4.1.0)
 Imports: estimability (>= 1.4.1), graphics, methods, mvtnorm, numDeriv,
-        stats, utils
+        rlang, stats, utils
 Suggests: bayesplot, bayestestR, biglm, brms, car, coda (>= 0.17),
         compositions, ggplot2, knitr, lattice, lme4, lmerTest (>=
         2.0.32), logspline, MASS, mediation, mgcv, multcomp,
         multcompView, MuMIn, nlme, ordinal (>= 2014.11-12), pbkrtest
-        (>= 0.4-1), rmarkdown, rsm, sandwich, scales, splines,
-        testthat, tibble, xtable (>= 1.8-2)
+        (>= 0.4-1), rmarkdown, robmixglm, rsm, sandwich, scales,
+        splines, testthat, tibble, xtable (>= 1.8-2)
 Enhances: CARBayes, coxme, gee, geepack, MCMCglmm, MCMCpack, mice,
         nnet, pscl, rstanarm, sommer, survival
 URL:
@@ -41,23 +43,22 @@ Description: Obtain estimated marginal means (EMMs) for many linear, generalized
   Statistician 34(4), 216-221 <doi:10.1080/00031305.1980.10483031>.
 License: GPL-2 | GPL-3
 Encoding: UTF-8
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2025-07-10 19:33:41 UTC; rlenth
-Author: Russell V. Lenth [aut, cre, cph],
+Packaged: 2025-10-28 21:28:28 UTC; jpiaskowski
+Author: Russell V. Lenth [aut, cph],
+  Julia Piaskowski [cre, aut],
   Balazs Banfai [ctb],
   Ben Bolker [ctb],
   Paul Buerkner [ctb],
   Iago Giné-Vázquez [ctb],
-  Maxime Herve [ctb],
+  Maxime Hervé [ctb],
   Maarten Jung [ctb],
   Jonathon Love [ctb],
   Fernando Miguez [ctb],
-  Julia Piaskowski [ctb],
   Hannes Riebl [ctb],
   Henrik Singmann [ctb]
-Maintainer: Russell V. Lenth <russell-lenth@uiowa.edu>
 Repository: CRAN
-Date/Publication: 2025-07-11 15:20:06 UTC
-Built: R 4.5.1; ; 2025-08-04 01:05:53 UTC; windows
+Date/Publication: 2025-10-29 06:10:25 UTC
+Built: R 4.5.2; ; 2025-12-03 04:09:09 UTC; windows

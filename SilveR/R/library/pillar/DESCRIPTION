@@ -1,6 +1,6 @@
 Package: pillar
 Title: Coloured Formatting for Columns
-Version: 1.11.0
+Version: 1.11.1
 Authors@R: 
     c(person(given = "Kirill",
              family = "M\u00fcller",
@@ -26,7 +26,7 @@ Suggests: bit64, DBI, debugme, DiagrammeR, dplyr, formattable, ggplot2,
         tibble, units (>= 0.7.2), vdiffr, withr
 VignetteBuilder: knitr
 Encoding: UTF-8
-RoxygenNote: 7.3.2.9000
+RoxygenNote: 7.3.3.9000
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Config/testthat/start-first: format_multi_fuzz, format_multi_fuzz_2,
@@ -36,12 +36,12 @@ Config/autostyle/strict: true
 Config/gha/extra-packages: units=?ignore-before-r=4.3.0
 Config/Needs/website: tidyverse/tidytemplate
 NeedsCompilation: no
-Packaged: 2025-07-04 18:25:31 UTC; kirill
+Packaged: 2025-09-17 03:59:12 UTC; kirill
 Author: Kirill Müller [aut, cre] (ORCID:
     <https://orcid.org/0000-0002-1416-3412>),
   Hadley Wickham [aut],
   RStudio [cph]
 Maintainer: Kirill Müller <kirill@cynkra.com>
 Repository: CRAN
-Date/Publication: 2025-07-04 19:20:02 UTC
-Built: R 4.5.1; ; 2025-08-04 01:38:40 UTC; windows
+Date/Publication: 2025-09-17 11:20:02 UTC
+Built: R 4.5.2; ; 2025-12-03 04:28:31 UTC; windows

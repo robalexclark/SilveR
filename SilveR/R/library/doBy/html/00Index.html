@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head><title>R: Groupwise Statistics, LSmeans, Linear Estimates, Utilities</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-<link rel="stylesheet" type="text/css" href="R.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<link rel="stylesheet" type="text/css" href="R.css">
 </head><body><div class="container">
 <h1> Groupwise Statistics, LSmeans, Linear Estimates, Utilities
-<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]" />
+<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]">
 </h1>
-<hr/>
+<hr>
 <div style="text-align: center;">
-<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
-<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
-</div><h2>Documentation for package &lsquo;doBy&rsquo; version 4.7.0</h2>
+<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]"></a>
+<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]"></a>
+</div><h2>Documentation for package &lsquo;doBy&rsquo; version 4.7.1</h2>
 
 <ul><li><a href="../DESCRIPTION" type="text/plain; charset=utf-8">DESCRIPTION file</a>.</li>
 <li><a href="../doc/index.html">User guides, package vignettes and other documentation.</a></li>
@@ -50,6 +50,8 @@
 <h2><a id="A">-- A --</a></h2>
 
 <table style="width: 100%;">
+<tr><td style="width: 25%;"><a href="pipe_arithmetic.html">add</a></td>
+<td>Pipe-friendly arithmetic helpers</td></tr>
 <tr><td style="width: 25%;"><a href="add_int.html">add_int</a></td>
 <td>Add interaction columns to data frame</td></tr>
 <tr><td style="width: 25%;"><a href="add_pred.html">add_pred</a></td>
@@ -58,6 +60,8 @@
 <td>Add residuals of different types to dataframe</td></tr>
 <tr><td style="width: 25%;"><a href="linest-matrix.html">aggregate_linest_list</a></td>
 <td>Linear estimates matrix</td></tr>
+<tr><td style="width: 25%;"><a href="align_coefs.html">align_coefs</a></td>
+<td>Align and combine fixed-effect coefficients from multiple models</td></tr>
 <tr><td style="width: 25%;"><a href="formula_ops.html">as_lhs_chr</a></td>
 <td>Formula operations and coercion.</td></tr>
 <tr><td style="width: 25%;"><a href="formula_ops.html">as_lhs_frm</a></td>
@@ -157,6 +161,8 @@
 <td>Computing simple descriptive statistics of a numeric vector.</td></tr>
 <tr><td style="width: 25%;"><a href="dietox.html">dietox</a></td>
 <td>Growth curves of pigs in a 3x3 factorial experiment</td></tr>
+<tr><td style="width: 25%;"><a href="pipe_arithmetic.html">divide</a></td>
+<td>Pipe-friendly arithmetic helpers</td></tr>
 </table>
 
 <h2><a id="E">-- E --</a></h2>
@@ -257,7 +263,7 @@
 
 <table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="income.html">income</a></td>
-<td>income data</td></tr>
+<td>Income data, years of educations and ethnicity</td></tr>
 <tr><td style="width: 25%;"><a href="interaction-plot.html">interaction-plot</a></td>
 <td>Two-way interaction plot</td></tr>
 <tr><td style="width: 25%;"><a href="interaction-plot.html">interaction_plot</a></td>
@@ -334,15 +340,17 @@
 <td>Milk yield data for manually milked cows.</td></tr>
 <tr><td style="width: 25%;"><a href="model_stability_glm.html">model_stability_glm</a></td>
 <td>Model stability for glm objects</td></tr>
+<tr><td style="width: 25%;"><a href="pipe_arithmetic.html">mult</a></td>
+<td>Pipe-friendly arithmetic helpers</td></tr>
 </table>
 
 <h2><a id="N">-- N --</a></h2>
 
 <table style="width: 100%;">
-<tr><td style="width: 25%;"><a href="NIRmilk.html">NIRmilk</a></td>
-<td>NIRmilk</td></tr>
+<tr><td style="width: 25%;"><a href="nir_milk.html">NIRmilk</a></td>
+<td>Near infra red light (NIR) measurements in milk</td></tr>
 <tr><td style="width: 25%;"><a href="nir_milk.html">nir_milk</a></td>
-<td>nir_milk</td></tr>
+<td>Near infra red light (NIR) measurements in milk</td></tr>
 </table>
 
 <h2><a id="O">-- O --</a></h2>
@@ -367,6 +375,8 @@
 <td>Extract (pick) elements without using brackets</td></tr>
 <tr><td style="width: 25%;"><a href="pick_elements.html">pick_elements</a></td>
 <td>Extract (pick) elements without using brackets</td></tr>
+<tr><td style="width: 25%;"><a href="pipe_arithmetic.html">pipe_arithmetic</a></td>
+<td>Pipe-friendly arithmetic helpers</td></tr>
 <tr><td style="width: 25%;"><a href="plot_lm.html">plot_lm</a></td>
 <td>Plot linear model object</td></tr>
 <tr><td style="width: 25%;"><a href="ls-means.html">popMeans</a></td>
@@ -377,8 +387,8 @@
 <td>Compute LS-means (aka population means or marginal means)</td></tr>
 <tr><td style="width: 25%;"><a href="potatoes.html">potatoes</a></td>
 <td>Weight and size of 20 potatoes</td></tr>
-<tr><td style="width: 25%;"><a href="pow.html">pow</a></td>
-<td>Power function</td></tr>
+<tr><td style="width: 25%;"><a href="pipe_arithmetic.html">pow</a></td>
+<td>Pipe-friendly arithmetic helpers</td></tr>
 <tr><td style="width: 25%;"><a href="data-prostate.html">prostate</a></td>
 <td>Prostate Tumor Gene Expression Dataset</td></tr>
 </table>
@@ -388,8 +398,8 @@
 <table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="rbind_list.html">rbind_list</a></td>
 <td>Bind list of data frames and add list names as a column</td></tr>
-<tr><td style="width: 25%;"><a href="reciprocal.html">reciprocal</a></td>
-<td>Reciprocal function</td></tr>
+<tr><td style="width: 25%;"><a href="pipe_arithmetic.html">reciprocal</a></td>
+<td>Pipe-friendly arithmetic helpers</td></tr>
 <tr><td style="width: 25%;"><a href="recodeVar.html">recodeVar</a></td>
 <td>Recode values of a vector</td></tr>
 <tr><td style="width: 25%;"><a href="recodeVar.html">recode_var</a></td>
@@ -431,8 +441,8 @@
 <td>Section a function and set default values in function</td></tr>
 <tr><td style="width: 25%;"><a href="linest-get.html">set_covariate_val</a></td>
 <td>Auxillary functions for computing lsmeans, contrasts etc</td></tr>
-<tr><td style="width: 25%;"><a href="section_fun.html">set_default</a></td>
-<td>Section a function and set default values in function</td></tr>
+<tr><td style="width: 25%;"><a href="set_default.html">set_default</a></td>
+<td>Set default values in a functions arguments</td></tr>
 <tr><td style="width: 25%;"><a href="set_list_set_matrix.html">set_list2matrix</a></td>
 <td>Matrix representatation of list of vectors and vice versa</td></tr>
 <tr><td style="width: 25%;"><a href="set_list_set_matrix.html">set_list_set_matrix</a></td>
@@ -440,7 +450,9 @@
 <tr><td style="width: 25%;"><a href="linest-get.html">set_xlevels</a></td>
 <td>Auxillary functions for computing lsmeans, contrasts etc</td></tr>
 <tr><td style="width: 25%;"><a href="shoes.html">shoes</a></td>
-<td>shoes</td></tr>
+<td>Wear of shoes</td></tr>
+<tr><td style="width: 25%;"><a href="shoes.html">shoes_long</a></td>
+<td>Wear of shoes</td></tr>
 <tr><td style="width: 25%;"><a href="formula_ops.html">simplify_rhs</a></td>
 <td>Formula operations and coercion.</td></tr>
 <tr><td style="width: 25%;"><a href="formula_ops.html">simplify_rhs.character</a></td>
@@ -467,6 +479,8 @@
 <td>Finds subsets of a dataframe which is split by variables in a formula.</td></tr>
 <tr><td style="width: 25%;"><a href="by-subset.html">subset_by</a></td>
 <td>Finds subsets of a dataframe which is split by variables in a formula.</td></tr>
+<tr><td style="width: 25%;"><a href="pipe_arithmetic.html">subtract</a></td>
+<td>Pipe-friendly arithmetic helpers</td></tr>
 <tr><td style="width: 25%;"><a href="sub_seq.html">sub_seq</a></td>
 <td>Find sub-sequences of identical elements in a vector.</td></tr>
 <tr><td style="width: 25%;"><a href="esticon.html">summary.esticon_class</a></td>
@@ -512,6 +526,8 @@
 <td>Function to make groupwise transformations</td></tr>
 <tr><td style="width: 25%;"><a href="by-transform.html">transform_by</a></td>
 <td>Function to make groupwise transformations</td></tr>
+<tr><td style="width: 25%;"><a href="transform_forecast.html">transform_forecast</a></td>
+<td>Transform forecasts from model scale to data scale by simulation</td></tr>
 <tr><td style="width: 25%;"><a href="truncate0.html">truncate0</a></td>
 <td>Truncate values in a matrix / vector to zero if they are below a certain threshold.</td></tr>
 </table>

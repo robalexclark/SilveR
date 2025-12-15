@@ -11,7 +11,7 @@ fct_drop                Drop unused levels
 fct_expand              Add additional levels to a factor
 fct_inorder             Reorder factor levels by first appearance,
                         frequency, or numeric order
-fct_lump                Lump uncommon factor together levels into
+fct_lump                Lump uncommon factor levels together into
                         "other"
 fct_match               Test for presence of levels in a factor
 fct_na_value_to_level   Convert between 'NA' values and 'NA' levels

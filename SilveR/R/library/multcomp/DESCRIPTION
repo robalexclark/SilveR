@@ -1,7 +1,7 @@
 Package: multcomp
 Title: Simultaneous Inference in General Parametric Models
-Version: 1.4-28
-Date: 2025-01-29
+Version: 1.4-29
+Date: 2025-10-19
 Authors@R: c(person("Torsten", "Hothorn", role = c("aut", "cre"), 
                     email = "Torsten.Hothorn@R-project.org", comment = c(ORCID = "0000-0001-8301-0471")), 
         person("Frank", "Bretz", role = "aut"), 
@@ -27,8 +27,9 @@ URL: http://multcomp.R-forge.R-project.org,
 LazyData: yes
 License: GPL-2
 NeedsCompilation: no
-Packaged: 2025-01-29 14:42:08 UTC; hothorn
-Author: Torsten Hothorn [aut, cre] (<https://orcid.org/0000-0001-8301-0471>),
+Packaged: 2025-10-19 13:56:54 UTC; hothorn
+Author: Torsten Hothorn [aut, cre] (ORCID:
+    <https://orcid.org/0000-0001-8301-0471>),
   Frank Bretz [aut],
   Peter Westfall [aut],
   Richard M. Heiberger [ctb],
@@ -36,5 +37,5 @@ Author: Torsten Hothorn [aut, cre] (<https://orcid.org/0000-0001-8301-0471>),
   Susan Scheibe [ctb]
 Maintainer: Torsten Hothorn <Torsten.Hothorn@R-project.org>
 Repository: CRAN
-Date/Publication: 2025-01-29 15:50:01 UTC
-Built: R 4.5.1; ; 2025-08-04 01:49:30 UTC; windows
+Date/Publication: 2025-10-20 05:10:29 UTC
+Built: R 4.5.2; ; 2025-12-03 04:28:37 UTC; windows

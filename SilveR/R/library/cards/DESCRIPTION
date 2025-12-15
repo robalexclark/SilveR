@@ -1,11 +1,14 @@
 Package: cards
 Title: Analysis Results Data
-Version: 0.4.0
+Version: 0.7.1
 Authors@R: c(
     person("Daniel D.", "Sjoberg", , "danield.sjoberg@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-0862-2018")),
     person("Becca", "Krouse", , "becca.z.krouse@gsk.com", role = "aut"),
-    person("Emily", "de la Rua", , "emily.de_la_rua@contractors.roche.com", role = "aut"),
+    person("Emily", "de la Rua", , "emily.de_la_rua@contractors.roche.com", role = "aut",
+           comment = c(ORCID = "0009-0000-8738-5561")),
+    person("Malan", "Bosman", , "malanbos@gmail.com", role = "aut",
+           comment = c(ORCID = "0000-0002-3020-195X")),
     person("F. Hoffmann-La Roche AG", role = c("cph", "fnd")),
     person("GlaxoSmithKline Research & Development Limited", role = "cph")
   )
@@ -19,26 +22,30 @@ URL: https://github.com/insightsengineering/cards,
         https://insightsengineering.github.io/cards/
 BugReports: https://github.com/insightsengineering/cards/issues
 Depends: R (>= 4.1)
-Imports: cli (>= 3.6.1), dplyr (>= 1.1.2), glue (>= 1.6.2), rlang (>=
-        1.1.1), tidyr (>= 1.3.0), tidyselect (>= 1.2.0)
-Suggests: spelling (>= 2.2.0), testthat (>= 3.2.0), withr (>= 3.0.0)
-Config/Needs/check: hms
+Imports: cli (>= 3.6.5), dplyr (>= 1.1.4), glue (>= 1.8.0), lifecycle
+        (>= 1.0.4), rlang (>= 1.1.6), tidyr (>= 1.3.1), tidyselect (>=
+        1.2.1)
+Suggests: testthat (>= 3.2.3), withr (>= 3.0.0)
+Config/Needs/coverage: hms
 Config/Needs/website: rmarkdown, jsonlite, yaml, gtsummary, tfrmt,
+        cardx, gt, fontawesome, insightsengineering/crane,
         insightsengineering/nesttemplate
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Encoding: UTF-8
 Language: en-US
 LazyData: true
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 NeedsCompilation: no
-Packaged: 2024-11-27 04:52:57 UTC; sjobergd
-Author: Daniel D. Sjoberg [aut, cre] (<https://orcid.org/0000-0003-0862-2018>),
+Packaged: 2025-12-02 05:31:07 UTC; sjobergd
+Author: Daniel D. Sjoberg [aut, cre] (ORCID:
+    <https://orcid.org/0000-0003-0862-2018>),
   Becca Krouse [aut],
-  Emily de la Rua [aut],
+  Emily de la Rua [aut] (ORCID: <https://orcid.org/0009-0000-8738-5561>),
+  Malan Bosman [aut] (ORCID: <https://orcid.org/0000-0002-3020-195X>),
   F. Hoffmann-La Roche AG [cph, fnd],
   GlaxoSmithKline Research & Development Limited [cph]
 Maintainer: Daniel D. Sjoberg <danield.sjoberg@gmail.com>
 Repository: CRAN
-Date/Publication: 2024-11-27 06:50:02 UTC
-Built: R 4.3.3; ; 2024-12-16 04:03:52 UTC; windows
+Date/Publication: 2025-12-02 07:50:12 UTC
+Built: R 4.5.2; ; 2025-12-03 00:54:24 UTC; windows

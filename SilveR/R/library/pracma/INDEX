@@ -274,6 +274,7 @@ shooting                Shooting Method
 shubert                 Shubert-Piyavskii Method
 sigmoid                 Sigmoid Function
 simpadpt                Adaptive Simpson Quadrature
+simpson                 Simpson Integration
 simpson2d               Double Simpson Integration
 sind                    Trigonometric Functions in Degrees
 size                    Size of Matrix

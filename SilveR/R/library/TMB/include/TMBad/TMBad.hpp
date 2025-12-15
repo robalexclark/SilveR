@@ -507,7 +507,7 @@ struct ADFun {
 
     std::vector<bool> keep_var = get_keep_var(keep_x, keep_y);
 
-    graph G = this->glob.reverse_graph(keep_var);
+    graph G = this->glob.reverse_graph(keep_var, true);
 
     std::vector<size_t> which_keep_x = which(keep_x);
     std::vector<size_t> which_keep_y = which(keep_y);
@@ -553,15 +553,18 @@ struct ADFun {
 
   IndirectAccessor<Scalar> Jacobian(
       const segment_ref<ReverseArgs<Scalar>, x_read> &x,
-      const segment_ref<ReverseArgs<Scalar>, dy_read> &w) {
+      const segment_ref<ReverseArgs<Scalar>, dy_read> &w,
+      bool clear_all = false, bool deriv_all = false) {
     TMBAD_ASSERT(x.size() == Domain());
     TMBAD_ASSERT(w.size() == Range());
     Position start = DomainVecSet(x);
+    Position root = Position(0, 0, 0);
     glob.forward(start);
-    glob.clear_deriv();
+    glob.clear_deriv(clear_all ? root : tail_start);
     for (size_t j = 0; j < Range(); j++) glob.deriv_dep(j) = w[j];
-    glob.reverse();
-    return IndirectAccessor<Scalar>(glob.derivs, glob.inv_index);
+    glob.reverse(deriv_all ? root : tail_start);
+    Index tail_var = deriv_all ? root.ptr.second : tail_start.ptr.second;
+    return IndirectAccessor<Scalar>(glob.derivs, glob.inv_index, tail_var);
   }
   std::vector<ad> Jacobian(const std::vector<ad> &x_,
                            const std::vector<ad> &w_) {
@@ -613,7 +616,7 @@ struct ADFun {
     std::vector<bool> keep = get_keep_var(keep_x, keep_y);
     graph G;
     if (!range_weight && Range() > 1) {
-      G = this->glob.reverse_graph(keep);
+      G = this->glob.reverse_graph(keep, true);
     }
     keep = glob.var2op(keep);
     global::replay replay(this->glob, ans.glob);
@@ -705,10 +708,12 @@ struct ADFun {
   }
   /** \brief Turn this operation sequence into an atomic operator */
   ADFun atomic() {
-    global::Complete<AtomOp<standard_derivative_table<ADFun> > > F(*this);
     std::vector<Scalar> x = DomainVec();
-    return ADFun(F, x);
+    return ADFun(atomic_raw(), x);
   }
+  typedef global::Complete<AtomOp<standard_derivative_table<ADFun> > > AtomOp_t;
+  /** \brief Internal use only */
+  AtomOp_t atomic_raw() { return *this; }
   /** \brief Parallel split this operation sequence
       Split function `f:R^n->R` by its accumulation tree. Then parallelize
       and accumulate each parallel component. Return a list of functions
@@ -776,9 +781,6 @@ struct ADFun {
   Sparse<ADFun> SpJacFun(std::vector<bool> keep_x = std::vector<bool>(0),
                          std::vector<bool> keep_y = std::vector<bool>(0),
                          SpJacFun_config config = SpJacFun_config()) {
-    ADFun atomic_jac_row;
-    std::vector<Index> rowcounts;
-
     Sparse<ADFun> ans;
 
     ans.m = Range();
@@ -791,7 +793,10 @@ struct ADFun {
     size_t keep_x_count = std::count(keep_x.begin(), keep_x.end(), true);
     size_t keep_y_count = std::count(keep_y.begin(), keep_y.end(), true);
 
-    graph G = this->glob.reverse_graph(keep_var);
+    graph G = this->glob.reverse_graph(keep_var, true);
+
+    bool do_compress = config.compress;
+    compress_helper cprs(this, keep_x, keep_y);
 
     global::replay replay(this->glob, ans.glob);
     replay.start();
@@ -809,20 +814,6 @@ struct ADFun {
       glob.subgraph_seq.resize(0);
       glob.subgraph_seq.push_back(G.dep2op[k]);
       G.search(glob.subgraph_seq);
-
-      bool do_compress = false;
-      if (config.compress) {
-        if (rowcounts.size() == 0) rowcounts = G.rowcounts();
-
-        size_t cost1 = 0;
-        for (size_t i = 0; i < glob.subgraph_seq.size(); i++) {
-          cost1 += rowcounts[glob.subgraph_seq[i]];
-        }
-
-        size_t cost2 = Domain() + Range() + Domain();
-
-        if (cost2 < cost1) do_compress = true;
-      }
 
       if (true) {
         glob.clear_array_subgraph(keep_var);
@@ -852,30 +843,9 @@ struct ADFun {
         replay.reverse_sub();
 
       } else {
-        if (atomic_jac_row.Domain() == 0) {
-          atomic_jac_row = this->WgtJacFun(keep_x, keep_y);
-          atomic_jac_row.optimize();
+        cprs.initialize(replay);
 
-          atomic_jac_row.set_inv_positions();
-
-          atomic_jac_row = atomic_jac_row.atomic();
-
-          replay.clear_deriv_sub();
-
-          TMBAD_ASSERT(atomic_jac_row.Domain() ==
-                       this->Domain() + this->Range());
-          TMBAD_ASSERT(atomic_jac_row.Range() == keep_x_count);
-        }
-        std::vector<Replay> vec(atomic_jac_row.Domain(), Replay(0));
-        for (size_t i = 0; i < this->Domain(); i++) {
-          vec[i] = replay.value_inv(i);
-        }
-        vec[this->Domain() + k] = 1.;
-        std::vector<Replay> r = atomic_jac_row(vec);
-        size_t r_idx = 0;
-        for (size_t i = 0; i < this->Domain(); i++) {
-          if (keep_x[i]) replay.deriv_inv(i) = r[r_idx++];
-        }
+        cprs.replay_row(replay, k, col_idx);
       }
       for (size_t l = 0; l < col_idx.size(); l++) {
         replay.deriv_inv(col_idx[l]).Dependent();
@@ -897,6 +867,87 @@ struct ADFun {
     set_inner_outer(ans);
     return ans;
   }
+  struct compress_helper {
+    ADFun *adf;
+    std::vector<bool> &keep_x;
+    std::vector<bool> &keep_y;
+    Index K;
+
+    AtomOp_t atomic_jac_row;
+    std::vector<bool> keep_x_sub;
+    std::vector<bool> keep_y_sub;
+    std::vector<Replay> vec;
+    std::vector<Index> deriv_idx;
+    compress_helper(ADFun *adf, std::vector<bool> &keep_x,
+                    std::vector<bool> &keep_y)
+        : adf(adf), keep_x(keep_x), keep_y(keep_y), K(0) {}
+    void initialize(global::replay &replay) {
+      if (K == 0) {
+        replay.clear_deriv_sub();
+
+        vec = std::vector<Replay>(adf->Domain() + adf->Range(), Replay(0));
+        for (size_t i = 0; i < adf->Domain(); i++) {
+          vec[i] = replay.value_inv(i);
+        }
+      }
+    }
+    Index findNextIndex(size_t k, std::vector<Index> &col_idx) {
+      for (size_t i = 0; i < col_idx.size(); i++) {
+        Index j = col_idx[i];
+        TMBAD_ASSERT2((i == 0) || (j > col_idx[i - 1]),
+                      "col_idx must be sorted");
+        if (j == k + 1) k = j;
+      }
+      return k + 1;
+    }
+    void replay_row(global::replay &replay, size_t k,
+                    std::vector<Index> &col_idx) {
+      bool first_instance = (k == K);
+      if (k == K) {
+        K = findNextIndex(k, col_idx);
+        if (!keep_y[k]) return;
+
+        keep_y_sub = keep_y;
+        for (size_t i = 0; i < keep_y_sub.size(); i++) {
+          if ((i < k) || (K <= i)) keep_y_sub[i] = false;
+        }
+        ADFun jac_row = adf->WgtJacFun(keep_x, keep_y_sub);
+        deriv_idx = which<Index>(keep_x);
+
+        keep_x_sub = jac_row.activeDomain();
+        jac_row.glob.inv_index = subset(jac_row.glob.inv_index, keep_x_sub);
+
+        keep_y_sub = jac_row.activeRange();
+        jac_row.glob.dep_index = subset(jac_row.glob.dep_index, keep_y_sub);
+        deriv_idx = subset(deriv_idx, keep_y_sub);
+
+        jac_row.eliminate();
+
+        std::vector<bool> r(keep_x);
+        r.resize(keep_x_sub.size(), true);
+        r = subset(r, keep_x_sub);
+        std::vector<Index> wr = which<Index>(r);
+        jac_row.reorder(wr);
+
+        jac_row.set_inv_positions();
+
+        jac_row.set_tail(wr);
+
+        atomic_jac_row = jac_row.atomic_raw();
+      }
+      bool last_instance = (k == K - 1);
+      atomic_jac_row.Op.ctrl.clear_all = last_instance;
+      atomic_jac_row.Op.ctrl.deriv_all = first_instance;
+      vec[adf->Domain() + k] = 1.;
+      std::vector<Replay> vec_sub = subset(vec, keep_x_sub);
+      vec[adf->Domain() + k] = 0.;
+      std::vector<Replay> r = atomic_jac_row(vec_sub);
+      size_t I = atomic_jac_row.output_size();
+      for (size_t i = 0; i < I; i++) {
+        replay.deriv_inv(deriv_idx[i]) = r[i];
+      }
+    }
+  };
   /** \brief Integrate as many univariate variables as possible
       \note Use `activeDomain()` to identify which variables have been
       integrated (integrated variables are no longer active).
@@ -1174,7 +1225,7 @@ struct ADFun_packed {
   ADFun_packed() {}
   ad_segment operator()(const std::vector<ad_segment> &x) {
     std::vector<ad_segment> xp(x.size());
-    for (size_t i = 0; i < xp.size(); i++) xp[i] = pack(x[i]);
+    for (size_t i = 0; i < xp.size(); i++) xp[i] = pack(x[i], true);
     std::vector<ad_aug> yp = Fp(concat(xp));
     return unpack(yp, 0);
   }
@@ -1196,7 +1247,7 @@ ADFun_packed<> ADFun_retaping(Functor &F, const std::vector<ad_segment> &x,
       DTab;
   PackWrap<Functor> Fp(F);
   std::vector<ad_segment> xp(x.size());
-  for (size_t i = 0; i < xp.size(); i++) xp[i] = pack(x[i]);
+  for (size_t i = 0; i < xp.size(); i++) xp[i] = pack(x[i], true);
   std::vector<ad_aug> xp_ = concat(xp);
   PackWrap<Test> testp(test);
   global::Complete<AtomOp<DTab> > Op(Fp, xp_, testp);

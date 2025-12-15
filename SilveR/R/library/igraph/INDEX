@@ -11,6 +11,13 @@ add_layout_             Add layout to graph
 add_vertices            Add vertices to a graph
 adjacent_vertices       Adjacent vertices of multiple vertices in a
                         graph
+align_layout            Align a vertex layout This function centers a
+                        vertex layout on the coordinate system origin
+                        and rotates the layout to achieve a visually
+                        pleasing alignment with the coordinate axes.
+                        Doing this is particularly useful with
+                        force-directed layouts such as
+                        'layout_with_fr()'.
 all_simple_paths        List all simple paths from one source
 alpha_centrality        Find Bonacich alpha centrality scores of
                         network positions
@@ -41,6 +48,7 @@ betweenness             Vertex and edge betweenness centrality
 bfs                     Breadth-first search
 biconnected_components
                         Biconnected components
+bipartite_gnm           Bipartite random graphs
 bipartite_mapping       Decide whether a graph is bipartite
 bipartite_projection    Project a bipartite graph
 c.igraph.es             Concatenate edge sequences
@@ -151,6 +159,8 @@ embed_laplacian_matrix
                         Spectral Embedding of the Laplacian of a Graph
 ends                    Incident vertices of some graph edges
 feedback_arc_set        Finding a feedback arc set in a graph
+feedback_vertex_set     Finding a feedback vertex set in a graph
+find_cycle              Finds a cycle in a graph, if there is one
 fit_hrg                 Fit a hierarchical random graph model
 fit_power_law           Fitting a power-law distribution function to
                         discrete data
@@ -211,7 +221,6 @@ igraph-vs-attributes    Query or set attributes of the vertices in a
                         vertex sequence
 igraph-vs-indexing      Indexing vertex sequences
 igraph-vs-indexing2     Select vertices and show their metadata
-igraph_demo             Run igraph demos, step by step
 igraph_options          Parameters for the igraph package
 incident                Incident edges of a vertex in a graph
 incident_edges          Incident edges of multiple vertices in a graph
@@ -227,6 +236,7 @@ is_biconnected          Check biconnectedness
 is_bipartite            Checks whether the graph has a vertex attribute
                         called 'type'.
 is_chordal              Chordality of a graph
+is_complete             Is this a complete graph?
 is_dag                  Directed acyclic graphs
 is_degseq               Check if a degree sequence is valid for a
                         multi-graph
@@ -407,9 +417,11 @@ sequential_pal          Sequential palette
 set_edge_attr           Set edge attributes
 set_graph_attr          Set a graph attribute
 set_vertex_attr         Set vertex attributes
+set_vertex_attrs        Set multiple vertex attributes
 shapes                  Various vertex shapes when plotting igraph
                         graphs
 similarity              Similarity measures of two vertices
+simple_cycles           Finds all simple cycles in a graph.
 simplified              Constructor modifier to drop multiple and loop
                         edges
 simplify                Simple graphs

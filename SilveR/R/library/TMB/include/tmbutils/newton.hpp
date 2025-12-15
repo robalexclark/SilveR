@@ -1143,7 +1143,7 @@ struct LogDetOperator : TMBad::global::DynamicOperator< -1, -1> {
     size_t n = input_size();
     // Get out if factorization went wrong
     if (llt->info() != 0) {
-      for (size_t i=0; i<n; i++) args.dx(i) = R_NaN;
+      for (size_t i=0; i<n; i++) args.dx(i) += R_NaN;
       return;
     }
     std::vector<Scalar> x = args.x_segment(0, n);
@@ -1194,6 +1194,8 @@ Type log_determinant(const Eigen::SparseMatrix<Type> &H,
 }
 template<class Type>
 Type log_determinant(const Eigen::SparseMatrix<Type> &H) {
+  if (!config.tmbad.atomic_sparse_log_determinant)
+    return log_determinant_simple(H);
   const Type* vptr = H.valuePtr();
   size_t n = H.nonZeros();
   std::vector<Type> x(vptr, vptr + n);

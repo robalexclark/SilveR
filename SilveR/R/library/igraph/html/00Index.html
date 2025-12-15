@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head><title>R: Network Analysis and Visualization</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-<link rel="stylesheet" type="text/css" href="R.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<link rel="stylesheet" type="text/css" href="R.css">
 </head><body><div class="container">
 <h1> Network Analysis and Visualization
-<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]" />
+<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]">
 </h1>
-<hr/>
+<hr>
 <div style="text-align: center;">
-<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
-<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
-</div><h2>Documentation for package &lsquo;igraph&rsquo; version 2.1.4</h2>
+<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]"></a>
+<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]"></a>
+</div><h2>Documentation for package &lsquo;igraph&rsquo; version 2.2.1</h2>
 
 <ul><li><a href="../DESCRIPTION" type="text/plain; charset=utf-8">DESCRIPTION file</a>.</li>
 <li><a href="../doc/index.html">User guides, package vignettes and other documentation.</a></li>
-<li><a href="../demo">Code demos</a>.  Use <a href="../../utils/help/demo">demo()</a> to run them.</li>
 <li><a href="../NEWS.md">Package NEWS</a>.</li>
 </ul>
 
@@ -67,6 +66,8 @@
 <td>Adjacent vertices of multiple vertices in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="communities.html">algorithm</a></td>
 <td>Functions to deal with the result of network community detection</td></tr>
+<tr><td style="width: 25%;"><a href="align_layout.html">align_layout</a></td>
+<td>Align a vertex layout This function centers a vertex layout on the coordinate system origin and rotates the layout to achieve a visually pleasing alignment with the coordinate axes. Doing this is particularly useful with force-directed layouts such as 'layout_with_fr()'.</td></tr>
 <tr><td style="width: 25%;"><a href="distances.html">all_shortest_paths</a></td>
 <td>Shortest (directed or undirected) paths between vertices</td></tr>
 <tr><td style="width: 25%;"><a href="all_simple_paths.html">all_simple_paths</a></td>
@@ -169,6 +170,10 @@
 <tr><td style="width: 25%;"><a href="biconnected_components.html">biconnected_components</a></td>
 <td>Biconnected components</td></tr>
 <tr><td style="width: 25%;"><a href="sample_bipartite.html">bipartite</a></td>
+<td>Bipartite random graphs</td></tr>
+<tr><td style="width: 25%;"><a href="sample_bipartite_gnm.html">bipartite_gnm</a></td>
+<td>Bipartite random graphs</td></tr>
+<tr><td style="width: 25%;"><a href="sample_bipartite_gnm.html">bipartite_gnp</a></td>
 <td>Bipartite random graphs</td></tr>
 <tr><td style="width: 25%;"><a href="make_bipartite_graph.html">bipartite_graph</a></td>
 <td>Create a bipartite graph</td></tr>
@@ -458,6 +463,10 @@
 <td>Diameter of a graph</td></tr>
 <tr><td style="width: 25%;"><a href="feedback_arc_set.html">feedback_arc_set</a></td>
 <td>Finding a feedback arc set in a graph</td></tr>
+<tr><td style="width: 25%;"><a href="feedback_vertex_set.html">feedback_vertex_set</a></td>
+<td>Finding a feedback vertex set in a graph</td></tr>
+<tr><td style="width: 25%;"><a href="find_cycle.html">find_cycle</a></td>
+<td>Finds a cycle in a graph, if there is one</td></tr>
 <tr><td style="width: 25%;"><a href="fit_hrg.html">fit_hrg</a></td>
 <td>Fit a hierarchical random graph model</td></tr>
 <tr><td style="width: 25%;"><a href="fit_power_law.html">fit_power_law</a></td>
@@ -659,8 +668,6 @@
 <td>Drawing graphs</td></tr>
 <tr><td style="width: 25%;"><a href="shapes.html">igraph.vertex.shapes</a></td>
 <td>Various vertex shapes when plotting igraph graphs</td></tr>
-<tr><td style="width: 25%;"><a href="igraph_demo.html">igraph_demo</a></td>
-<td>Run igraph demos, step by step</td></tr>
 <tr><td style="width: 25%;"><a href="igraph_options.html">igraph_opt</a></td>
 <td>Parameters for the igraph package</td></tr>
 <tr><td style="width: 25%;"><a href="igraph_options.html">igraph_options</a></td>
@@ -699,6 +706,10 @@
 <td>Checks whether the graph has a vertex attribute called 'type'.</td></tr>
 <tr><td style="width: 25%;"><a href="is_chordal.html">is_chordal</a></td>
 <td>Chordality of a graph</td></tr>
+<tr><td style="width: 25%;"><a href="cliques.html">is_clique</a></td>
+<td>Functions to find cliques, i.e. complete subgraphs in a graph</td></tr>
+<tr><td style="width: 25%;"><a href="is_complete.html">is_complete</a></td>
+<td>Is this a complete graph?</td></tr>
 <tr><td style="width: 25%;"><a href="components.html">is_connected</a></td>
 <td>Connected components of a graph</td></tr>
 <tr><td style="width: 25%;"><a href="is_dag.html">is_dag</a></td>
@@ -717,6 +728,8 @@
 <td>Is this object an igraph graph?</td></tr>
 <tr><td style="width: 25%;"><a href="isomorphic.html">is_isomorphic_to</a></td>
 <td>Decide if two graphs are isomorphic</td></tr>
+<tr><td style="width: 25%;"><a href="ivs.html">is_ivs</a></td>
+<td>Independent vertex sets</td></tr>
 <tr><td style="width: 25%;"><a href="matching.html">is_matching</a></td>
 <td>Matching</td></tr>
 <tr><td style="width: 25%;"><a href="matching.html">is_max_matching</a></td>
@@ -1068,6 +1081,10 @@
 <td>Trait-based random generation</td></tr>
 <tr><td style="width: 25%;"><a href="sample_bipartite.html">sample_bipartite</a></td>
 <td>Bipartite random graphs</td></tr>
+<tr><td style="width: 25%;"><a href="sample_bipartite_gnm.html">sample_bipartite_gnm</a></td>
+<td>Bipartite random graphs</td></tr>
+<tr><td style="width: 25%;"><a href="sample_bipartite_gnm.html">sample_bipartite_gnp</a></td>
+<td>Bipartite random graphs</td></tr>
 <tr><td style="width: 25%;"><a href="sample_chung_lu.html">sample_chung_lu</a></td>
 <td>Random graph with given expected degrees</td></tr>
 <tr><td style="width: 25%;"><a href="sample_last_cit.html">sample_cit_cit_types</a></td>
@@ -1148,6 +1165,8 @@
 <td>Set a graph attribute</td></tr>
 <tr><td style="width: 25%;"><a href="set_vertex_attr.html">set_vertex_attr</a></td>
 <td>Set vertex attributes</td></tr>
+<tr><td style="width: 25%;"><a href="set_vertex_attrs.html">set_vertex_attrs</a></td>
+<td>Set multiple vertex attributes</td></tr>
 <tr><td style="width: 25%;"><a href="shapes.html">shapes</a></td>
 <td>Various vertex shapes when plotting igraph graphs</td></tr>
 <tr><td style="width: 25%;"><a href="shapes.html">shape_noclip</a></td>
@@ -1160,6 +1179,8 @@
 <td>Functions to deal with the result of network community detection</td></tr>
 <tr><td style="width: 25%;"><a href="similarity.html">similarity</a></td>
 <td>Similarity measures of two vertices</td></tr>
+<tr><td style="width: 25%;"><a href="simple_cycles.html">simple_cycles</a></td>
+<td>Finds all simple cycles in a graph.</td></tr>
 <tr><td style="width: 25%;"><a href="simplified.html">simplified</a></td>
 <td>Constructor modifier to drop multiple and loop edges</td></tr>
 <tr><td style="width: 25%;"><a href="simplify.html">simplify</a></td>

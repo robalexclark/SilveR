@@ -90,6 +90,7 @@ mapping_swap_x_y        Swap x and y mapping
 model_response_variables
                         Model term names
 nasa                    Data from the Data Expo JSM 2006.
+nba_ppg_2008            NBA Player Statistics for 2008-2009 Season
 pigs                    United Kingdom Pig Production
 print.ggmatrix          Print 'ggmatrix' object
 print_if_interactive    Print if not CRAN

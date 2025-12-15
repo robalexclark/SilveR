@@ -23,6 +23,7 @@ bam.update              Update a strictly additive bam model for new
                         data.
 bandchol                Choleski decomposition of a band diagonal
                         matrix
+bcg                     Censored Box-Cox Gaussian family
 betar                   GAM beta regression family
 blas.thread.test        BLAS thread safety
 bug.reports.mgcv        Reporting mgcv bugs.
@@ -42,6 +43,8 @@ cpois                   GAM censored Poisson family
 dDeta                   Obtaining derivative w.r.t. linear predictor
 dpnorm                  Stable evaluation of difference between normal
                         c.d.f.s
+dppois                  Stable evaluation of difference between Poisson
+                        c.d.f.s
 exclude.too.far         Exclude prediction grid points too far from
                         data
 extract.lme.cov         Extract the data covariance matrix from an lme
@@ -55,14 +58,13 @@ fixDependence           Detect linear dependencies of one matrix on
 formXtViX               Form component of GAMM covariance matrix
 formula.gam             GAM formula
 fs.test                 FELSPLINE test function
-full.score              GCV/UBRE score for use within nlm
 gam                     Generalized additive models with integrated
                         smoothness estimation
 gam.check               Some diagnostics for a fitted gam model
 gam.control             Setting GAM fitting defaults
 gam.convergence         GAM convergence and performance issues
 gam.fit                 GAM P-IRLS estimation with GCV/UBRE smoothness
-                        estimation
+                        estimation (deprecated)
 gam.fit3                P-IRLS GAM estimation with GCV, UBRE/AIC or
                         RE/ML derivative calculation
 gam.fit5.post.proc      Post-processing output of gam.fit5
@@ -168,6 +170,7 @@ rig                     Generate inverse Gaussian random deviates
 rmvn                    Generate from or evaluate multivariate normal
                         or t densities.
 s                       Defining smooths in GAM formulae
+scasm                   Shape constrained additive smooth models
 scat                    GAM scaled t family for heavy tailed data
 sdiag                   Extract or modify diagonals of a matrix
 shash                   Sinh-arcsinh location scale and shape model

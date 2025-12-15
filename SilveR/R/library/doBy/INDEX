@@ -1,9 +1,10 @@
 .rhsf2list              Convert right hand sided formula to a list
-NIRmilk                 NIRmilk
 add_int                 Add interaction columns to data frame
 add_pred                Add predicted values of different types to
                         dataframe
 add_resid               Add residuals of different types to dataframe
+align_coefs             Align and combine fixed-effect coefficients
+                        from multiple models
 beets                   beets data
 binomial_to_bernoulli_data
                         Convert binomial data to bernoulli data
@@ -50,7 +51,7 @@ get_formulas            Get formulas from model_stability_glm_class
                         object
 haldCement              Heat development in cement under hardening.
 head_matrix             head and tail for matrices
-income                  income data
+income                  Income data, years of educations and ethnicity
 interaction-plot        Two-way interaction plot
 is_estimable            Determines if contrasts are estimable.
 linest                  Compute linear estimates
@@ -63,17 +64,16 @@ math_teachers           Height of math teachers
 mb_summary              Fast summary of microbenchmark object
 milkman                 Milk yield data for manually milked cows.
 model_stability_glm     Model stability for glm objects
-nir_milk                nir_milk
+nir_milk                Near infra red light (NIR) measurements in milk
 parseGroupFormula       Extract components from a formula with
                         "conditioning bar"
 pick_elements           Extract (pick) elements without using brackets
+pipe_arithmetic         Pipe-friendly arithmetic helpers
 plot_lm                 Plot linear model object
 potatoes                Weight and size of 20 potatoes
-pow                     Power function
 prostate                Prostate Tumor Gene Expression Dataset
 rbind_list              Bind list of data frames and add list names as
                         a column
-reciprocal              Reciprocal function
 recodeVar               Recode values of a vector
 recover_pca_data        Recover data from principal component analysis
 renameCol               Rename columns in a matrix or a dataframe.
@@ -84,9 +84,10 @@ scaleBy                 Group-wise scaling of data
 scale_df                Scale numeric variables in a data frame
 section_fun             Section a function and set default values in
                         function
+set_default             Set default values in a functions arguments
 set_list_set_matrix     Matrix representatation of list of vectors and
                         vice versa
-shoes                   shoes
+shoes                   Wear of shoes
 split_byrow_bycol       Split matrix or dataframe into list
 sub_seq                 Find sub-sequences of identical elements in a
                         vector.
@@ -94,6 +95,8 @@ taylor                  Taylor expansion (one dimension)
 tidy-esticon            Tidy an esticon object
 tidy-linest             Tidy a linest object
 time_since_event        Calculate "time since event" in a vector
+transform_forecast      Transform forecasts from model scale to data
+                        scale by simulation
 truncate0               Truncate values in a matrix / vector to zero if
                         they are below a certain threshold.
 v                       Shorthand for vparse()

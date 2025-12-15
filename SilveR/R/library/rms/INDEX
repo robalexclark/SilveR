@@ -18,6 +18,8 @@ Surv                    Exported Functions That Were Imported From
                         Other Packages
 Xcontrast               Xcontrast
 [.Ocens                 Ocens
+adapt_orm               Adaptive orm Fit For a Single Continuous
+                        Predictor
 anova.rms               Analysis of Variance (Wald, LR, and F
                         Statistics)
 as.data.frame.Ocens     Convert 'Ocens' Object to Data Frame to
