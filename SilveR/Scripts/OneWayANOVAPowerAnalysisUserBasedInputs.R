@@ -114,7 +114,7 @@ if(AnalysisType=="DatasetValues") {
 	x<-summary(tabs)
 	betweenvar <- var(x$emmean)
 	ngps <- dim(x)[1]
-}
+	}
 
 #Working out the graphical parameters
 if(plotSettingsType=="poweraxis") {
@@ -265,18 +265,18 @@ if (as.numeric(Res2) > 99.99) {
 	Res2x <- Res2
 }
 Res3<-format(round(100*as.numeric(power.anova.test(groups=ngps, between.var=betweenvar , within.var=withinvar, n=sampleSizeTo2, sig.level=sig)[6]) , 2), nsmall = 2, scientific = FALSE)
-print(Res3)
+
 if (as.numeric(Res3) > 99.99) {
 	Res3x <- ">99.99"
 } else {
 	Res3x <- Res3
 }
 
-text1<-paste("Assuming the significance level is set at ", 100*sig , "%, the number of groups is ", ngps, ", with a sample size of ",  sampleSizeFrom2, " per group, if the effect size is ", Effect , ", then the statistical power is ", Res1x, "%. " , sep="")
+text1<-paste("Assuming the significance level is set at ", 100*sig , "%, the number of groups is ", ngps, ", with a sample size of ",  sampleSizeFrom2, " per group, if the between group variance is ", Effect , ", then the statistical power is ", Res1x, "%. " , sep="")
 HTML(text1, align="left")
-text2<-paste("Assuming the significance level is set at ", 100*sig , "%, the number of groups is ", ngps, ", with a sample size of ",  midsize, " per group, if the effect size is ", Effect , ", then the statistical power is ", Res2x, "%. " , sep="")
+text2<-paste("Assuming the significance level is set at ", 100*sig , "%, the number of groups is ", ngps, ", with a sample size of ",  midsize, " per group, if the between group variance is ", Effect , ", then the statistical power is ", Res2x, "%. " , sep="")
 HTML(text2, align="left")
-text3<-paste("Assuming the significance level is set at ", 100*sig , "%, the number of groups is ", ngps, ", with a sample size of ",  sampleSizeTo2, " per group, if the effect size is ", Effect , ", then the statistical power is ", Res3x, "%. " , sep="")
+text3<-paste("Assuming the significance level is set at ", 100*sig , "%, the number of groups is ", ngps, ", with a sample size of ",  sampleSizeTo2, " per group, if the between group variance is ", Effect , ", then the statistical power is ", Res3x, "%. " , sep="")
 HTML(text3, align="left")
 
 HTML.title("Definitions", HR=2, align="left")
