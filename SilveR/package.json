@@ -1,6 +1,6 @@
 ﻿{
    "name": "InVivoStat",
-   "version": "5.0.0",
+   "version": "5.1.0",
    "description": "Cross-platform statisical analysis system",
    "repository": {
       "url": "https://github.com/robalexclark/SilveR"
