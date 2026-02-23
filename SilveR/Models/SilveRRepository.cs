@@ -58,9 +58,9 @@ namespace SilveR.Models
 
         public async Task DeleteDataset(int datasetID)
         {
-            Dataset dataset = new Dataset();
-            dataset.DatasetID = datasetID;
-            context.Entry(dataset).State = EntityState.Deleted;
+            Dataset dataset = context.Datasets.Local.FirstOrDefault(d => d.DatasetID == datasetID)
+                ?? new Dataset { DatasetID = datasetID };
+            context.Datasets.Remove(dataset);
 
             //because not cascading, doing manual update on any analyses referencing this dataset
             var analyses = context.Analyses.Where(a => a.DatasetID == datasetID);
@@ -76,9 +76,9 @@ namespace SilveR.Models
         {
             foreach (int datasetID in datasetIDs)
             {
-                Dataset dataset = new Dataset();
-                dataset.DatasetID = datasetID;
-                context.Entry(dataset).State = EntityState.Deleted;
+                Dataset dataset = context.Datasets.Local.FirstOrDefault(d => d.DatasetID == datasetID)
+                    ?? new Dataset { DatasetID = datasetID };
+                context.Datasets.Remove(dataset);
 
                 //because not cascading, doing manual update on any analyses referencing this dataset
                 var analyses = context.Analyses.Where(a => a.DatasetID == datasetID);
@@ -140,9 +140,9 @@ namespace SilveR.Models
 
         public async Task DeleteAnalysis(int analysisID)
         {
-            Analysis analysis = new Analysis();
-            analysis.AnalysisID = analysisID;
-            context.Entry(analysis).State = EntityState.Deleted;
+            Analysis analysis = context.Analyses.Local.FirstOrDefault(a => a.AnalysisID == analysisID)
+                ?? new Analysis { AnalysisID = analysisID };
+            context.Analyses.Remove(analysis);
 
             await context.SaveChangesAsync();
         }
@@ -151,9 +151,9 @@ namespace SilveR.Models
         {
             foreach (int analysisID in analysisIDs)
             {
-                Analysis analysis = new Analysis();
-                analysis.AnalysisID = analysisID;
-                context.Entry(analysis).State = EntityState.Deleted;
+                Analysis analysis = context.Analyses.Local.FirstOrDefault(a => a.AnalysisID == analysisID)
+                    ?? new Analysis { AnalysisID = analysisID };
+                context.Analyses.Remove(analysis);
             }
 
             await context.SaveChangesAsync();

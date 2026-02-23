@@ -69,23 +69,30 @@ namespace SilveR.Helpers
 
         public string LoadStringArgument(string targetName)
         {
-            Argument arg = arguments.Single(x => x.Name == targetName);
+            Argument arg = arguments.SingleOrDefault(x => x.Name == targetName);
 
-            return arg.Value;
+            return arg?.Value;
         }
 
         public bool LoadBooleanArgument(string targetName)
         {
-            Argument arg = arguments.Single(x => x.Name == targetName);
+            Argument arg = arguments.SingleOrDefault(x => x.Name == targetName);
 
-            return Boolean.Parse(arg.Value);
+            if (arg?.Value != null)
+            {
+                return Boolean.Parse(arg.Value);
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public List<string> LoadIEnumerableArgument(string targetName)
         {
-            Argument arg = arguments.Single(x => x.Name == targetName);
+            Argument arg = arguments.SingleOrDefault(x => x.Name == targetName);
 
-            if (arg.Value != null)
+            if (arg?.Value != null)
             {
                 return arg.Value.Split(',').ToList();
             }
@@ -97,21 +104,36 @@ namespace SilveR.Helpers
 
         public int LoadIntArgument(string targetName)
         {
-            Argument arg = arguments.Single(x => x.Name == targetName);
-            return int.Parse(arg.Value);
+            Argument arg = arguments.SingleOrDefault(x => x.Name == targetName);
+
+            if (arg?.Value != null)
+            {
+                return int.Parse(arg.Value);
+            }
+            else
+            {
+                return 0;
+            }
         }
 
         public decimal LoadDecimalArgument(string targetName)
         {
-            Argument arg = arguments.Single(x => x.Name == targetName);
-            return Decimal.Parse(arg.Value);
+            Argument arg = arguments.SingleOrDefault(x => x.Name == targetName);
+            if (arg?.Value != null)
+            {
+                return Decimal.Parse(arg.Value);
+            }
+            else
+            {
+                return 0.0m;
+            }
         }
 
         public Nullable<decimal> LoadNullableDecimalArgument(string targetName)
         {
-            Argument arg = arguments.Single(x => x.Name == targetName);
+            Argument arg = arguments.SingleOrDefault(x => x.Name == targetName);
 
-            if (arg.Value != null)
+            if (arg?.Value != null)
             {
                 return Decimal.Parse(arg.Value);
             }
@@ -123,9 +145,9 @@ namespace SilveR.Helpers
 
         public Nullable<int> LoadNullableIntArgument(string targetName)
         {
-            Argument arg = arguments.Single(x => x.Name == targetName);
+            Argument arg = arguments.SingleOrDefault(x => x.Name == targetName);
 
-            if (arg.Value != null)
+            if (arg?.Value != null)
             {
                 return int.Parse(arg.Value);
             }

@@ -15,24 +15,25 @@ statdata <- read.csv(Args[3], header=TRUE, sep=",")
 DoseResponseType <- tolower(Args[4])
 ResponseVar <- Args[5]
 responseTransform <- tolower(Args[6])
-DoseVar <- Args[7]
-Offsetz <- Args[8]
-DoseTransform <- tolower(Args[9])
-QCResponse <- Args[10]
-QCDose <- Args[11]
-Samples <- Args[12]
-MinCoeff <- Args[13]
-MaxCoeff <- Args[14]
-SlopeCoeff <- Args[15]
-ECIDCoeff <- Args[16]
-MinStartValue <- Args[17]
-MaxStartValue <- Args[18]
-SlopeStartValue <- Args[19]
-ECIDStartValue <- Args[20]
-Equation <- Args[21]
-StartValues <- Args[22]
-EquationResponse <- Args[23]
-EquationDose <- Args[24]
+Weight <- Args[7] # Parsed for future weighting options (currently unused)
+DoseVar <- Args[8]
+Offsetz <- Args[9]
+DoseTransform <- tolower(Args[10])
+QCResponse <- Args[11]
+QCDose <- Args[12]
+Samples <- Args[13]
+MinCoeff <- Args[14]
+MaxCoeff <- Args[15]
+SlopeCoeff <- Args[16]
+ECIDCoeff <- Args[17]
+MinStartValue <- Args[18]
+MaxStartValue <- Args[19]
+SlopeStartValue <- Args[20]
+ECIDStartValue <- Args[21]
+Equation <- Args[22]
+StartValues <- Args[23]
+EquationResponse <- Args[24]
+EquationDose <- Args[25]
 
 #source(paste(getwd(),"/Common_Functions.R", sep=""))
 
@@ -429,6 +430,18 @@ if (DoseResponseType == "fourparameter") {
 		ed50p<-mean(temp[-1], na.rm=TRUE)
 	}
 
+	#Setting up weights vector
+	weight <- "InverseSq"
+	if (weight == "None") {
+		weights_vector <- rep(1, times = nrow(statdata))
+	}
+	if (weight == "Inverse") {
+		 weights_vector <- 1 / statdata$responsezzzz
+	}
+	if (weight == "InverseSq") {
+		 weights_vector <- 1 / statdata$responsezzzz^2
+	}
+
 #===================================================================================================================
 #Titles and description
 #===================================================================================================================
@@ -453,36 +466,36 @@ if (DoseResponseType == "fourparameter") {
 #===================================================================================================================
 #Fitting the model
 #===================================================================================================================
-	if        (MinCoeff == "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff == "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~D         + (A        -D        )/(1+10^((C         -logconczzzz)*B          )), start=list(A=maxp,B=slopep,C= ed50p,D=minp), data=statdata) 
-	} else if (MinCoeff == "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff == "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~D         + (A        -D        )/(1+exp((C         -logconczzzz)*B          )), start=list(A=maxp,B=slopep,C= ed50p,D=minp), data=statdata) 
-	} else if (MinCoeff == "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff == "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~D         + (MaxCoeffp-D        )/(1+10^((C         -logconczzzz)*B          )), start=list(B=slopep,C= ed50p,D=minp), data=statdata) 
-	} else if (MinCoeff == "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff == "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~D         + (MaxCoeffp-D        )/(1+exp((C         -logconczzzz)*B          )), start=list(B=slopep,C= ed50p,D=minp), data=statdata) 
-	} else if (MinCoeff == "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff == "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~D         + (A        -D        )/(1+10^((C         -logconczzzz)*SlopeCoeffp)), start=list(A=maxp,C= ed50p,D=minp), data=statdata) 
-	} else if (MinCoeff == "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff == "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~D         + (A        -D        )/(1+exp((C         -logconczzzz)*SlopeCoeffp)), start=list(A=maxp,C= ed50p,D=minp), data=statdata) 
-	} else if (MinCoeff == "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff != "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~D         + (A        -D        )/(1+10^((ECIDCoeffp-logconczzzz)*B          )), start=list(A=maxp,B=slopep,D=minp), data=statdata) 
-	} else if (MinCoeff == "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff != "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~D         + (A        -D        )/(1+exp((ECIDCoeffp-logconczzzz)*B          )), start=list(A=maxp,B=slopep,D=minp), data=statdata) 
-	} else if (MinCoeff != "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff == "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (A        -MinCoeffp)/(1+10^((C         -logconczzzz)*B          )), start=list(A=maxp,B=slopep,C= ed50p), data=statdata) 
-	} else if (MinCoeff != "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff == "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (A        -MinCoeffp)/(1+exp((C         -logconczzzz)*B          )), start=list(A=maxp,B=slopep,C= ed50p), data=statdata) 
-	} else if (MinCoeff == "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff == "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~D         + (MaxCoeffp-D        )/(1+10^((C         -logconczzzz)*SlopeCoeffp)), start=list(C= ed50p,D=minp), data=statdata) 
-	} else if (MinCoeff == "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff == "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~D         + (MaxCoeffp-D        )/(1+exp((C         -logconczzzz)*SlopeCoeffp)), start=list(C= ed50p,D=minp), data=statdata) 
-	} else if (MinCoeff == "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff != "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~D         + (MaxCoeffp-D        )/(1+10^((ECIDCoeffp-logconczzzz)*B          )), start=list(B=slopep,D=minp), data=statdata) 
-	} else if (MinCoeff == "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff != "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~D         + (MaxCoeffp-D        )/(1+exp((ECIDCoeffp-logconczzzz)*B          )), start=list(B=slopep,D=minp), data=statdata) 
-	} else if (MinCoeff != "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff == "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (MaxCoeffp-MinCoeffp)/(1+10^((C         -logconczzzz)*B          )), start=list(B=slopep,C= ed50p), data=statdata)
-	} else if (MinCoeff != "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff == "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (MaxCoeffp-MinCoeffp)/(1+exp((C         -logconczzzz)*B          )), start=list(B=slopep,C= ed50p), data=statdata) 
-	} else if (MinCoeff == "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff != "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~D         + (A        -D        )/(1+10^((ECIDCoeffp-logconczzzz)*SlopeCoeffp)), start=list(A=maxp,D=minp), data=statdata) 
-	} else if (MinCoeff == "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff != "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~D         + (A        -D        )/(1+exp((ECIDCoeffp-logconczzzz)*SlopeCoeffp)), start=list(A=maxp,D=minp), data=statdata) 
-	} else if (MinCoeff != "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff == "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (A        -MinCoeffp)/(1+10^((C         -logconczzzz)*SlopeCoeffp)), start=list(A=maxp,C= ed50p), data=statdata) 
-	} else if (MinCoeff != "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff == "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (A        -MinCoeffp)/(1+exp((C         -logconczzzz)*SlopeCoeffp)), start=list(A=maxp,C= ed50p), data=statdata) 
-	} else if (MinCoeff != "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff != "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (A        -MinCoeffp)/(1+10^((ECIDCoeffp-logconczzzz)*B          )), start=list(A=maxp,B=slopep), data=statdata) 
-	} else if (MinCoeff != "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff != "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (A        -MinCoeffp)/(1+exp((ECIDCoeffp-logconczzzz)*B          )), start=list(A=maxp,B=slopep), data=statdata) 
-	} else if (MinCoeff == "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff != "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~D         + (MaxCoeffp-D        )/(1+10^((ECIDCoeffp-logconczzzz)*SlopeCoeffp)), start=list(D=minp), data=statdata) 
-	} else if (MinCoeff == "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff != "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~D         + (MaxCoeffp-D        )/(1+exp((ECIDCoeffp-logconczzzz)*SlopeCoeffp)), start=list(D=minp), data=statdata) 
-	} else if (MinCoeff != "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff == "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (MaxCoeffp-MinCoeffp)/(1+10^((C         -logconczzzz)*SlopeCoeffp)), start=list(C= ed50p), data=statdata) 
-	} else if (MinCoeff != "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff == "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (MaxCoeffp-MinCoeffp)/(1+exp((C         -logconczzzz)*SlopeCoeffp)), start=list(C= ed50p), data=statdata) 
-	} else if (MinCoeff != "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff != "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (MaxCoeffp-MinCoeffp)/(1+10^((ECIDCoeffp-logconczzzz)*B          )), start=list(B=slopep), data=statdata) 
-	} else if (MinCoeff != "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff != "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (MaxCoeffp-MinCoeffp)/(1+exp((ECIDCoeffp-logconczzzz)*B          )), start=list(B=slopep), data=statdata) 
-	} else if (MinCoeff != "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff != "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (A        -MinCoeffp)/(1+10^((ECIDCoeffp-logconczzzz)*SlopeCoeffp)), start=list(A=maxp), data=statdata) 
-	} else if (MinCoeff != "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff != "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (A        -MinCoeffp)/(1+exp((ECIDCoeffp-logconczzzz)*SlopeCoeffp)), start=list(A=maxp), data=statdata) 
+	if        (MinCoeff == "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff == "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~D         + (A        -D        )/(1+10^((C         -logconczzzz)*B          )), weights = weights_vector, start=list(A=maxp,B=slopep,C= ed50p,D=minp), data=statdata) 
+	} else if (MinCoeff == "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff == "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~D         + (A        -D        )/(1+exp((C         -logconczzzz)*B          )), weights = weights_vector, start=list(A=maxp,B=slopep,C= ed50p,D=minp), data=statdata) 
+	} else if (MinCoeff == "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff == "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~D         + (MaxCoeffp-D        )/(1+10^((C         -logconczzzz)*B          )), weights = weights_vector, start=list(B=slopep,C= ed50p,D=minp), data=statdata) 
+	} else if (MinCoeff == "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff == "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~D         + (MaxCoeffp-D        )/(1+exp((C         -logconczzzz)*B          )), weights = weights_vector, start=list(B=slopep,C= ed50p,D=minp), data=statdata) 
+	} else if (MinCoeff == "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff == "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~D         + (A        -D        )/(1+10^((C         -logconczzzz)*SlopeCoeffp)), weights = weights_vector, start=list(A=maxp,C= ed50p,D=minp), data=statdata) 
+	} else if (MinCoeff == "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff == "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~D         + (A        -D        )/(1+exp((C         -logconczzzz)*SlopeCoeffp)), weights = weights_vector, start=list(A=maxp,C= ed50p,D=minp), data=statdata) 
+	} else if (MinCoeff == "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff != "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~D         + (A        -D        )/(1+10^((ECIDCoeffp-logconczzzz)*B          )), weights = weights_vector, start=list(A=maxp,B=slopep,D=minp), data=statdata) 
+	} else if (MinCoeff == "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff != "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~D         + (A        -D        )/(1+exp((ECIDCoeffp-logconczzzz)*B          )), weights = weights_vector, start=list(A=maxp,B=slopep,D=minp), data=statdata) 
+	} else if (MinCoeff != "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff == "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (A        -MinCoeffp)/(1+10^((C         -logconczzzz)*B          )), weights = weights_vector, start=list(A=maxp,B=slopep,C= ed50p), data=statdata) 
+	} else if (MinCoeff != "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff == "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (A        -MinCoeffp)/(1+exp((C         -logconczzzz)*B          )), weights = weights_vector, start=list(A=maxp,B=slopep,C= ed50p), data=statdata) 
+	} else if (MinCoeff == "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff == "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~D         + (MaxCoeffp-D        )/(1+10^((C         -logconczzzz)*SlopeCoeffp)), weights = weights_vector, start=list(C= ed50p,D=minp), data=statdata) 
+	} else if (MinCoeff == "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff == "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~D         + (MaxCoeffp-D        )/(1+exp((C         -logconczzzz)*SlopeCoeffp)), weights = weights_vector, start=list(C= ed50p,D=minp), data=statdata) 
+	} else if (MinCoeff == "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff != "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~D         + (MaxCoeffp-D        )/(1+10^((ECIDCoeffp-logconczzzz)*B          )), weights = weights_vector, start=list(B=slopep,D=minp), data=statdata) 
+	} else if (MinCoeff == "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff != "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~D         + (MaxCoeffp-D        )/(1+exp((ECIDCoeffp-logconczzzz)*B          )), weights = weights_vector, start=list(B=slopep,D=minp), data=statdata) 
+	} else if (MinCoeff != "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff == "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (MaxCoeffp-MinCoeffp)/(1+10^((C         -logconczzzz)*B          )), weights = weights_vector, start=list(B=slopep,C= ed50p), data=statdata)
+	} else if (MinCoeff != "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff == "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (MaxCoeffp-MinCoeffp)/(1+exp((C         -logconczzzz)*B          )), weights = weights_vector, start=list(B=slopep,C= ed50p), data=statdata) 
+	} else if (MinCoeff == "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff != "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~D         + (A        -D        )/(1+10^((ECIDCoeffp-logconczzzz)*SlopeCoeffp)), weights = weights_vector, start=list(A=maxp,D=minp), data=statdata) 
+	} else if (MinCoeff == "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff != "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~D         + (A        -D        )/(1+exp((ECIDCoeffp-logconczzzz)*SlopeCoeffp)), weights = weights_vector, start=list(A=maxp,D=minp), data=statdata) 
+	} else if (MinCoeff != "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff == "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (A        -MinCoeffp)/(1+10^((C         -logconczzzz)*SlopeCoeffp)), weights = weights_vector, start=list(A=maxp,C= ed50p), data=statdata) 
+	} else if (MinCoeff != "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff == "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (A        -MinCoeffp)/(1+exp((C         -logconczzzz)*SlopeCoeffp)), weights = weights_vector, start=list(A=maxp,C= ed50p), data=statdata) 
+	} else if (MinCoeff != "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff != "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (A        -MinCoeffp)/(1+10^((ECIDCoeffp-logconczzzz)*B          )), weights = weights_vector, start=list(A=maxp,B=slopep), data=statdata) 
+	} else if (MinCoeff != "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff != "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (A        -MinCoeffp)/(1+exp((ECIDCoeffp-logconczzzz)*B          )), weights = weights_vector, start=list(A=maxp,B=slopep), data=statdata) 
+	} else if (MinCoeff == "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff != "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~D         + (MaxCoeffp-D        )/(1+10^((ECIDCoeffp-logconczzzz)*SlopeCoeffp)), weights = weights_vector, start=list(D=minp), data=statdata) 
+	} else if (MinCoeff == "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff != "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~D         + (MaxCoeffp-D        )/(1+exp((ECIDCoeffp-logconczzzz)*SlopeCoeffp)), weights = weights_vector, start=list(D=minp), data=statdata) 
+	} else if (MinCoeff != "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff == "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (MaxCoeffp-MinCoeffp)/(1+10^((C         -logconczzzz)*SlopeCoeffp)), weights = weights_vector, start=list(C= ed50p), data=statdata) 
+	} else if (MinCoeff != "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff == "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (MaxCoeffp-MinCoeffp)/(1+exp((C         -logconczzzz)*SlopeCoeffp)), weights = weights_vector, start=list(C= ed50p), data=statdata) 
+	} else if (MinCoeff != "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff != "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (MaxCoeffp-MinCoeffp)/(1+10^((ECIDCoeffp-logconczzzz)*B          )), weights = weights_vector, start=list(B=slopep), data=statdata) 
+	} else if (MinCoeff != "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff != "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (MaxCoeffp-MinCoeffp)/(1+exp((ECIDCoeffp-logconczzzz)*B          )), weights = weights_vector, start=list(B=slopep), data=statdata) 
+	} else if (MinCoeff != "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff != "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (A        -MinCoeffp)/(1+10^((ECIDCoeffp-logconczzzz)*SlopeCoeffp)), weights = weights_vector, start=list(A=maxp), data=statdata) 
+	} else if (MinCoeff != "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff != "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (A        -MinCoeffp)/(1+exp((ECIDCoeffp-logconczzzz)*SlopeCoeffp)), weights = weights_vector, start=list(A=maxp), data=statdata) 
 	} else if (MinCoeff != "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff != "NULL"&& DoseTransform != "loge") {
 		HTML.title("Warning", HR=2, align="left")
 		HTML("You need to estimate at least one of the parameters, hence no analysis has been performed.", align="left")

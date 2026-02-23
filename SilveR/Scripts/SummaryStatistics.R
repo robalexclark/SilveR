@@ -165,11 +165,29 @@ if (firstCat != "NULL" || secondCat != "NULL" || thirdCat != "NULL" || fourthCat
             	vectorCoeffVariation <- c(1:length)
             	vectorUCI <- c(1:length)
             	vectorLCI <- c(1:length)
+		firstCategory <- c(1:length)
+		secondCategory <- c(1:length)
+		thirdCategory <- c(1:length)
+		fourthCategory <- c(1:length)
 
 		#Generating the summary stats
             	for (i in 1:length) {
                 	sub <- subset(statdata, statdata$catfact == unique(levels(as.factor(statdata$catfact)))[i])
                 	sub2 <- data.frame(sub)
+
+			if (firstCat != "NULL") {
+				firstCategory[i] <- eval(parse(text = paste("sub2$", firstCat)))[1]
+			}
+			if (secondCat != "NULL") {
+				secondCategory[i] <- eval(parse(text = paste("sub2$", secondCat)))[1]
+			}
+			if (thirdCat != "NULL") {
+				thirdCategory[i] <- eval(parse(text = paste("sub2$", thirdCat)))[1]
+			}
+			if (fourthCat != "NULL") {
+				fourthCategory[i] <- eval(parse(text = paste("sub2$", fourthCat)))[1]
+			}
+
                 	if (mean == "Y") {
                 	    vectormean[i] = mean(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE)
                 	}
@@ -219,6 +237,19 @@ if (firstCat != "NULL" || secondCat != "NULL" || thirdCat != "NULL" || fourthCat
             	}
 
             	#Generating final table dataset
+		if (firstCat != "NULL") {
+			table <- cbind(table, firstCategory)
+		}
+		if (secondCat != "NULL") {
+			table <- cbind(table, secondCategory)
+		}
+		if (thirdCat != "NULL") {
+			table <- cbind(table, thirdCategory)
+		}
+		if (fourthCat != "NULL") {
+			table <- cbind(table, fourthCategory)
+		}
+
             	if (mean == "Y") {
                 	vectormean <- format(round(vectormean, 4), nsmall = 4, scientific = FALSE)
                 	table <- cbind(table, vectormean)
@@ -278,6 +309,24 @@ if (firstCat != "NULL" || secondCat != "NULL" || thirdCat != "NULL" || fourthCat
 
  	       	#Generating column names
             	temp6 <- c("Categorisation Factor levels")
+
+		if (firstCat != "NULL") {
+            		hedC1 <- c(firstCat)
+                	temp6 <- cbind(temp6, hedC1)
+		}
+		if (secondCat != "NULL") {
+            		hedC2 <- c(secondCat)
+                	temp6 <- cbind(temp6, hedC2)
+		}
+		if (thirdCat != "NULL") {
+            		hedC3 <- c(thirdCat)
+                	temp6 <- cbind(temp6, hedC3)
+		}
+		if (fourthCat != "NULL") {
+            		hedC4 <- c(fourthCat)
+                	temp6 <- cbind(temp6, hedC4)
+		}
+
             	if (mean == "Y") {
             		hed1 <- c("Mean")
                 	temp6 <- cbind(temp6, hed1)

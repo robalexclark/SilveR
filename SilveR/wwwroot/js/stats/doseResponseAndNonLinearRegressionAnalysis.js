@@ -8,6 +8,10 @@ $(function () {
         dataSource: theModel.transformationsList
     });
 
+    $("#Weight").kendoDropDownList({
+        dataSource: theModel.weightsList
+    });
+
     $("#Dose").kendoDropDownList({
         dataSource: theModel.availableVariablesAllowNull
     });
@@ -109,6 +113,7 @@ $(function () {
         $('#FourParameterPanel').addClass("disabledpanel");
 
         $("#Response").data("kendoDropDownList").value("");
+        $("#Weight").data("kendoDropDownList").value("");
         $("#Dose").data("kendoDropDownList").value("");
         $("#QCResponse").data("kendoDropDownList").value("");
         $("#QCDose").data("kendoDropDownList").value("");

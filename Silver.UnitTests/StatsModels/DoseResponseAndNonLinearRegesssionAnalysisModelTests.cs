@@ -43,6 +43,21 @@ namespace SilveR.UnitTests.StatsModels
         }
 
         [Fact]
+        public void WeightsList_ReturnsCorrectList()
+        {
+            //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+            DoseResponseAndNonLinearRegressionAnalysisModel sut = new DoseResponseAndNonLinearRegressionAnalysisModel();
+
+            //Act
+            IEnumerable<string> result = sut.WeightsList;
+
+            //Assert
+            Assert.IsAssignableFrom<IEnumerable<string>>(result);
+            Assert.Equal(new List<string>() { "None", "1/Response", "1/Response^2" }, result);
+        }
+
+        [Fact]
         public void ExportData_FourParameter_ReturnsCorrectStringArray()
         {
             //Arrange
@@ -98,6 +113,9 @@ namespace SilveR.UnitTests.StatsModels
 
             var dose = result.Single(x => x.Name == "Dose");
             Assert.Equal("Dose1", dose.Value);
+
+            var weight = result.Single(x => x.Name == "Weight");
+            Assert.Equal("1/Response^2", weight.Value);
 
             var doseScale = result.Single(x => x.Name == "DoseScale");
             Assert.Equal("Log10", doseScale.Value);
@@ -173,6 +191,9 @@ namespace SilveR.UnitTests.StatsModels
 
             var dose = result.Single(x => x.Name == "Dose");
             Assert.Null(dose.Value);
+
+            var weight = result.Single(x => x.Name == "Weight");
+            Assert.Equal("None", weight.Value);
 
             var doseScale = result.Single(x => x.Name == "DoseScale");
             Assert.Equal("Log10", doseScale.Value);
@@ -257,12 +278,13 @@ namespace SilveR.UnitTests.StatsModels
             arguments.Add(new Argument { Name = "QCResponse", Value = "QC Resp1" });
             arguments.Add(new Argument { Name = "Response", Value = "Resp 1" });
             arguments.Add(new Argument { Name = "ResponseTransformation", Value = "None" });
+            arguments.Add(new Argument { Name = "Weight", Value = "1/Response" });
             arguments.Add(new Argument { Name = "SamplesResponse", Value = "Sample 1" });
             arguments.Add(new Argument { Name = "SlopeCoeff", Value = "6" });
             arguments.Add(new Argument { Name = "SlopeStartValue", Value = "7" });
             arguments.Add(new Argument { Name = "StartValues", Value = "1,2,3" });
 
-            Assert.Equal(21, arguments.Count);
+            Assert.Equal(22, arguments.Count);
 
             //Act
             sut.LoadArguments(arguments);
@@ -283,6 +305,7 @@ namespace SilveR.UnitTests.StatsModels
             Assert.Equal("QC Resp1", sut.QCResponse);
             Assert.Equal("Resp 1", sut.Response);
             Assert.Equal("None", sut.ResponseTransformation);
+            Assert.Equal("1/Response", sut.Weight);
             Assert.Equal("Sample 1", sut.SamplesResponse);
             Assert.Equal(6, sut.SlopeCoeff);
             Assert.Equal(7, sut.SlopeStartValue);
@@ -300,7 +323,7 @@ namespace SilveR.UnitTests.StatsModels
             string result = sut.GetCommandLineArguments();
 
             //Assert
-            Assert.Equal("FourParameter Respivs_sp_ivs1 None Dose1 1 Log10 QCivs_sp_ivsResp1 QCDose1 Sampleivs_sp_ivs1 2 4 6 8 1 5 7 9 NULL NULL NULL NULL", result);
+            Assert.Equal("FourParameter Respivs_sp_ivs1 None 1/Response^2 Dose1 1 Log10 QCivs_sp_ivsResp1 QCDose1 Sampleivs_sp_ivs1 2 4 6 8 1 5 7 9 NULL NULL NULL NULL", result);
         }
 
         [Fact]
@@ -314,7 +337,7 @@ namespace SilveR.UnitTests.StatsModels
             string result = sut.GetCommandLineArguments();
 
             //Assert
-            Assert.Equal("Equation NULL None NULL NULL Log10 NULL NULL NULL NULL NULL NULL NULL NULL NULL NULL NULL y=mx+c 1,2,3 Respivs_sp_ivs1 Dose1", result);
+            Assert.Equal("Equation NULL None None NULL NULL Log10 NULL NULL NULL NULL NULL NULL NULL NULL NULL NULL NULL y=mx+c 1,2,3 Respivs_sp_ivs1 Dose1", result);
         }
 
 
@@ -339,6 +362,7 @@ namespace SilveR.UnitTests.StatsModels
                 QCResponse = "QC Resp1",
                 Response = "Resp 1",
                 ResponseTransformation = "None",
+                Weight = "1/Response^2",
                 SamplesResponse = "Sample 1",
                 SlopeCoeff = 6m,
                 SlopeStartValue = 7m,
@@ -369,6 +393,7 @@ namespace SilveR.UnitTests.StatsModels
                 QCResponse = null,
                 Response = null,
                 ResponseTransformation = "None",
+                Weight = "None",
                 SamplesResponse = null,
                 SlopeCoeff = null,
                 SlopeStartValue = null,
@@ -445,7 +470,7 @@ namespace SilveR.UnitTests.StatsModels
                 DatasetID = 6,
                 DatasetName = "_test dataset.xlsx [unpairedttest]",
                 DateUpdated = new DateTime(2018, 11, 16, 9, 14, 35),
-                TheData = "SilveRSelected,Resp 1,Resp2,Resp 3,Resp4,Resp 5,Resp 6,Resp 7,Resp8,Resp:9,Resp-10,Resp^11,Treat1,Treat2,Treat3,Treat4,Treat(5,Treat£6,Treat:7,Treat}8,PVTestresponse1,PVTestresponse2,PVTestgroup\r\nTrue,65,65,65,x,,-2,0,-2,65,65,0.1,A,A,1,A,1,A,A,A,1,1,1\r\nTrue,32,,32,32,32,32,32,0.1,32,32,0.1,A,A,1,A,1,A,A,A,2,2,1\r\nTrue,543,,543,543,543,543,543,0.2,543,543,0.2,A,A,1,A,1,A,A,A,3,3,1\r\nTrue,675,,675,675,675,675,675,0.1,675,675,0.1,A,A,1,B,1,A,A,A,4,4,1\r\nTrue,876,,876,876,876,876,876,0.2,876,876,0.2,A,A,1,B,1,A,A,A,11,10,2\r\nTrue,54,,54,54,54,54,54,0.3,54,54,0.3,A,A,1,B,1,A,A,A,12,11,2\r\nTrue,432,,,432,432,432,432,0.45,432,432,0.45,B,B,2,C,2,B,B,B,13,12,2\r\nTrue,564,,,564,564,564,564,0.2,564,564,0.2,B,B,2,C,2,B,B,,14,13,2\r\nTrue,76,,,76,76,76,76,0.14,76,76,0.14,B,B,2,C,2,B,B,,,,\r\nTrue,54,,,54,54,54,54,0.2,54,54,0.2,B,B,2,D,3,B,B,,,,\r\nTrue,32,,,32,32,32,32,0.1,32,32,0.1,B,B,2,D,3,B,B,,,,\r\nTrue,234,,,234,234,234,234,0.4,234,234,0.4,B,,2,D,3,B,B,,,,",
+                TheData = "SilveRSelected,Resp 1,Resp2,Resp 3,Resp4,Resp 5,Resp 6,Resp 7,Resp8,Resp:9,Resp-10,Resp^11,Treat1,Treat2,Treat3,Treat4,Treat(5,Treatï¿½6,Treat:7,Treat}8,PVTestresponse1,PVTestresponse2,PVTestgroup\r\nTrue,65,65,65,x,,-2,0,-2,65,65,0.1,A,A,1,A,1,A,A,A,1,1,1\r\nTrue,32,,32,32,32,32,32,0.1,32,32,0.1,A,A,1,A,1,A,A,A,2,2,1\r\nTrue,543,,543,543,543,543,543,0.2,543,543,0.2,A,A,1,A,1,A,A,A,3,3,1\r\nTrue,675,,675,675,675,675,675,0.1,675,675,0.1,A,A,1,B,1,A,A,A,4,4,1\r\nTrue,876,,876,876,876,876,876,0.2,876,876,0.2,A,A,1,B,1,A,A,A,11,10,2\r\nTrue,54,,54,54,54,54,54,0.3,54,54,0.3,A,A,1,B,1,A,A,A,12,11,2\r\nTrue,432,,,432,432,432,432,0.45,432,432,0.45,B,B,2,C,2,B,B,B,13,12,2\r\nTrue,564,,,564,564,564,564,0.2,564,564,0.2,B,B,2,C,2,B,B,,14,13,2\r\nTrue,76,,,76,76,76,76,0.14,76,76,0.14,B,B,2,C,2,B,B,,,,\r\nTrue,54,,,54,54,54,54,0.2,54,54,0.2,B,B,2,D,3,B,B,,,,\r\nTrue,32,,,32,32,32,32,0.1,32,32,0.1,B,B,2,D,3,B,B,,,,\r\nTrue,234,,,234,234,234,234,0.4,234,234,0.4,B,,2,D,3,B,B,,,,",
                 VersionNo = 1
             };
 

@@ -28,6 +28,14 @@ namespace SilveR.StatsModels
             get { return new List<string>() { "None", "Log10", "Loge", "Square Root", "ArcSine", "Rank" }; }
         }
 
+        [DisplayName("Weight")]
+        public string Weight { get; set; } = "None";
+
+        public IEnumerable<string> WeightsList
+        {
+            get { return new List<string>() { "None", "1/Response", "1/Response^2" }; }
+        }
+
         [CheckUsedOnceOnly]
         [ValidateResponseOrDoseAttribute]
         [DisplayName("Dose")]
@@ -159,6 +167,7 @@ namespace SilveR.StatsModels
             args.Add(ArgumentHelper.ArgumentFactory(nameof(AnalysisType), AnalysisType.ToString()));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Response), Response));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(ResponseTransformation), ResponseTransformation));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(Weight), Weight));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Dose), Dose));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(DoseScale), DoseScale.ToString()));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Offset), Offset));
@@ -188,6 +197,7 @@ namespace SilveR.StatsModels
             this.AnalysisType = (AnalysisOption)Enum.Parse(typeof(AnalysisOption), argHelper.LoadStringArgument(nameof(AnalysisType)), true);
             this.Response = argHelper.LoadStringArgument(nameof(Response));
             this.ResponseTransformation = argHelper.LoadStringArgument(nameof(ResponseTransformation));
+            this.Weight = argHelper.LoadStringArgument(nameof(Weight));
             this.Dose = argHelper.LoadStringArgument(nameof(Dose));
             this.DoseScale = (DoseScaleOption)Enum.Parse(typeof(DoseScaleOption), argHelper.LoadStringArgument(nameof(DoseScale)), true);
             this.Offset = argHelper.LoadNullableDecimalArgument(nameof(Offset));
@@ -218,32 +228,33 @@ namespace SilveR.StatsModels
             arguments.Append(" " + argFormatter.GetFormattedArgument(Response, true)); //5
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseTransformation, false)); //6
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Dose, true)); //7
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Weight, false)); //7
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Dose, true)); //8
 
             //get the checkbox setting
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Offset.ToString(), false)); //8
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Offset.ToString(), false)); //9
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(DoseScale.ToString(), false)); //9
+            arguments.Append(" " + argFormatter.GetFormattedArgument(DoseScale.ToString(), false)); //10
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(QCResponse, true)); //10
-            arguments.Append(" " + argFormatter.GetFormattedArgument(QCDose, true)); //11
-            arguments.Append(" " + argFormatter.GetFormattedArgument(SamplesResponse, true)); //12
+            arguments.Append(" " + argFormatter.GetFormattedArgument(QCResponse, true)); //11
+            arguments.Append(" " + argFormatter.GetFormattedArgument(QCDose, true)); //12
+            arguments.Append(" " + argFormatter.GetFormattedArgument(SamplesResponse, true)); //13
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(MinCoeff.ToString(), false)); //13
-            arguments.Append(" " + argFormatter.GetFormattedArgument(MaxCoeff.ToString(), false)); //14
-            arguments.Append(" " + argFormatter.GetFormattedArgument(SlopeCoeff.ToString(), false)); //15
-            arguments.Append(" " + argFormatter.GetFormattedArgument(EDICCoeff.ToString(), false)); //16
+            arguments.Append(" " + argFormatter.GetFormattedArgument(MinCoeff.ToString(), false)); //14
+            arguments.Append(" " + argFormatter.GetFormattedArgument(MaxCoeff.ToString(), false)); //15
+            arguments.Append(" " + argFormatter.GetFormattedArgument(SlopeCoeff.ToString(), false)); //16
+            arguments.Append(" " + argFormatter.GetFormattedArgument(EDICCoeff.ToString(), false)); //17
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(MinStartValue.ToString(), false)); //17
-            arguments.Append(" " + argFormatter.GetFormattedArgument(MaxStartValue.ToString(), false)); //18
-            arguments.Append(" " + argFormatter.GetFormattedArgument(SlopeStartValue.ToString(), false)); //19
-            arguments.Append(" " + argFormatter.GetFormattedArgument(EDICStartValue.ToString(), false)); //20
+            arguments.Append(" " + argFormatter.GetFormattedArgument(MinStartValue.ToString(), false)); //18
+            arguments.Append(" " + argFormatter.GetFormattedArgument(MaxStartValue.ToString(), false)); //19
+            arguments.Append(" " + argFormatter.GetFormattedArgument(SlopeStartValue.ToString(), false)); //20
+            arguments.Append(" " + argFormatter.GetFormattedArgument(EDICStartValue.ToString(), false)); //21
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Equation, false)); //21
-            arguments.Append(" " + argFormatter.GetFormattedArgument(StartValues, false)); //22
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Equation, false)); //22
+            arguments.Append(" " + argFormatter.GetFormattedArgument(StartValues, false)); //23
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(EquationYAxis, true)); //23
-            arguments.Append(" " + argFormatter.GetFormattedArgument(EquationXAxis, true)); //24
+            arguments.Append(" " + argFormatter.GetFormattedArgument(EquationYAxis, true)); //24
+            arguments.Append(" " + argFormatter.GetFormattedArgument(EquationXAxis, true)); //25
 
             return arguments.ToString().Trim();
         }

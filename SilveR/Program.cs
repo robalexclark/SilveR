@@ -1,6 +1,6 @@
 ﻿using ElectronNET.API;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 using Serilog;
 using System;
 using System.Globalization;
@@ -27,7 +27,7 @@ namespace SilveR
             try
             {
                 Log.Information("Starting web host");
-                CreateWebHostBuilder(args).Build().Run();
+                CreateHostBuilder(args).Build().Run();
             }
             catch (Exception ex)
             {
@@ -40,11 +40,15 @@ namespace SilveR
             }
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-              .UseElectron(args)
-                .UseStartup<Startup>()
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .UseSerilog()
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder
+                        .UseElectron(args)
+                        .UseStartup<Startup>();
                     //.UseUrls("http://0.0.0.0:5000")
-                    .UseSerilog();
+                });
     }
 }
