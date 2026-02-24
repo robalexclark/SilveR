@@ -311,19 +311,19 @@ if (firstCat != "NULL" || secondCat != "NULL" || thirdCat != "NULL" || fourthCat
             	temp6 <- c("Categorisation Factor levels")
 
 		if (firstCat != "NULL") {
-            		hedC1 <- c(firstCat)
+            		hedC1 <- c(paste("Factor: ", firstCat))
                 	temp6 <- cbind(temp6, hedC1)
 		}
 		if (secondCat != "NULL") {
-            		hedC2 <- c(secondCat)
+            		hedC2 <- c(paste("Factor: ", secondCat))
                 	temp6 <- cbind(temp6, hedC2)
 		}
 		if (thirdCat != "NULL") {
-            		hedC3 <- c(thirdCat)
+            		hedC3 <- c(paste("Factor: ", thirdCat))
                 	temp6 <- cbind(temp6, hedC3)
 		}
 		if (fourthCat != "NULL") {
-            		hedC4 <- c(fourthCat)
+            		hedC4 <- c(paste("Factor: ", fourthCat))
                 	temp6 <- cbind(temp6, hedC4)
 		}
 

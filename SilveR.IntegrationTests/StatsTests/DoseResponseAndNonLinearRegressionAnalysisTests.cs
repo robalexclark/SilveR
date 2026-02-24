@@ -935,6 +935,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
@@ -961,6 +962,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
@@ -990,6 +992,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
@@ -1017,6 +1020,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
@@ -1045,6 +1049,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "Log10";
@@ -1072,6 +1077,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "Log10";
@@ -1099,6 +1105,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "Loge";
@@ -1126,6 +1133,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "Loge";
@@ -1153,6 +1161,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "Square Root";
@@ -1180,6 +1189,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "Square Root";
@@ -1207,6 +1217,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "ArcSine";
@@ -1234,6 +1245,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "ArcSine";
@@ -1261,6 +1273,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
@@ -1289,6 +1302,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
@@ -1317,6 +1331,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
@@ -1345,6 +1360,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
@@ -1373,6 +1389,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
@@ -1401,6 +1418,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
@@ -1429,6 +1447,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
@@ -1457,6 +1476,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
@@ -1485,6 +1505,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp9";
             model.ResponseTransformation = "None";
@@ -1512,6 +1533,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp9";
             model.ResponseTransformation = "None";
@@ -1540,6 +1562,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp9";
             model.ResponseTransformation = "None";
@@ -1567,6 +1590,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp9";
             model.ResponseTransformation = "None";
@@ -1595,6 +1619,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp9";
             model.ResponseTransformation = "Log10";
@@ -1622,6 +1647,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp9";
             model.ResponseTransformation = "Log10";
@@ -1649,6 +1675,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp9";
             model.ResponseTransformation = "Loge";
@@ -1676,6 +1703,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp9";
             model.ResponseTransformation = "Loge";
@@ -1703,6 +1731,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp9";
             model.ResponseTransformation = "Square Root";
@@ -1730,6 +1759,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp9";
             model.ResponseTransformation = "Square Root";
@@ -1757,6 +1787,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp9";
             model.ResponseTransformation = "ArcSine";
@@ -1784,6 +1815,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp9";
             model.ResponseTransformation = "ArcSine";
@@ -1811,6 +1843,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp9";
             model.ResponseTransformation = "None";
@@ -1839,6 +1872,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp9";
             model.ResponseTransformation = "None";
@@ -1868,6 +1902,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp9";
             model.ResponseTransformation = "None";
@@ -1896,6 +1931,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp9";
             model.ResponseTransformation = "None";
@@ -1924,6 +1960,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp9";
             model.ResponseTransformation = "None";
@@ -1952,6 +1989,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp9";
             model.ResponseTransformation = "None";
@@ -1980,6 +2018,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp9";
             model.ResponseTransformation = "None";
@@ -2008,6 +2047,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp9";
             model.ResponseTransformation = "None";
@@ -2036,6 +2076,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.AnalysisType = DoseResponseAndNonLinearRegressionAnalysisModel.AnalysisOption.Equation;
             model.Equation = "A+B*x+C*x*x";
@@ -2061,6 +2102,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.AnalysisType = DoseResponseAndNonLinearRegressionAnalysisModel.AnalysisOption.Equation;
             model.Equation = "A+B*x+C*x*x";
@@ -2086,6 +2128,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "None";
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.AnalysisType = DoseResponseAndNonLinearRegressionAnalysisModel.AnalysisOption.Equation;
             model.Equation = "A+B*X+C*X*X";
@@ -2101,5 +2144,2368 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The formula should be of the form f=y(x) with x lower case.", errors);
             Helpers.SaveOutput("DoseResponseAndNonLinearRegressionAnalysis", testName, errors);
         }
+
+
+        [Fact]
+        public async Task DR83()
+        {
+            string testName = "DR83";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR84()
+        {
+            string testName = "DR84";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Log10;
+            model.Offset = 0.000001m;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR85()
+        {
+            string testName = "DR85";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR86()
+        {
+            string testName = "DR86";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.Offset = 0.0001m;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR87()
+        {
+            string testName = "DR87";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Log10";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Log10;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR88()
+        {
+            string testName = "DR88";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Log10";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR89()
+        {
+            string testName = "DR89";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Loge";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Log10;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR90()
+        {
+            string testName = "DR90";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Loge";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR91()
+        {
+            string testName = "DR91";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Square Root";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Log10;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR92()
+        {
+            string testName = "DR92";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Square Root";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR93()
+        {
+            string testName = "DR93";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "ArcSine";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Log10;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR94()
+        {
+            string testName = "DR94";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "ArcSine";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR95()
+        {
+            string testName = "DR95";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+            model.MinCoeff = 0;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR96()
+        {
+            string testName = "DR96";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Log10;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+            model.MaxCoeff = 1;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR97()
+        {
+            string testName = "DR97";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+            model.SlopeCoeff = 1;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR98()
+        {
+            string testName = "DR98";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Log10;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+            model.EDICCoeff = 0.03m;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR99()
+        {
+            string testName = "DR99";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+            model.MinStartValue = 10;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR100()
+        {
+            string testName = "DR100";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Log10;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+            model.MaxStartValue = 1;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR101()
+        {
+            string testName = "DR101";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+            model.SlopeStartValue = 1;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR102()
+        {
+            string testName = "DR102";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Log10;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+            model.EDICStartValue = 0.03m;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR103()
+        {
+            string testName = "DR103";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Log10;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR104()
+        {
+            string testName = "DR104";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Log10;
+            model.Offset = 0.000001m;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR105()
+        {
+            string testName = "DR105";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR106()
+        {
+            string testName = "DR106";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.Offset = 0.0001m;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR107()
+        {
+            string testName = "DR107";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "Log10";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Log10;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR108()
+        {
+            string testName = "DR108";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "Log10";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR109()
+        {
+            string testName = "DR109";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "Loge";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Log10;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR110()
+        {
+            string testName = "DR110";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "Loge";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR111()
+        {
+            string testName = "DR111";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "Square Root";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Log10;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR112()
+        {
+            string testName = "DR112";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "Square Root";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR113()
+        {
+            string testName = "DR113";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "ArcSine";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Log10;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR114()
+        {
+            string testName = "DR114";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "ArcSine";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR115()
+        {
+            string testName = "DR115";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+            model.MinCoeff = 0;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR116()
+        {
+            string testName = "DR116";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Log10;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+            model.MaxCoeff = 1;
+            model.SlopeStartValue = -1;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR117()
+        {
+            string testName = "DR117";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+            model.SlopeCoeff = 1;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR118()
+        {
+            string testName = "DR118";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Log10;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+            model.EDICCoeff = 0.03m;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR119()
+        {
+            string testName = "DR119";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+            model.MinStartValue = 10;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR120()
+        {
+            string testName = "DR120";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Log10;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+            model.MaxStartValue = 1;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR121()
+        {
+            string testName = "DR121";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+            model.SlopeStartValue = -1;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR122()
+        {
+            string testName = "DR122";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Log10;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+            model.EDICStartValue = 0.03m;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR123()
+        {
+            string testName = "DR123";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR124()
+        {
+            string testName = "DR124";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Log10;
+            model.Offset = 0.000001m;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR125()
+        {
+            string testName = "DR125";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR126()
+        {
+            string testName = "DR126";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.Offset = 0.0001m;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR127()
+        {
+            string testName = "DR127";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Log10";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Log10;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR128()
+        {
+            string testName = "DR128";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Log10";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR129()
+        {
+            string testName = "DR129";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Loge";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Log10;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR130()
+        {
+            string testName = "DR130";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Loge";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR131()
+        {
+            string testName = "DR131";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Square Root";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Log10;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR132()
+        {
+            string testName = "DR132";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Square Root";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR133()
+        {
+            string testName = "DR133";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "ArcSine";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Log10;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR134()
+        {
+            string testName = "DR134";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "ArcSine";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR135()
+        {
+            string testName = "DR135";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+            model.MinCoeff = 0;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR136()
+        {
+            string testName = "DR136";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Log10;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+            model.MaxCoeff = 1;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR137()
+        {
+            string testName = "DR137";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+            model.SlopeCoeff = 1;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR138()
+        {
+            string testName = "DR138";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Log10;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+            model.EDICCoeff = 0.03m;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR139()
+        {
+            string testName = "DR139";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+            model.MinStartValue = 10;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR140()
+        {
+            string testName = "DR140";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Log10;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+            model.MaxStartValue = 1;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR141()
+        {
+            string testName = "DR141";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+            model.SlopeStartValue = 1;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR142()
+        {
+            string testName = "DR142";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Log10;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose1";
+            model.SamplesResponse = "Sample 1";
+            model.EDICStartValue = 0.03m;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR143()
+        {
+            string testName = "DR143";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Log10;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR144()
+        {
+            string testName = "DR144";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Log10;
+            model.Offset = 0.000001m;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR145()
+        {
+            string testName = "DR145";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR146()
+        {
+            string testName = "DR146";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.Offset = 0.0001m;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR147()
+        {
+            string testName = "DR147";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "Log10";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Log10;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR148()
+        {
+            string testName = "DR148";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "Log10";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR149()
+        {
+            string testName = "DR149";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "Loge";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Log10;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR150()
+        {
+            string testName = "DR150";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "Loge";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR151()
+        {
+            string testName = "DR151";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "Square Root";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Log10;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR152()
+        {
+            string testName = "DR152";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "Square Root";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR153()
+        {
+            string testName = "DR153";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "ArcSine";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Log10;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR154()
+        {
+            string testName = "DR154";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "ArcSine";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR155()
+        {
+            string testName = "DR155";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+            model.MinCoeff = 0;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR156()
+        {
+            string testName = "DR156";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Log10;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+            model.MaxCoeff = 1;
+            model.SlopeStartValue = -1;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR157()
+        {
+            string testName = "DR157";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+            model.SlopeCoeff = 1;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR158()
+        {
+            string testName = "DR158";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Log10;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+            model.EDICCoeff = 0.03m;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR159()
+        {
+            string testName = "DR159";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+            model.MinStartValue = 10;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR160()
+        {
+            string testName = "DR160";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Log10;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+            model.MaxStartValue = 1;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR161()
+        {
+            string testName = "DR161";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Loge;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+            model.SlopeStartValue = -1;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task DR162()
+        {
+            string testName = "DR162";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+            model.Weight = "1/Response^2";
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+            model.Response = "Resp9";
+            model.ResponseTransformation = "None";
+            model.Dose = "Dose1";
+            model.DoseScale = DoseResponseAndNonLinearRegressionAnalysisModel.DoseScaleOption.Log10;
+            model.QCResponse = "QC Resp1";
+            model.QCDose = "QCDose2";
+            model.SamplesResponse = "Sample 1";
+            model.EDICStartValue = 0.03m;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+        }
+
     }
 }
