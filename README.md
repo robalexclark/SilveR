@@ -92,16 +92,18 @@ The container listens on port 5000 internally, so you only need to choose an ava
 If you want to build from the current source (for example after making local changes), run the following commands from the repository root:
 
 ```
-docker build -t silver:latest SilveR
-docker run -d -p 5000:5000 --name silver-web silver:latest
+docker build -t invivostat/invivostat:latest SilveR
+docker run -d -p 5000:5000 --name invivostat invivostat/invivostat:latest
 ```
 
 The Dockerfile now exports `ASPNETCORE_URLS=http://0.0.0.0:5000`, so the app is reachable from the host without extra configuration.
 
+The production Docker image is defined in `SilveR/Dockerfile`. The repository root `Dockerfile` is intended for the full test image used to run `dotnet test` in a container.
+
 When you are finished, stop the container with:
 
 ```
-docker stop invivostat-container    # or silver-web
+docker stop invivostat-container    # or invivostat
 ```
 
 

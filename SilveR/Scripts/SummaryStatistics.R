@@ -136,6 +136,14 @@ HTML(add2, align="left")
 #===================================================================================================================
 #Categorisation analysis
 #===================================================================================================================
+nocat <- 0
+if (firstCat != "NULL" ) { nocat=nocat+1}
+if (secondCat != "NULL" ) { nocat=nocat+1}
+if (thirdCat != "NULL" ) { nocat=nocat+1}
+if (fourthCat != "NULL" ) { nocat=nocat+1}
+
+
+
 if ((firstCat != "NULL" || secondCat != "NULL" || thirdCat != "NULL" || fourthCat != "NULL") && resplength > 1 ) {
       #Overall title
       HTML.title("Categorised summary statistics", HR=2, align="left")
@@ -237,16 +245,16 @@ if (firstCat != "NULL" || secondCat != "NULL" || thirdCat != "NULL" || fourthCat
             	}
 
             	#Generating final table dataset
-		if (firstCat != "NULL") {
+		if (firstCat != "NULL" && nocat>1) {
 			table <- cbind(table, firstCategory)
 		}
-		if (secondCat != "NULL") {
+		if (secondCat != "NULL" && nocat>1) {
 			table <- cbind(table, secondCategory)
 		}
-		if (thirdCat != "NULL") {
+		if (thirdCat != "NULL" && nocat>1) {
 			table <- cbind(table, thirdCategory)
 		}
-		if (fourthCat != "NULL") {
+		if (fourthCat != "NULL" && nocat>1) {
 			table <- cbind(table, fourthCategory)
 		}
 
@@ -310,20 +318,20 @@ if (firstCat != "NULL" || secondCat != "NULL" || thirdCat != "NULL" || fourthCat
  	       	#Generating column names
             	temp6 <- c("Categorisation Factor levels")
 
-		if (firstCat != "NULL") {
-            		hedC1 <- c(firstCat)
+		if (firstCat != "NULL" && nocat>1) {
+            		hedC1 <- c(paste("Factor: ", firstCat))
                 	temp6 <- cbind(temp6, hedC1)
 		}
-		if (secondCat != "NULL") {
-            		hedC2 <- c(secondCat)
+		if (secondCat != "NULL" && nocat>1) {
+            		hedC2 <- c(paste("Factor: ", secondCat))
                 	temp6 <- cbind(temp6, hedC2)
 		}
-		if (thirdCat != "NULL") {
-            		hedC3 <- c(thirdCat)
+		if (thirdCat != "NULL" && nocat>1) {
+            		hedC3 <- c(paste("Factor: ", thirdCat))
                 	temp6 <- cbind(temp6, hedC3)
 		}
-		if (fourthCat != "NULL") {
-            		hedC4 <- c(fourthCat)
+		if (fourthCat != "NULL" && nocat>1) {
+            		hedC4 <- c(paste("Factor: ", fourthCat))
                 	temp6 <- cbind(temp6, hedC4)
 		}
 

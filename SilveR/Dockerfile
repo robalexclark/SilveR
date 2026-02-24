@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.6
 
-FROM mcr.microsoft.com/dotnet/aspnet:8.0-bookworm-slim AS base-deps
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base-deps
 
 ENV DEBIAN_FRONTEND=noninteractive \
     LANG=en_US.UTF-8 \
@@ -14,17 +14,8 @@ RUN apt-get update \
         locales \
         ca-certificates \
         curl \
-        gnupg \
-        dirmngr \
     && sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen \
     && locale-gen en_US.UTF-8 \
-    && gpg --batch --keyserver keyserver.ubuntu.com \
-        --recv-keys 95C0FAF38DB3CCAD0C080A7BDC78B2DDEABC47B7 \
-    && gpg --batch --export 95C0FAF38DB3CCAD0C080A7BDC78B2DDEABC47B7 \
-        | gpg --dearmor --yes --batch -o /usr/share/keyrings/cran-archive-keyring.gpg \
-    && echo "deb [signed-by=/usr/share/keyrings/cran-archive-keyring.gpg] https://cloud.r-project.org/bin/linux/debian bookworm-cran40/" \
-        > /etc/apt/sources.list.d/cran-r.list \
-    && apt-get purge -y --auto-remove gnupg dirmngr \
     && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /tmp/R/tmp && chmod -R 777 /tmp/R
@@ -46,7 +37,7 @@ RUN apt-get update \
         libfontconfig1-dev \
         libudunits2-dev \
         libpq-dev \
-        libv8-dev \
+        libnode-dev \
         liblapack-dev \
         libblas-dev \
         gfortran \
@@ -62,23 +53,23 @@ FROM base-deps AS base
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         r-base \
-        libcurl4 \
-        libssl3 \
+        libcurl4t64 \
+        libssl3t64 \
         libxml2 \
-        libjpeg62-turbo \
-        libpng16-16 \
+        libjpeg-turbo8 \
+        libpng16-16t64 \
         libtiff6 \
         libharfbuzz0b \
         libfribidi0 \
         libfontconfig1 \
         libudunits2-0 \
         libpq5 \
-        libv8-dev \
+        libnode109 \
         liblapack3 \
         libblas3 \
     && rm -rf /var/lib/apt/lists/*
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src/SilveR
 COPY SilveR.csproj ./

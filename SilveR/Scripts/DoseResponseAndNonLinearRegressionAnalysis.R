@@ -15,7 +15,7 @@ statdata <- read.csv(Args[3], header=TRUE, sep=",")
 DoseResponseType <- tolower(Args[4])
 ResponseVar <- Args[5]
 responseTransform <- tolower(Args[6])
-Weight <- Args[7] # Parsed for future weighting options (currently unused)
+Weight <- Args[7] 
 DoseVar <- Args[8]
 Offsetz <- Args[9]
 DoseTransform <- tolower(Args[10])
@@ -100,7 +100,7 @@ if (DoseResponseType == "equation") {
 	Title <-paste(branding, " Non-Linear Regression Analysis", sep="")
 	HTML.title(Title, HR = 1, align = "left")
 
-	#Software developement version warning
+	#Software development version warning
 	if (Betawarn == "Y") {
 		HTML.title("Warning", HR=2, align="left")
 		HTML(BetaMessage, align="left")
@@ -111,7 +111,7 @@ if (DoseResponseType == "equation") {
 	add<-paste(c("The  "), EquationResponse, " response is currently being analysed using the user defined equation in the Dose-response and Non-Linear Regression Analysis module. ", sep="")
 	HTML(add, align="left")
 
-	#STB October 2013 - adding a warnign message if no x variable defined in the user equation
+	#STB October 2013 - adding a warning message if no x variable defined in the user equation
 	Equationx<-c(Equation)
 	if ( grepl("x",Equationx, fixed=TRUE, ignore.case=FALSE) == FALSE) {
 		HTML.title("Warning", HR=2, align="left")
@@ -431,14 +431,13 @@ if (DoseResponseType == "fourparameter") {
 	}
 
 	#Setting up weights vector
-	weight <- "InverseSq"
-	if (weight == "None") {
+	if (Weight == "None") {
 		weights_vector <- rep(1, times = nrow(statdata))
 	}
-	if (weight == "Inverse") {
+	if (Weight == "1/Response") {
 		 weights_vector <- 1 / statdata$responsezzzz
 	}
-	if (weight == "InverseSq") {
+	if (Weight == "1/Response^2") {
 		 weights_vector <- 1 / statdata$responsezzzz^2
 	}
 
@@ -450,7 +449,7 @@ if (DoseResponseType == "fourparameter") {
 	add<-paste("The  ", ResponseVar, " response is currently being analysed by the Dose-response and Non-Linear Regression Analysis module", sep="")
 	if(responseTransform != "none") {
 		add<-paste(add, " and has been ", responseTransform, " transformed prior to analysis" , sep="")
-		add<-paste(add, responseTransform, sep="")
+	#	add<-paste(add, responseTransform, sep="")
 	}
 	add<-paste(add, ".", sep="")
 	HTML(add, align="left")
@@ -462,7 +461,28 @@ if (DoseResponseType == "fourparameter") {
 		add<-paste(c("The dose variable ("), DoseVar, ") has been loge transformed prior to analysis.",sep="")
 	}
 	HTML(add, align="left")
+	
+	if(Weight == "1/Response") {
+	  addx<-paste(c("The analysis performed is a weighted non-linear regression, using 1/Response as the weighting.",sep=""))
+	  HTML(addx, align="left")
+	}
+	if(Weight == "1/Response^2") {
+	  addx<-paste(c("The analysis performed is a weighted non-linear regression, using 1/Response^2 as the weighting.",sep=""))
+	  HTML(addx, align="left")
+	  }
 
+
+	
+	#Weight test
+	weighttest <-min(statdata$responsezzzz, na.rm=TRUE)
+	if (weighttest <= 0 && Weight == "1/Response") {
+	  HTML.title("Warning", HR=2, align="left")
+	  HTML("One or more responses are negative, which causes the 1/Response weighting to include negative values. 
+	       Because negative weights cannot be used in this analysis, selecting the 1/Response^2 weighting is recommended instead.", align="left")
+	quit()
+	}
+
+	
 #===================================================================================================================
 #Fitting the model
 #===================================================================================================================
@@ -513,6 +533,8 @@ if (DoseResponseType == "fourparameter") {
 		HTML("Unfortunately the residual degrees of freedom are low (less than 5). This may make the estimation of the underlying variability, and hence the results of the statistical tests, unreliable. This can be caused by attempting to model too many parameters. We recommend you fix some of the parameters.", align="left")
 	}
 
+
+	
 #===================================================================================================================
 # Scatterplot of responses with fit
 #===================================================================================================================
