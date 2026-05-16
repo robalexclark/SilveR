@@ -166,6 +166,16 @@ grparatext = read.table(userOptions)
 	if (FillTransparency > 1) {
 		FillTransparency <- 1
 	}
+
+#labels size
+labsize<- 3
+
+#marker labels size
+MarkerLabelFontSize <- as.numeric(grparanum$V2[23])
+if (is.na(MarkerLabelFontSize)) {
+	MarkerLabelFontSize <- labsize
+}
+
 #===================================================================================================================
 #Defining the GGPLOT options
 
@@ -678,7 +688,7 @@ NONCAT_SCAT <- function(typez) {
 	}
 
 	if (typez == "PCAPLOT") {
-		g6 <- g5 + geom_text(size = 3, aes(label = obznames), hjust = 0, vjust = 1) +
+		g6 <- g5 + geom_text(size = labsize, aes(label = obznames), hjust = 0, vjust = 1) +
 			theme(axis.text.x = element_text(hjust = 0.5, angle = 0), axis.text.y = element_text(hjust = 0.5, angle = 0))
 	} else {
 		g6 <- g5
@@ -686,7 +696,7 @@ NONCAT_SCAT <- function(typez) {
 	g7 <- g6 + geom_point(size = Point_size, shape = Point_shape, color = "black", fill = Gr_fill, position = position_jitter(w = w_Gr_jitscat, h = h_Gr_jitscat))
 
 	if (scatterlabels == "Y") {
-		g8 <- g7 + geom_text_repel(aes(label = rownames(graphdata)), size = 3.5,force = 10, point.padding=1)
+		g8 <- g7 + geom_text_repel(aes(label = rownames(graphdata)), size = MarkerLabelFontSize,force = 10, point.padding=1)
 	} else {
 		g8 <- g7
 	}
@@ -757,7 +767,7 @@ ONECATSEP_SCAT <- function() {
 	}
 
 	if (scatterlabels == "Y") {
-		g2 <- g1 + geom_text_repel(aes(label = rownames(graphdata)), size = 3.5, force = 10, point.padding=1)
+		g2 <- g1 + geom_text_repel(aes(label = rownames(graphdata)), size = MarkerLabelFontSize, force = 10, point.padding=1)
 	} else {
 		g2 <- g1
 	}
@@ -821,7 +831,7 @@ TWOCATSEP_SCAT <- function() {
 	}
 
 	if (scatterlabels == "Y") {
-		g2 <- g1 + geom_text_repel(aes(label = rownames(graphdata)), size = 3.5, force = 10, point.padding=1)
+		g2 <- g1 + geom_text_repel(aes(label = rownames(graphdata)), size = MarkerLabelFontSize, force = 10, point.padding=1)
 	} else {
 		g2 <- g1
 	}
@@ -884,13 +894,13 @@ OVERLAID_SCAT <- function() {
 	}
 
 	if (Labelz_IVS_ == "Y") {
-		g2 <- g1 + geom_text(size = 3, aes(label = obznames), hjust = 0, vjust = 1)
+		g2 <- g1 + geom_text(size = labsize, aes(label = obznames), hjust = 0, vjust = 1)
 	} else {
 		g2 <- g1
 	}
 
 	if (scatterlabels == "Y") {
-		g3 <- g2 + geom_text_repel(aes(label = rownames(graphdata), color = graphdata$l_l), size = 3.5,force = 10, point.padding=1, show.legend = FALSE)
+		g3 <- g2 + geom_text_repel(aes(label = rownames(graphdata), color = graphdata$l_l), size = MarkerLabelFontSize,force = 10, point.padding=1, show.legend = FALSE)
 	} else {
 		g3 <- g2
 	}
@@ -1713,11 +1723,11 @@ NONCAT_QQPLOT <- function(typez) {
 		stat_qq(size = Point_size, shape = Point_shape, color = "black", fill = Gr_fill) +
 		stat_qq_line(lty = Line_type, linewidth = Line_size, color = alpha(Gr_line, Gr_alpha))
 	
-#	if (scatterlabels == "Y") {
-#		g2 <- g + geom_text_repel(label=graphdata$name[order(graphdata$yvarrr_IVS)], stat="qq")
-#	} else {
+	if (scatterlabels == "Y") {
+		g2 <- g + geom_text_repel(label=graphdata$name[order(graphdata$yvarrr_IVS)], stat="qq", size=MarkerLabelFontSize)
+	} else {
 		g2 <- g
-#	}
+	}
 	suppressWarnings(print(g2))
 }
 
@@ -1735,9 +1745,9 @@ CAT_QQPLOT <- function() {
 		stat_qq_line(aes(colour = catfact), lty = Line_type, linewidth = Line_size)
 
 #	if (scatterlabels == "Y") {
-#		g2 <- g + geom_text_repel(label = graphdata$name[order(graphdata$yvarrr_IVS)], stat="qq" ,  size = 3.5,force = 10, point.padding=1, show.legend = FALSE)
-#		g2 <- g + geom_text_repel(aes(fill=catfact), label=graphdata$name[order(graphdata$yvarrr_IVS)], stat="qq" ,  size = 3.5,force = 10, point.padding=1, show.legend = FALSE)
-#		g2 <- g + geom_text_repel(label=graphdata$name[order(graphdata$yvarrr_IVS)], stat="qq" ,  size = 3.5,force = 10, point.padding=1, show.legend = FALSE)
+#		g2 <- g + geom_text_repel(label = graphdata$name[order(graphdata$yvarrr_IVS)], stat="qq" ,  size = labsize,force = 10, point.padding=1, show.legend = FALSE)
+#		g2 <- g + geom_text_repel(aes(fill=catfact), label=graphdata$name[order(graphdata$yvarrr_IVS)], stat="qq" ,  size = labsize,force = 10, point.padding=1, show.legend = FALSE)
+#		g2 <- g + geom_text_repel(label=graphdata$name[order(graphdata$yvarrr_IVS)], stat="qq" ,  size = labsize,force = 10, point.padding=1, show.legend = FALSE)
 #	} else {
 		g2 <- g
 #	}
@@ -2169,7 +2179,7 @@ ROCPLOT <- function() {
 
 
 #===================================================================================================================
-#Multivariate plots 
+#Multivariate plots Point_size
 #===================================================================================================================
 
 #Line plot of the variances
@@ -2181,9 +2191,9 @@ NONCAT_SEMx <- function() {
 		ylab(YAxisTitle) +
 		xlab(XAxisTitle) +
 		ggtitle(MainTitle2) +
-
-	stat_summary(fun = mean, geom = 'line', aes(group = 1), colour = Gr_line)
-	g1 <- g + geom_point(fill = Gr_line, colour = "black", size = Point_size, shape = Point_shape)
+         	stat_summary(fun = mean, geom = 'line', aes(group = 1), colour = Gr_line)
+	g1 <- g + geom_point(fill = Gr_line, colour = "black", size = Point_size, shape = Point_shape) +
+		scale_x_continuous(breaks = scales::breaks_width(1))
 	suppressWarnings(print(g1))
 }
 
@@ -2198,7 +2208,7 @@ PCbiplotx <- function(PC, x = "PC1", y = "PC2") {
 		theme(legend.position = Gr_legend_pos) +
 		geom_hline(yintercept=0, size = 0.1, linetype="dashed") +
 		geom_vline(xintercept=0, size = 0.1, linetype="dashed") + 
-		geom_text(alpha = .7, size = 3, aes(label = obsnames)) 
+		geom_text(alpha = .7, size = labsize, aes(label = obsnames)) 
 	
 	datapc <- data.frame(varnames = rownames(PC$rotation), PC$rotation)
 	mult <- min(
@@ -2213,7 +2223,7 @@ PCbiplotx <- function(PC, x = "PC1", y = "PC2") {
 
 	plot2 <- plot + 
 		coord_equal() +
-		geom_text(data = datapc, aes(x = v1, y = v2, label = varnames), size = 5, vjust = 1, color = Gr_line) +
+		geom_text(data = datapc, aes(x = v1, y = v2, label = varnames), size = labsize, vjust = 1, color = Gr_line) +
 		geom_segment(data = datapc, aes(x = 0, y = 0, xend = v1, yend = v2), arrow = arrow(length = unit(0.2, "cm")), color = Gr_line) 
 	suppressWarnings(print(plot2))
 }
@@ -2303,7 +2313,7 @@ for (i in 1 : length(segment(hcdata)$clust)) {
   labelParams <- set_labels_params(nrow(hcdata$labels), direction, fan)
   hcdata$labels$angle <- labelParams$angle
 
- p <- p + geom_text(data = label(hcdata), aes(x = x, y = y, label = label, colour = factor(clust), angle = angle), vjust = labelParams$vjust, hjust = labelParams$hjust, nudge_y = ymax * nudge.label, size = 3.5, show.legend =  FALSE) +
+ p <- p + geom_text(data = label(hcdata), aes(x = x, y = y, label = label, colour = factor(clust), angle = angle), vjust = labelParams$vjust, hjust = labelParams$hjust, nudge_y = ymax * nudge.label, size = labsize, show.legend =  FALSE) +
   	scale_color_manual(values = Gr_paletteDen)
 
   ylim <- -round(ymax * expand.y, 1)

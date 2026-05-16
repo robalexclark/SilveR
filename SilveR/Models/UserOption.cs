@@ -86,6 +86,7 @@ namespace SilveR.Models
         public double GraphicsYVerticalJust { get; set; } = 0.5;
         public int PointSize { get; set; } = 4;
         public int PointShape { get; set; } = 21;
+        public double MarkerLabelFontSize { get; set; } = 3;
         public int LineSize { get; set; } = 1;
         public int LegendTextSize { get; set; } = 15;
 
@@ -153,6 +154,7 @@ namespace SilveR.Models
             optionLines.Add(nameof(this.GraphicsHeightJitter) + " " + this.GraphicsHeightJitter.ToString());
             optionLines.Add(nameof(this.ErrorBarWidth) + " " + this.ErrorBarWidth.ToString());
             optionLines.Add(nameof(this.FillTransparency) + " " + this.FillTransparency.ToString());
+            optionLines.Add(nameof(this.MarkerLabelFontSize) + " " + this.MarkerLabelFontSize.ToString());
 
             return optionLines;
         }

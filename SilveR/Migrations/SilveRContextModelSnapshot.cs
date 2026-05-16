@@ -252,6 +252,9 @@ namespace SilveR.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<double>("MarkerLabelFontSize")
+                        .HasColumnType("REAL");
+
                     b.Property<bool>("OutputAnalysisOptions")
                         .HasColumnType("INTEGER");
 

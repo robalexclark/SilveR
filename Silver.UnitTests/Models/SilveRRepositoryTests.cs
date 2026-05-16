@@ -391,6 +391,7 @@ namespace SilveR.UnitTests.Models
             Assert.Equal(0.1, userOption.GraphicsWidthJitter);
             Assert.Equal(0.1, userOption.GraphicsHeightJitter);
             Assert.Equal(0.7, userOption.ErrorBarWidth);
+            Assert.Equal(3, userOption.MarkerLabelFontSize);
         }
 
 

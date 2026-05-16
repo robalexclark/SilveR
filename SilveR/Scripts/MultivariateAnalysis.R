@@ -215,7 +215,8 @@ MainTitle2 <-""
 yvarrr_IVS_SEM<- test$importance[2,]
 xvarrr_IVS_SEM<- c(1:length(yvarrr_IVS_SEM))
 for (i in 1:length(yvarrr_IVS_SEM)) {
-	xvarrr_IVS_SEM[i] <- paste("PC", xvarrr_IVS_SEM[i], sep = "")
+#	xvarrr_IVS_SEM[i] <- paste("PC", xvarrr_IVS_SEM[i], sep = "")
+	xvarrr_IVS_SEM[i] <- as.numeric(xvarrr_IVS_SEM[i])
 }
 graphdata_SEM<- data.frame(yvarrr_IVS_SEM)
 graphdata_SEM$xvarrr_IVS_SEM <-xvarrr_IVS_SEM

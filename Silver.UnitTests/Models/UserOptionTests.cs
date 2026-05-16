@@ -65,6 +65,7 @@ namespace SilveR.UnitTests.Models
             Assert.Equal("GraphicsHeightJitter 0.1", optionLines[42]);
             Assert.Equal("ErrorBarWidth 0.7", optionLines[43]);
             Assert.Equal("FillTransparency 1", optionLines[44]);
+            Assert.Equal("MarkerLabelFontSize 3", optionLines[45]);
         }
     }
 }
