@@ -34,6 +34,7 @@ namespace SilveR.IntegrationTests
             DbContextOptionsBuilder<SilveRContext> optionsBuilder = new DbContextOptionsBuilder<SilveRContext>();
             optionsBuilder.UseSqlite("Data Source=SilveR.db");
             SilveRContext silverContext = new SilveRContext(optionsBuilder.Options);
+            silverContext.Database.Migrate();
 
             //if(silverContext.UserOptions.Any() == false)
             //{

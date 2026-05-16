@@ -1,7 +1,7 @@
 #Software branding
 #branding <- "InVivoStat (beta version)"
 branding <- "InVivoStat"
-IVS_version <- "5.1.0"
+IVS_version <- "5.2.0"
 
 #Software update
 UpdateIVS <- "N"
@@ -688,7 +688,7 @@ NONCAT_SCAT <- function(typez) {
 	}
 
 	if (typez == "PCAPLOT") {
-		g6 <- g5 + geom_text(size = labsize, aes(label = obznames), hjust = 0, vjust = 1) +
+		g6 <- g5 + geom_text(size = MarkerLabelFontSize, aes(label = obznames), hjust = 0, vjust = 1) +
 			theme(axis.text.x = element_text(hjust = 0.5, angle = 0), axis.text.y = element_text(hjust = 0.5, angle = 0))
 	} else {
 		g6 <- g5
@@ -894,7 +894,7 @@ OVERLAID_SCAT <- function() {
 	}
 
 	if (Labelz_IVS_ == "Y") {
-		g2 <- g1 + geom_text(size = labsize, aes(label = obznames), hjust = 0, vjust = 1)
+		g2 <- g1 + geom_text(size = MarkerLabelFontSize, aes(label = obznames), hjust = 0, vjust = 1)
 	} else {
 		g2 <- g1
 	}
@@ -1745,9 +1745,9 @@ CAT_QQPLOT <- function() {
 		stat_qq_line(aes(colour = catfact), lty = Line_type, linewidth = Line_size)
 
 #	if (scatterlabels == "Y") {
-#		g2 <- g + geom_text_repel(label = graphdata$name[order(graphdata$yvarrr_IVS)], stat="qq" ,  size = labsize,force = 10, point.padding=1, show.legend = FALSE)
-#		g2 <- g + geom_text_repel(aes(fill=catfact), label=graphdata$name[order(graphdata$yvarrr_IVS)], stat="qq" ,  size = labsize,force = 10, point.padding=1, show.legend = FALSE)
-#		g2 <- g + geom_text_repel(label=graphdata$name[order(graphdata$yvarrr_IVS)], stat="qq" ,  size = labsize,force = 10, point.padding=1, show.legend = FALSE)
+#		g2 <- g + geom_text_repel(label = graphdata$name[order(graphdata$yvarrr_IVS)], stat="qq" ,  size = MarkerLabelFontSize,force = 10, point.padding=1, show.legend = FALSE)
+#		g2 <- g + geom_text_repel(aes(fill=catfact), label=graphdata$name[order(graphdata$yvarrr_IVS)], stat="qq" ,  size = MarkerLabelFontSize,force = 10, point.padding=1, show.legend = FALSE)
+#		g2 <- g + geom_text_repel(label=graphdata$name[order(graphdata$yvarrr_IVS)], stat="qq" ,  size = MarkerLabelFontSize,force = 10, point.padding=1, show.legend = FALSE)
 #	} else {
 		g2 <- g
 #	}
@@ -2208,7 +2208,7 @@ PCbiplotx <- function(PC, x = "PC1", y = "PC2") {
 		theme(legend.position = Gr_legend_pos) +
 		geom_hline(yintercept=0, size = 0.1, linetype="dashed") +
 		geom_vline(xintercept=0, size = 0.1, linetype="dashed") + 
-		geom_text(alpha = .7, size = labsize, aes(label = obsnames)) 
+		geom_text(alpha = .7, size = MarkerLabelFontSize, aes(label = obsnames)) 
 	
 	datapc <- data.frame(varnames = rownames(PC$rotation), PC$rotation)
 	mult <- min(
@@ -2223,7 +2223,7 @@ PCbiplotx <- function(PC, x = "PC1", y = "PC2") {
 
 	plot2 <- plot + 
 		coord_equal() +
-		geom_text(data = datapc, aes(x = v1, y = v2, label = varnames), size = labsize, vjust = 1, color = Gr_line) +
+		geom_text(data = datapc, aes(x = v1, y = v2, label = varnames), size = MarkerLabelFontSize, vjust = 1, color = Gr_line) +
 		geom_segment(data = datapc, aes(x = 0, y = 0, xend = v1, yend = v2), arrow = arrow(length = unit(0.2, "cm")), color = Gr_line) 
 	suppressWarnings(print(plot2))
 }
@@ -2313,7 +2313,7 @@ for (i in 1 : length(segment(hcdata)$clust)) {
   labelParams <- set_labels_params(nrow(hcdata$labels), direction, fan)
   hcdata$labels$angle <- labelParams$angle
 
- p <- p + geom_text(data = label(hcdata), aes(x = x, y = y, label = label, colour = factor(clust), angle = angle), vjust = labelParams$vjust, hjust = labelParams$hjust, nudge_y = ymax * nudge.label, size = labsize, show.legend =  FALSE) +
+ p <- p + geom_text(data = label(hcdata), aes(x = x, y = y, label = label, colour = factor(clust), angle = angle), vjust = labelParams$vjust, hjust = labelParams$hjust, nudge_y = ymax * nudge.label, size = MarkerLabelFontSize, show.legend =  FALSE) +
   	scale_color_manual(values = Gr_paletteDen)
 
   ylim <- -round(ymax * expand.y, 1)
