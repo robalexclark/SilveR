@@ -346,6 +346,17 @@ namespace SilveR
                     context.Scripts.Add(multivariate);
                 }
 
+                Script existingHasseDiagramsGenerator = existingScripts.SingleOrDefault(x => x.ScriptFileName == "HasseDiagramsGenerator");
+                if (existingHasseDiagramsGenerator == null)
+                {
+                    Script hasseDiagramsGenerator = new Script() { ScriptDisplayName = "Hasse Diagrams Generator", ScriptFileName = "HasseDiagramsGenerator", RequiresDataset = true };
+                    context.Scripts.Add(hasseDiagramsGenerator);
+                }
+                else
+                {
+                    existingHasseDiagramsGenerator.RequiresDataset = true;
+                }
+
                 if (!existingScripts.Any(x => x.ScriptFileName == "NestedDesignAnalysis"))
                 {
                     Script nestedDesign = new Script() { ScriptDisplayName = "Nested Design Analysis", ScriptFileName = "NestedDesignAnalysis", RequiresDataset = true };

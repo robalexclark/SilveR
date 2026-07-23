@@ -83,6 +83,9 @@
     <None Update="Scripts\GraphicalAnalysis.R">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Scripts\HasseDiagramsGenerator.R">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Scripts\IncompleteFactorialParametricAnalysis.R">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

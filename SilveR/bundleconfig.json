@@ -57,6 +57,12 @@
     ]
   },
   {
+    "outputFileName": "wwwroot/js/stats/hasseDiagramsGenerator.min.js",
+    "inputFiles": [
+      "wwwroot/js/stats/hasseDiagramsGenerator.js"
+    ]
+  },
+  {
     "outputFileName": "wwwroot/js/stats/nonParametricAnalysis.min.js",
     "inputFiles": [
       "wwwroot/js/stats/nonParametricAnalysis.js",

@@ -25,12 +25,82 @@ namespace SilveR.Helpers
             HtmlDocument document = new HtmlDocument();
             document.LoadHtml(theHTML);
 
+            SanitizeHtml(document, resultsFiles);
             document = InlineImages(document, resultsFiles);
 
             List<char> trimChars = new List<char>(Environment.NewLine.ToCharArray());
             trimChars.Add(' ');
             string inlineHtml = document.DocumentNode.OuterHtml.Trim(trimChars.ToArray());
             return inlineHtml;
+        }
+
+        public static string SanitizeStoredHtml(string html)
+        {
+            if (String.IsNullOrEmpty(html))
+            {
+                return String.Empty;
+            }
+
+            HtmlDocument document = new HtmlDocument();
+            document.LoadHtml(html);
+            SanitizeHtml(document, null);
+            return document.DocumentNode.OuterHtml;
+        }
+
+        private static void SanitizeHtml(HtmlDocument document, List<string> resultsFiles)
+        {
+            string[] unsafeElements = { "script", "iframe", "object", "embed", "svg", "math", "base", "meta" };
+            foreach (HtmlNode node in document.DocumentNode.Descendants().Where(x => unsafeElements.Contains(x.Name, StringComparer.OrdinalIgnoreCase)).ToList())
+            {
+                node.Remove();
+            }
+
+            foreach (HtmlNode node in document.DocumentNode.Descendants().ToList())
+            {
+                if (node.Name.Equals("img", StringComparison.OrdinalIgnoreCase))
+                {
+                    string source = node.GetAttributeValue("src", String.Empty);
+                    bool isInlineImage = source.StartsWith("data:image/png;base64,", StringComparison.OrdinalIgnoreCase);
+                    bool isResultImage = resultsFiles != null && resultsFiles.Any(x => Path.GetFileName(x).Equals(Path.GetFileName(source), StringComparison.OrdinalIgnoreCase));
+                    if (!isInlineImage && !isResultImage)
+                    {
+                        node.Remove();
+                        continue;
+                    }
+                }
+
+                foreach (HtmlAttribute attribute in node.Attributes.ToList())
+                {
+                    string attributeName = attribute.Name;
+                    string attributeValue = attribute.Value?.Trim() ?? String.Empty;
+                    if (attributeName.StartsWith("on", StringComparison.OrdinalIgnoreCase)
+                        || IsUnsafeUri(attributeName, attributeValue)
+                        || (attributeName.Equals("style", StringComparison.OrdinalIgnoreCase) && ContainsUnsafeStyle(attributeValue)))
+                    {
+                        node.Attributes.Remove(attribute);
+                    }
+                }
+            }
+        }
+
+        private static bool IsUnsafeUri(string attributeName, string attributeValue)
+        {
+            if (!attributeName.Equals("href", StringComparison.OrdinalIgnoreCase)
+                && !attributeName.Equals("src", StringComparison.OrdinalIgnoreCase)
+                && !attributeName.Equals("xlink:href", StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+
+            return attributeValue.StartsWith("javascript:", StringComparison.OrdinalIgnoreCase)
+                || attributeValue.StartsWith("vbscript:", StringComparison.OrdinalIgnoreCase)
+                || attributeValue.StartsWith("data:text/html", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static bool ContainsUnsafeStyle(string style)
+        {
+            return style.IndexOf("expression(", StringComparison.OrdinalIgnoreCase) >= 0
+                || style.IndexOf("javascript:", StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
         private static HtmlDocument InlineImages(HtmlDocument document, List<string> resultsFiles)

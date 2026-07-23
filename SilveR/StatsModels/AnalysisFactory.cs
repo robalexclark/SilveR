@@ -37,6 +37,7 @@ namespace SilveR.StatsModels
                 "OneWayANOVAPowerAnalysisUserBasedInputs" => new OneWayANOVAPowerAnalysisUserBasedInputsModel(),
                 "OneWayANOVAPowerAnalysisDatasetBasedInputs" => new OneWayANOVAPowerAnalysisDatasetBasedInputsModel(dataset),
                 "MultivariateAnalysis" => new MultivariateAnalysisModel(dataset),
+                "HasseDiagramsGenerator" => new HasseDiagramsGeneratorModel(dataset),
                 "NestedDesignAnalysis" => new NestedDesignAnalysisModel(dataset),
                 "IncompleteFactorialParametricAnalysis" => new IncompleteFactorialParametricAnalysisModel(dataset),
                 "SingleMeasuresToRepeatedMeasuresDataTransformation" => new SingleMeasuresToRepeatedMeasuresDataTransformationModel(dataset),

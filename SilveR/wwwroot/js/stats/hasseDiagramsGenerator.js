@@ -1,0 +1,11 @@
+$(function () {
+    $("#FixedFactors").kendoMultiSelect({
+        dataSource: theModel.availableVariables,
+        value: theModel.fixedFactors
+    });
+
+    $("#RandomFactors").kendoMultiSelect({
+        dataSource: theModel.availableVariables,
+        value: theModel.randomFactors
+    });
+});

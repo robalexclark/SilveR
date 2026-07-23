@@ -1,0 +1,129 @@
+@model SilveR.StatsModels.HasseDiagramsGeneratorModel
+
+@section Scripts {
+    <script>
+        var theModel = @Html.Raw(Json.Serialize(Model));
+    </script>
+    <environment names="Development">
+        <script defer src="~/js/stats/hasseDiagramsGenerator.js"></script>
+    </environment>
+    <environment names="Production">
+        <script defer src="~/js/stats/hasseDiagramsGenerator.min.js"></script>
+    </environment>
+}
+
+@{
+    ViewBag.Title = "Hasse Diagrams Generator";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>@ViewBag.Title</h2>
+    </div>
+</div>
+
+<form action="/Analyses/HasseDiagramsGenerator" class="form-horizontal mt-2" method="post">
+    @await Html.PartialAsync("AnalysisErrors")
+    <input asp-for="DatasetID" hidden />
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-header">Input Options</div>
+                <div class="card-body">
+                    <h4>Factors</h4>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label" asp-for="FixedFactors">Fixed factors</label>
+                        <div class="col-md-6">
+                            <select class="form-control" asp-for="FixedFactors"></select>
+                            <span asp-validation-for="FixedFactors"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label" asp-for="RandomFactors">Random factors</label>
+                        <div class="col-md-6">
+                            <select class="form-control" asp-for="RandomFactors"></select>
+                            <span asp-validation-for="RandomFactors"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row mt-4">
+                        <label class="col-md-6 col-form-label" asp-for="CheckForConfoundedDegreesOfFreedom">Check for confounded DF</label>
+                        <div class="col-md-6 pt-2">
+                            <input asp-for="CheckForConfoundedDegreesOfFreedom" type="checkbox" class="checkbox-fix" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Output Options</div>
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label" asp-for="ObjectColour">Object colour</label>
+                        <div class="col-md-6"><input class="form-control" asp-for="ObjectColour" /></div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label" asp-for="ShowPartialCrossing">Show partial crossing</label>
+                        <div class="col-md-6 pt-2"><input asp-for="ShowPartialCrossing" type="checkbox" class="checkbox-fix" /></div>
+                    </div>
+
+                    <h4>Object labels</h4>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label" asp-for="ShowDegreesOfFreedom">Show degrees of freedom</label>
+                        <div class="col-md-6 pt-2"><input asp-for="ShowDegreesOfFreedom" type="checkbox" class="checkbox-fix" /></div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label" asp-for="ShowMaximumLevels">Show maximum levels</label>
+                        <div class="col-md-6 pt-2"><input asp-for="ShowMaximumLevels" type="checkbox" class="checkbox-fix" /></div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label" asp-for="FontColour">Font colour</label>
+                        <div class="col-md-6"><input class="form-control" asp-for="FontColour" /></div>
+                    </div>
+
+                    <h4>Structural lines</h4>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label" asp-for="StructuralLineColour">Colour</label>
+                        <div class="col-md-6"><input class="form-control" asp-for="StructuralLineColour" /></div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label" asp-for="StructuralLineWidth">Width</label>
+                        <div class="col-md-6"><input class="form-control" asp-for="StructuralLineWidth" /></div>
+                    </div>
+
+                    <h4>Partial crossing lines</h4>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label" asp-for="PartialCrossingLineColour">Colour</label>
+                        <div class="col-md-6"><input class="form-control" asp-for="PartialCrossingLineColour" /></div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label" asp-for="PartialCrossingLineWidth">Width</label>
+                        <div class="col-md-6"><input class="form-control" asp-for="PartialCrossingLineWidth" /></div>
+                    </div>
+
+                    <h4>Object font sizes</h4>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label" asp-for="SmallObjectFontSize">Small</label>
+                        <div class="col-md-6"><input class="form-control" asp-for="SmallObjectFontSize" /></div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label" asp-for="MediumObjectFontSize">Medium</label>
+                        <div class="col-md-6"><input class="form-control" asp-for="MediumObjectFontSize" /></div>
+                    </div>
+                    <div class="form-group row mb-0">
+                        <label class="col-md-6 col-form-label" asp-for="LargeObjectFontSize">Large</label>
+                        <div class="col-md-6"><input class="form-control" asp-for="LargeObjectFontSize" /></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row my-3">
+        <div class="col-md-12 text-right">
+            <button class="btn btn-primary btn-lg" type="submit">Submit <i class="fa fa-caret-right"></i></button>
+        </div>
+    </div>
+</form>

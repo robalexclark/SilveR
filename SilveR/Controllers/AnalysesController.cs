@@ -260,6 +260,12 @@ namespace SilveR.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> HasseDiagramsGenerator(HasseDiagramsGeneratorModel model, bool ignoreWarnings)
+        {
+            return await RunAnalysis(model, ignoreWarnings);
+        }
+
+        [HttpPost]
         public async Task<IActionResult> NestedDesignAnalysis(NestedDesignAnalysisModel model, bool ignoreWarnings)
         {
             return await RunAnalysis(model, ignoreWarnings);
@@ -375,6 +381,7 @@ namespace SilveR.Controllers
 
             if (analysis.HtmlOutput != null)
             {
+                analysis.HtmlOutput = InlineHtmlCreator.SanitizeStoredHtml(analysis.HtmlOutput);
                 return View(analysis);
             }
             else
@@ -413,6 +420,7 @@ namespace SilveR.Controllers
         public async Task<IActionResult> ResultsForExport(string analysisGuid)
         {
             Analysis analysis = await repository.GetAnalysis(analysisGuid);
+            analysis.HtmlOutput = InlineHtmlCreator.SanitizeStoredHtml(analysis.HtmlOutput);
             return View(analysis);
         }
 
