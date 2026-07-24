@@ -1,0 +1,11 @@
+analytical              A cross-nested design for an analytical method
+                        investigation
+concrete                A fractional factorial design for investigating
+                        asphalt concrete production
+dental                  A crossover design for a dental study
+hasselayout             Hasse diagram of the layout structure
+hasserls                Hasse diagram of the restricted layout
+                        structure
+human                   A block design for an experiment in
+                        human-computer interaction
+print.ls                Print and Summary Methods for '"ls"' Objects

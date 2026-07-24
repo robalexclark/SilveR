@@ -4,12 +4,12 @@ Title: Hasse Diagram of the Layout Structure and Restricted Layout
         Structure
 Version: 2.1
 Date: 2026-07-22
-Authors@R:
+Authors@R: 
     c(person(given = "Damianos", family = "Michaelides", role = c("aut", "cre"), email = "dm3g15@soton.ac.uk"),
       person(given = "Simon", family = "Bate", role = c("aut"), email = "simon.t.bate@gsk.com"),
       person(given = "Marion", family = "Chatfield", role = "aut"))
 Maintainer: Damianos Michaelides <dm3g15@soton.ac.uk>
-Description: Returns a Hasse diagram of the layout structure (Bate and Chatfield (2016)) <doi:10.1080/00224065.2016.11918173> or the restricted layout structure (Bate and Chatfield (2016)) <doi:10.1080/00224065.2016.11918174> of an experimental design.
+Description: Returns a Hasse diagram of the layout structure (Bate and Chatfield (2016)) <doi:10.1080/00224065.2016.11918173> or the restricted layout structure (Bate and Chatfield (2016)) <doi:10.1080/00224065.2016.11918174> of an experimental design. 
 License: GPL-2
 Encoding: UTF-8
 URL: https://github.com/GSK-Biostatistics/hassediagrams
