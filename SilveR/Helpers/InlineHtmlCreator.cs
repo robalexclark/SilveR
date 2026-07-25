@@ -59,7 +59,7 @@ namespace SilveR.Helpers
             {
                 if (node.Name.Equals("img", StringComparison.OrdinalIgnoreCase))
                 {
-                    string source = node.GetAttributeValue("src", String.Empty);
+                    string source = HtmlEntity.DeEntitize(node.GetAttributeValue("src", String.Empty)).Trim();
                     bool isInlineImage = source.StartsWith("data:image/png;base64,", StringComparison.OrdinalIgnoreCase);
                     bool isResultImage = resultsFiles != null && resultsFiles.Any(x => Path.GetFileName(x).Equals(Path.GetFileName(source), StringComparison.OrdinalIgnoreCase));
                     if (!isInlineImage && !isResultImage)
@@ -92,9 +92,30 @@ namespace SilveR.Helpers
                 return false;
             }
 
-            return attributeValue.StartsWith("javascript:", StringComparison.OrdinalIgnoreCase)
-                || attributeValue.StartsWith("vbscript:", StringComparison.OrdinalIgnoreCase)
-                || attributeValue.StartsWith("data:text/html", StringComparison.OrdinalIgnoreCase);
+            string decodedValue = HtmlEntity.DeEntitize(attributeValue).Trim();
+            int colonIndex = decodedValue.IndexOf(':');
+            int pathIndex = decodedValue.IndexOfAny(new[] { '/', '?', '#' });
+            if (colonIndex < 0 || (pathIndex >= 0 && pathIndex < colonIndex))
+            {
+                return false;
+            }
+
+            string scheme = new string(decodedValue
+                .Take(colonIndex)
+                .Where(character => !Char.IsControl(character) && !Char.IsWhiteSpace(character))
+                .ToArray());
+
+            if (attributeName.Equals("href", StringComparison.OrdinalIgnoreCase))
+            {
+                return !scheme.Equals("http", StringComparison.OrdinalIgnoreCase)
+                    && !scheme.Equals("https", StringComparison.OrdinalIgnoreCase)
+                    && !scheme.Equals("mailto", StringComparison.OrdinalIgnoreCase);
+            }
+
+            return !scheme.Equals("http", StringComparison.OrdinalIgnoreCase)
+                && !scheme.Equals("https", StringComparison.OrdinalIgnoreCase)
+                && !(scheme.Equals("data", StringComparison.OrdinalIgnoreCase)
+                    && decodedValue.StartsWith("data:image/png;base64,", StringComparison.OrdinalIgnoreCase));
         }
 
         private static bool ContainsUnsafeStyle(string style)

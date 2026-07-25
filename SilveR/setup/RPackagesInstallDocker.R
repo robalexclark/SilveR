@@ -24,6 +24,7 @@ install.packages("https://cran.r-project.org/src/contrib/Archive/rms/rms_6.6-0.t
 install.packages("contrast", dependencies = TRUE, ask = FALSE)
 install.packages("PowerTOST", dependencies = TRUE, ask = FALSE)
 install.packages("mmrm", dependencies = TRUE, ask = FALSE)
+install.packages("hassediagrams", dependencies = TRUE, ask = FALSE)
 
 BiocManager::install("mixOmics", dependencies = TRUE, ask = FALSE)
 
@@ -33,7 +34,8 @@ packages <- c(
   "R2HTML", "Matrix", "MASS", "ggplot2", "ggrepel", "plyr", "reshape", 
   "GGally", "proto", "coin", "ROCR", "Exact", "dplyr", "multcompView", 
   "car", "emmeans", "detectseparation", "ggdendro", "BiocManager", 
-  "Hmisc", "polspline", "kableExtra", "rms", "contrast", "PowerTOST", "mmrm"
+  "Hmisc", "polspline", "kableExtra", "rms", "contrast", "PowerTOST", "mmrm",
+  "hassediagrams"
 )
 
 # Function to check installation

@@ -27,6 +27,7 @@ install.packages("BiocManager")
 install.packages("contrast")
 install.packages("PowerTOST")
 install.packages("mmrm")
+install.packages("hassediagrams")
 
 BiocManager::install("mixOmics")
 
@@ -57,3 +58,4 @@ library(BiocManager)
 library(contrast)
 library(mixOmics)
 library(mmrm)
+library(hassediagrams)

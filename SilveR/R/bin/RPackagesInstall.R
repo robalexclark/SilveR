@@ -28,6 +28,7 @@ install.packages("ggdendro")
 install.packages("BiocManager")
 install.packages("contrast")
 install.packages("PowerTOST", repo="https://www.stats.bris.ac.uk/R/")
+install.packages("hassediagrams")
 BiocManager::install("mixOmics")
 
 
@@ -56,3 +57,4 @@ library(ggdendro)
 library(BiocManager)
 library(contrast)
 library(mixOmics)
+library(hassediagrams)

@@ -1,0 +1,30 @@
+Package: hassediagrams
+Type: Package
+Title: Hasse Diagram of the Layout Structure and Restricted Layout
+        Structure
+Version: 2.1
+Date: 2026-07-22
+Authors@R:
+    c(person(given = "Damianos", family = "Michaelides", role = c("aut", "cre"), email = "dm3g15@soton.ac.uk"),
+      person(given = "Simon", family = "Bate", role = c("aut"), email = "simon.t.bate@gsk.com"),
+      person(given = "Marion", family = "Chatfield", role = "aut"))
+Maintainer: Damianos Michaelides <dm3g15@soton.ac.uk>
+Description: Returns a Hasse diagram of the layout structure (Bate and Chatfield (2016)) <doi:10.1080/00224065.2016.11918173> or the restricted layout structure (Bate and Chatfield (2016)) <doi:10.1080/00224065.2016.11918174> of an experimental design.
+License: GPL-2
+Encoding: UTF-8
+URL: https://github.com/GSK-Biostatistics/hassediagrams
+BugReports: https://github.com/GSK-Biostatistics/hassediagrams/issues
+Imports: igraph, methods, MASS, grDevices, graphics, stats, utils
+Depends: R (>= 3.5.0)
+Suggests: dae, knitr, rmarkdown, jsonlite, kableExtra
+LazyData: true
+RoxygenNote: 7.3.2
+VignetteBuilder: knitr
+NeedsCompilation: no
+Packaged: 2026-07-22 08:57:48 UTC; damianosmichaelides
+Author: Damianos Michaelides [aut, cre],
+  Simon Bate [aut],
+  Marion Chatfield [aut]
+Repository: CRAN
+Date/Publication: 2026-07-22 10:20:02 UTC
+Built: R 4.6.1; ; 2026-07-22 23:52:00 UTC; windows

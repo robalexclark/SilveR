@@ -43,5 +43,29 @@ namespace SilveR.UnitTests.Helpers
             Assert.DoesNotContain("javascript:", result, StringComparison.OrdinalIgnoreCase);
             Assert.Contains("data:image/png;base64,AA==", result, StringComparison.OrdinalIgnoreCase);
         }
+
+        [Theory]
+        [InlineData("&#106;avascript:alert(1)")]
+        [InlineData("java&#x09;script:alert(1)")]
+        [InlineData("vbscript:alert(1)")]
+        [InlineData("data:text/html,&lt;script&gt;alert(1)&lt;/script&gt;")]
+        public void SanitizeStoredHtml_EncodedOrDisallowedUri_RemovesAttribute(string uri)
+        {
+            string result = InlineHtmlCreator.SanitizeStoredHtml($"<a href=\"{uri}\">unsafe</a>");
+
+            Assert.DoesNotContain("href=", result, StringComparison.OrdinalIgnoreCase);
+        }
+
+        [Theory]
+        [InlineData("/analyses/result")]
+        [InlineData("#result")]
+        [InlineData("https://example.test/result")]
+        [InlineData("mailto:analyst@example.test")]
+        public void SanitizeStoredHtml_AllowedUri_KeepsAttribute(string uri)
+        {
+            string result = InlineHtmlCreator.SanitizeStoredHtml($"<a href=\"{uri}\">safe</a>");
+
+            Assert.Contains("href=", result, StringComparison.OrdinalIgnoreCase);
+        }
     }
 }
