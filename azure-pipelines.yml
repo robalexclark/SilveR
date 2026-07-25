@@ -127,17 +127,29 @@ jobs:
   - script: 'dotnet clean'
     displayName: Clean Build
 
-  - script: electronize build /target win
+  - powershell: |
+      electronize build /target win /package-json electron-builder.package.json
+      if ($LASTEXITCODE -ne 0) {
+          throw "electronize build failed with exit code $LASTEXITCODE."
+      }
+      $installer = $null
+      $deadline = (Get-Date).AddMinutes(30)
+      while (($null -eq $installer) -and ((Get-Date) -lt $deadline)) {
+          $installer = Get-ChildItem -Path '$(Agent.WorkFolder)' -Filter '*.exe' -File -Recurse |
+              Where-Object { $_.Name -like '*Setup*.exe' -and $_.Name -notlike '*uninstaller*' } |
+              Select-Object -First 1
+          if ($null -eq $installer) {
+              Write-Host 'Waiting for electron-builder to produce the Windows installer...'
+              Start-Sleep -Seconds 10
+          }
+      }
+      if ($null -eq $installer) {
+          throw 'electron-builder did not produce the Windows installer within 30 minutes.'
+      }
+      Write-Host "Copying installer from $($installer.FullName)"
+      Copy-Item -LiteralPath $installer.FullName -Destination '$(Build.ArtifactStagingDirectory)/InVivoStat Setup 5.2.0.exe' -Force
     workingDirectory: ./SilveR
-    displayName: Build for Win-x64
-
-  - task: CopyFiles@2
-    displayName: Copy InVivoStat Setup 5.2.0.exe
-    inputs:
-      sourceFolder: '$(Build.SourcesDirectory)/SilveR/bin/Desktop'
-      contents: 'InVivoStat Setup 5.2.0.exe'
-      targetFolder: '$(Build.ArtifactStagingDirectory)'
-      overWrite: true
+    displayName: Build and copy InVivoStat Setup 5.2.0.exe
 
   - task: PublishBuildArtifacts@1
     inputs:
@@ -184,22 +196,24 @@ jobs:
   - script: dotnet tool install ElectronNET.CLI -g
     displayName: Install Electron.Net CLI
 
-  - script: sudo npm install electron-builder --global
-    displayName: Install electron builder
-
-  #- script: sudo chown -R $(whoami) ~/.npm
-  #  displayName: Reset permissions
-
-  - script: electronize build /target linux
+  - script: |
+      electronize build /target linux /package-json electron-builder.package.json
+      installer=''
+      for attempt in $(seq 1 180); do
+        installer="$(find "$(Agent.WorkFolder)" -type f -name '*.AppImage' -print -quit)"
+        test -n "$installer" && break
+        echo 'Waiting for electron-builder to produce the Linux AppImage...'
+        sleep 10
+      done
+      test -n "$installer" || { echo 'electron-builder did not produce the Linux AppImage within 30 minutes.' >&2; exit 1; }
+      echo "Copying installer from $installer"
+      cp "$installer" "$(Build.ArtifactStagingDirectory)/InVivoStat Setup 5.2.0.AppImage"
     workingDirectory: ./SilveR
-    displayName: Build for Linux
-
-  - script: 'cp $(Build.SourcesDirectory)/SilveR/bin/Desktop/InVivoStat-5.2.0.AppImage $(Build.ArtifactStagingDirectory)'  
-    displayName: Copy InVivoStat Setup 5.2.0.AppImage
+    displayName: Build and copy InVivoStat Setup 5.2.0.AppImage
 
   - task: PublishBuildArtifacts@1
     inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)/InVivoStat-5.2.0.AppImage'
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/InVivoStat Setup 5.2.0.AppImage'
       ArtifactName: 'drop'
 
   - task: GitHubRelease@1
@@ -212,7 +226,7 @@ jobs:
       tag: '5.2.0'
       title: '5.2.0'
       assetUploadMode: 'replace'
-      assets: '$(Build.ArtifactStagingDirectory)/InVivoStat-5.2.0.AppImage'
+      assets: '$(Build.ArtifactStagingDirectory)/InVivoStat Setup 5.2.0.AppImage'
       isPreRelease: true
       isDraft: false
 
@@ -242,15 +256,20 @@ jobs:
   - script: dotnet tool install ElectronNET.CLI -g
     displayName: Install Electron.Net CLI
 
-  - script: sudo npm install electron-builder --global
-    displayName: Install electron-builder
-
-  - script: electronize build /target osx 
+  - script: |
+      electronize build /target osx /package-json electron-builder.package.json
+      installer=''
+      for attempt in $(seq 1 180); do
+        installer="$(find "$(Agent.WorkFolder)" -type f -name '*.dmg' -print -quit)"
+        test -n "$installer" && break
+        echo 'Waiting for electron-builder to produce the macOS disk image...'
+        sleep 10
+      done
+      test -n "$installer" || { echo 'electron-builder did not produce the macOS disk image within 30 minutes.' >&2; exit 1; }
+      echo "Copying installer from $installer"
+      cp "$installer" "$(Build.ArtifactStagingDirectory)/InVivoStat-5.2.0.dmg"
     workingDirectory: ./SilveR
-    displayName: Build for MacOS
-
-  - script: 'cp $(Build.SourcesDirectory)/SilveR/bin/Desktop/InVivoStat-5.2.0.dmg $(Build.ArtifactStagingDirectory)'
-    displayName: Copy InVivoStat Setup 5.2.0.dmg
+    displayName: Build and copy InVivoStat Setup 5.2.0.dmg
 
   - task: PublishBuildArtifacts@1
     inputs:
