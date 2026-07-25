@@ -1,0 +1,20 @@
+{
+  "name": "in-vivo-stat-electron-host",
+  "version": "5.2.0",
+  "description": "Electron.NET host dependencies used by the release build",
+  "main": "main.js",
+  "license": "MIT",
+  "dependencies": {
+    "dasherize": "^2.0.0",
+    "electron-updater": "^5.3.0",
+    "image-size": "^1.0.2",
+    "portscanner": "^2.2.0",
+    "socket.io": "^4.6.1"
+  },
+  "devDependencies": {
+    "electron": "23.2.0"
+  },
+  "optionalDependencies": {
+    "electron-builder": "24.13.3"
+  }
+}
