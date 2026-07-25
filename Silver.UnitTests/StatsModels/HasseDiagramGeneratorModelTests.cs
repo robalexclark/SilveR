@@ -6,13 +6,13 @@ using Xunit;
 
 namespace SilveR.UnitTests.StatsModels
 {
-    public class HasseDiagramsGeneratorModelTests
+    public class HasseDiagramGeneratorModelTests
     {
         [Fact]
         public void Validate_NoFactors_ReturnsError()
         {
             System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
-            HasseDiagramsGeneratorModel sut = new HasseDiagramsGeneratorModel();
+            HasseDiagramGeneratorModel sut = new HasseDiagramGeneratorModel();
 
             var result = sut.Validate();
 
@@ -24,7 +24,7 @@ namespace SilveR.UnitTests.StatsModels
         public void GetCommandLineArguments_FixedAndRandomFactors_ReturnsConfiguredArguments()
         {
             System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
-            HasseDiagramsGeneratorModel sut = new HasseDiagramsGeneratorModel
+            HasseDiagramGeneratorModel sut = new HasseDiagramGeneratorModel
             {
                 FixedFactors = new List<string> { "Treatment", "Time" },
                 RandomFactors = new List<string> { "Block" }

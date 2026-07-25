@@ -260,7 +260,7 @@ namespace SilveR.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> HasseDiagramsGenerator(HasseDiagramsGeneratorModel model, bool ignoreWarnings)
+        public async Task<IActionResult> HasseDiagramGenerator(HasseDiagramGeneratorModel model, bool ignoreWarnings)
         {
             return await RunAnalysis(model, ignoreWarnings);
         }

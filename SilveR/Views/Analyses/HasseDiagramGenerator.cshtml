@@ -1,28 +1,32 @@
-@model SilveR.StatsModels.HasseDiagramsGeneratorModel
+@model SilveR.StatsModels.HasseDiagramGeneratorModel
 
 @section Scripts {
     <script>
         var theModel = @Html.Raw(Json.Serialize(Model));
     </script>
     <environment names="Development">
-        <script defer src="~/js/stats/hasseDiagramsGenerator.js"></script>
+        <script defer src="~/js/stats/hasseDiagramGenerator.js"></script>
+        <script defer src="~/js/openLinks.js"></script>
     </environment>
     <environment names="Production">
-        <script defer src="~/js/stats/hasseDiagramsGenerator.min.js"></script>
+        <script defer src="~/js/stats/hasseDiagramGenerator.min.js"></script>
     </environment>
 }
 
 @{
-    ViewBag.Title = "Hasse Diagrams Generator";
+    ViewBag.Title = "Hasse Diagram Generator";
 }
 
 <div class="row">
     <div class="col-md-6">
         <h2>@ViewBag.Title</h2>
     </div>
+    <div class="col-md-6">
+        <a href="#" onclick="openItem('http://invivostat.co.uk/wp-content/user-guides-v4/Hasse_Diagram_Generator.pdf')" class="btn btn-info pull-right">Help</a>
+    </div>
 </div>
 
-<form action="/Analyses/HasseDiagramsGenerator" class="form-horizontal mt-2" method="post">
+<form action="/Analyses/HasseDiagramGenerator" class="form-horizontal mt-2" method="post">
     @await Html.PartialAsync("AnalysisErrors")
     <input asp-for="DatasetID" hidden />
 

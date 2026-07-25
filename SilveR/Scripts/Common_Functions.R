@@ -398,6 +398,96 @@ namereplaceGSUB <- function(axistitle) {
 	return(axistitle)
 }
 
+
+
+namereplaceHD <- function(axistitle) {
+
+	#for (i in 1:20) {
+		axistitle <- gsub("ivs_questionmark_ivs", "_", axistitle)
+		axistitle <- gsub("ivs_tilde_ivs", "_", axistitle)
+		axistitle <- gsub("ivs_star_ivs", "_", axistitle)
+		axistitle <- gsub("ivs_plus_ivs", "_", axistitle)
+		axistitle <- gsub("ivs_sp_ivs", "_", axistitle)
+		axistitle <- gsub("ivs_ob_ivs", "_", axistitle)
+		axistitle <- gsub("X_IVS_X", "_", axistitle)
+		axistitle <- gsub("ivs_cb_ivs", "_", axistitle)
+		axistitle <- gsub("ivs_div_ivs", "_", axistitle)
+		axistitle <- gsub("ivs_pc_ivs", "_", axistitle)
+		axistitle <- gsub("ivs_hash_ivs", "_", axistitle)
+		axistitle <- gsub("ivs_pt_ivs", "_", axistitle)
+		axistitle <- gsub("ivs_hyphen_ivs", "_", axistitle)
+		axistitle <- gsub("ivs_at_ivs", "_", axistitle)
+		axistitle <- gsub("ivs_colon_ivs", "_", axistitle)
+		axistitle <- gsub("ivs_exclam_ivs", "_", axistitle)
+		axistitle <- gsub("ivs_quote_ivs", "_", axistitle)
+		axistitle <- gsub("ivs_pound_ivs", "_", axistitle)
+		axistitle <- gsub("ivs_dollar_ivs", "_", axistitle)
+		axistitle <- gsub("ivs_hat_ivs", "_", axistitle)
+		axistitle <- gsub("ivs_amper_ivs", "_", axistitle)
+		axistitle <- gsub("ivs_obrace_ivs", "_", axistitle)
+		axistitle <- gsub("ivs_cbrace_ivs", "_", axistitle)
+		axistitle <- gsub("ivs_semi_ivs", "_", axistitle)
+		axistitle <- gsub("ivs_pipe_ivs", "_", axistitle)
+		axistitle <- gsub("ivs_slash_ivs", "_", axistitle)
+		axistitle <- gsub("ivs_osb_ivs", "_", axistitle)
+		axistitle <- gsub("ivs_csb_ivs", "_", axistitle)
+		axistitle <- gsub("ivs_eq_ivs", "_", axistitle)
+		axistitle <- gsub("ivs_lt_ivs", "_", axistitle)
+		axistitle <- gsub("ivs_gt_ivs", "_", axistitle)
+		axistitle <- gsub("ivs_dblquote_ivs", "_", axistitle)
+ 	#}
+	 
+	return(axistitle)
+}
+
+
+#This text replaces variable names in the Hase Daigmam module
+replace_ivs_bits <- function(df) {
+   patterns <- c(
+    "ivs_tilde_ivs",
+    "ivs_star_ivs",
+    "ivs_plus_ivs",
+    "ivs_sp_ivs",
+    "ivs_ob_ivs",
+    "X_IVS_X",
+    "ivs_cb_ivs",
+    "ivs_div_ivs",
+    "ivs_pc_ivs",
+    "ivs_hash_ivs",
+    "ivs_pt_ivs",
+    "ivs_hyphen_ivs",
+    "ivs_at_ivs",
+    "ivs_colon_ivs",
+    "ivs_exclam_ivs",
+    "ivs_quote_ivs",
+    "ivs_pound_ivs",
+    "ivs_dollar_ivs",
+    "ivs_hat_ivs",
+    "ivs_amper_ivs",
+    "ivs_obrace_ivs",
+    "ivs_cbrace_ivs",
+    "ivs_semi_ivs",
+    "ivs_pipe_ivs",
+    "ivs_slash_ivs",
+    "ivs_osb_ivs",
+    "ivs_csb_ivs",
+    "ivs_eq_ivs",
+    "ivs_lt_ivs",
+    "ivs_gt_ivs",
+    "ivs_dblquote_ivs"
+  )
+  
+  replacements <- setNames(rep("_", length(patterns)), patterns)
+  
+  new_names <- names(df)
+  for (p in names(replacements)) {
+    new_names <- str_replace_all(new_names, fixed(p), replacements[p])
+  }
+  
+  names(df) <- new_names
+  df
+}
+
 #===================================================================================================================
 #Graphical functions - shared code across modules
 #===================================================================================================================
@@ -2452,6 +2542,7 @@ reference <- function (name) {
   if (name == "dplyr") 		  {reference <- "Wickham H, Francois R, Henry L, Muller K, Vaughan D (2023). dplyr: A Grammar of Data Manipulation. doi:10.32614/CRAN.package.dplyr, R package version 1.1.4, https://CRAN.R-project.org/package=dplyr."}
   if (name == "emmeans") 	  {reference <- "Lenth R (2025). emmeans: Estimated Marginal Means, aka Least-Squares Means. doi:10.32614/CRAN.package.emmeans, R package version 1.11.1, https://CRAN.R-project.org/package=emmeans."}
   if (name == "Exact") 		  {reference <- "Calhoun P (2024). Exact: Unconditional Exact Test. doi:10.32614/CRAN.package.Exact, R package version 3.3, https://CRAN.R-project.org/package=Exact."}
+  if (name == "hassediagrams") 	  {reference <- "Michaelides D, Bate S, Chatfield M (2026). hassediagrams: Hasse Diagram of the Layout Structure and Restricted Layout Structure. doi:10.32614/CRAN.package.hassediagrams. doi.org/10.32614/CRAN.package.hassediagrams, R  package version 2.0, https://CRAN.R-project.org/package=hassediagrams."}
   if (name == "Hmisc") 		  {reference <- "Harrell Jr F (2025). Hmisc: Harrell Miscellaneous.  doi:10.32614/CRAN.package.Hmisc, R package version 5.2-3, https://CRAN.R-project.org/package=Hmisc."}
   if (name == "GGally")  	  {reference <- "Schloerke B, Cook D, Larmarange J, Briatte F, Marbach M, Thoen E, Elberg A, Crowley J (2024). GGally: Extension to ggplot2. doi:10.32614/CRAN.package.GGally, R  package version 2.2.1, https://CRAN.R-project.org/package=GGally."}
   if (name == "ggdendro") 	  {reference <- "de Vries A, Ripley BD (2024). ggdendro: Create Dendrograms and Tree Diagrams Using ggplot2. doi:10.32614/CRAN.package.ggdendro, R package version 0.2.0, https://CRAN.R-project.org/package=ggdendro."}

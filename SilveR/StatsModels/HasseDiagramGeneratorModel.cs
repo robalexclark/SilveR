@@ -10,7 +10,7 @@ using System.Text;
 
 namespace SilveR.StatsModels
 {
-    public class HasseDiagramsGeneratorModel : AnalysisDataModelBase
+    public class HasseDiagramGeneratorModel : AnalysisDataModelBase
     {
         [CheckUsedOnceOnly]
         public IEnumerable<string> FixedFactors { get; set; }
@@ -44,9 +44,9 @@ namespace SilveR.StatsModels
 
         public decimal LargeObjectFontSize { get; set; } = 1m;
 
-        public HasseDiagramsGeneratorModel() : base("HasseDiagramsGenerator") { }
+        public HasseDiagramGeneratorModel() : base("HasseDiagramGenerator") { }
 
-        public HasseDiagramsGeneratorModel(IDataset dataset) : base(dataset, "HasseDiagramsGenerator") { }
+        public HasseDiagramGeneratorModel(IDataset dataset) : base(dataset, "HasseDiagramGenerator") { }
 
         public override ValidationInfo Validate()
         {
