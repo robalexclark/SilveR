@@ -9,6 +9,7 @@ using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -237,15 +238,45 @@ namespace SilveR.Services
                     Analysis analysis = await silveRRepository.GetAnalysis(analysisGuid);
 
                     string message = "ContentRoot=" + Startup.ContentRootPath + Environment.NewLine + Environment.NewLine;
+                    message = message + "AnalysisGuid=" + analysisGuid + Environment.NewLine + Environment.NewLine;
                     message = message + "TempFolder=" + workingDir + Environment.NewLine + Environment.NewLine;
                     message = message + "Arguments=" + theArguments + Environment.NewLine + Environment.NewLine;
                     message = message + "Rscript=" + rscriptPath + Environment.NewLine + Environment.NewLine;
+                    message = message + "ApplicationVersion=" + (Assembly.GetEntryAssembly()?.GetName().Version?.ToString() ?? "unknown") + Environment.NewLine;
+                    message = message + "Runtime=" + RuntimeInformation.FrameworkDescription + Environment.NewLine;
+                    message = message + "OperatingSystem=" + RuntimeInformation.OSDescription + Environment.NewLine + Environment.NewLine;
+                    message = message + "AnalysisOutputFiles:" + Environment.NewLine + GetAnalysisOutputFileManifest(workingDir, analysisGuid) + Environment.NewLine;
+                    message = message + "Exception:" + Environment.NewLine;
 
                     message = message + ex.ToString();
 
                     analysis.RProcessOutput = message;
                     await silveRRepository.UpdateAnalysis(analysis);
                 }
+            }
+        }
+
+        private static string GetAnalysisOutputFileManifest(string workingDir, string analysisGuid)
+        {
+            try
+            {
+                FileInfo[] files = new DirectoryInfo(workingDir)
+                    .GetFiles(analysisGuid + "*")
+                    .OrderBy(file => file.Name, StringComparer.OrdinalIgnoreCase)
+                    .ToArray();
+
+                if (files.Length == 0)
+                {
+                    return "(none)";
+                }
+
+                return String.Join(
+                    Environment.NewLine,
+                    files.Select(file => $"- {file.Name} ({file.Length} bytes, last modified {file.LastWriteTimeUtc:O})"));
+            }
+            catch (Exception ex)
+            {
+                return $"(unable to enumerate output files: {ex.GetType().Name}: {ex.Message})";
             }
         }
 

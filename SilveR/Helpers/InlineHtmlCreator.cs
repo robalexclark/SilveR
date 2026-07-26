@@ -13,8 +13,21 @@ namespace SilveR.Helpers
     {
         public static string CreateInlineHtml(List<string> resultsFiles)
         {
+            ArgumentNullException.ThrowIfNull(resultsFiles);
+
             //get html
-            string htmlFile = resultsFiles.Single(x => x.EndsWith(".html") || x.EndsWith(".htm"));
+            List<string> htmlFiles = resultsFiles
+                .Where(x => x.EndsWith(".html", StringComparison.OrdinalIgnoreCase)
+                    || x.EndsWith(".htm", StringComparison.OrdinalIgnoreCase))
+                .ToList();
+            if (htmlFiles.Count != 1)
+            {
+                throw new InvalidOperationException(
+                    $"Expected exactly one HTML results file, but found {htmlFiles.Count}. "
+                    + $"Available result files: {FormatResultFileNames(resultsFiles)}");
+            }
+
+            string htmlFile = htmlFiles[0];
 
             //read in the html and reconvert any dodgy characters back
             string theHTML = File.ReadAllText(htmlFile, Encoding.UTF8); // Encoding.GetEncoding(1252));
@@ -26,12 +39,43 @@ namespace SilveR.Helpers
             document.LoadHtml(theHTML);
 
             SanitizeHtml(document, resultsFiles);
+            ValidateResultImageReferences(document, resultsFiles);
             document = InlineImages(document, resultsFiles);
 
             List<char> trimChars = new List<char>(Environment.NewLine.ToCharArray());
             trimChars.Add(' ');
             string inlineHtml = document.DocumentNode.OuterHtml.Trim(trimChars.ToArray());
             return inlineHtml;
+        }
+
+        private static void ValidateResultImageReferences(HtmlDocument document, List<string> resultsFiles)
+        {
+            List<string> missingImages = document.DocumentNode
+                .Descendants("img")
+                .Select(node => HtmlEntity.DeEntitize(node.GetAttributeValue("src", String.Empty)).Trim())
+                .Where(source => !String.IsNullOrEmpty(source)
+                    && !source.StartsWith("data:image/png;base64,", StringComparison.OrdinalIgnoreCase)
+                    && !resultsFiles.Any(file => Path.GetFileName(file).Equals(
+                        Path.GetFileName(source), StringComparison.OrdinalIgnoreCase)))
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToList();
+
+            if (missingImages.Count > 0)
+            {
+                throw new InvalidOperationException(
+                    $"HTML references image file(s) that were not produced: {String.Join(", ", missingImages)}. "
+                    + $"Available result files: {FormatResultFileNames(resultsFiles)}");
+            }
+        }
+
+        private static string FormatResultFileNames(IEnumerable<string> resultsFiles)
+        {
+            string[] fileNames = resultsFiles
+                .Select(Path.GetFileName)
+                .OrderBy(fileName => fileName, StringComparer.OrdinalIgnoreCase)
+                .ToArray();
+
+            return fileNames.Length == 0 ? "(none)" : String.Join(", ", fileNames);
         }
 
         public static string SanitizeStoredHtml(string html)
@@ -128,11 +172,34 @@ namespace SilveR.Helpers
         {
             foreach (HtmlNode d in document.DocumentNode.Descendants("img"))
             {
-                string src = d.GetAttributeValue("src", null);
+                string src = HtmlEntity.DeEntitize(d.GetAttributeValue("src", String.Empty)).Trim();
+                if (src.StartsWith("data:image/png;base64,", StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
 
-                string imageFile = resultsFiles.Single(x => Path.GetFileName(x) == Path.GetFileName(src));
+                string imageFile = resultsFiles.FirstOrDefault(x =>
+                    Path.GetFileName(x).Equals(Path.GetFileName(src), StringComparison.OrdinalIgnoreCase));
+                if (imageFile == null)
+                {
+                    throw new InvalidOperationException(
+                        $"Unable to inline image '{src}' because no matching result file was found. "
+                        + $"Available result files: {FormatResultFileNames(resultsFiles)}");
+                }
 
-                byte[] imageBytes = LoadImageAsPngBytes(imageFile);
+                byte[] imageBytes;
+                try
+                {
+                    imageBytes = LoadImageAsPngBytes(imageFile);
+                }
+                catch (Exception ex)
+                {
+                    FileInfo imageInfo = new FileInfo(imageFile);
+                    throw new InvalidOperationException(
+                        $"Unable to inline image '{src}' from result file '{imageInfo.Name}' "
+                        + $"({imageInfo.Length} bytes, last modified {imageInfo.LastWriteTimeUtc:O}).",
+                        ex);
+                }
 
                 // Convert byte[] to Base64 String so the image can be embedded inline
                 string base64String = Convert.ToBase64String(imageBytes);

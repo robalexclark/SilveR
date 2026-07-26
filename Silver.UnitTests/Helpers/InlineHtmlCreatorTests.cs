@@ -1,4 +1,6 @@
 using SilveR.Helpers;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,6 +28,78 @@ namespace SilveR.UnitTests.Helpers
                 Assert.DoesNotContain("<script", result, StringComparison.OrdinalIgnoreCase);
                 Assert.DoesNotContain("onerror", result, StringComparison.OrdinalIgnoreCase);
                 Assert.DoesNotContain("javascript:", result, StringComparison.OrdinalIgnoreCase);
+            }
+            finally
+            {
+                Directory.Delete(testDirectory, true);
+            }
+        }
+
+        [Fact]
+        public void CreateInlineHtml_ImageFilenameHasDifferentCase_InlinesImage()
+        {
+            string testDirectory = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+            Directory.CreateDirectory(testDirectory);
+
+            try
+            {
+                string htmlPath = Path.Combine(testDirectory, "results.html");
+                string imagePath = Path.Combine(testDirectory, "results.png");
+                File.WriteAllText(htmlPath, "<html><body><img src=\"RESULTS.PNG\" /></body></html>");
+                using (Image<Rgba32> image = new Image<Rgba32>(1, 1))
+                {
+                    image.SaveAsPng(imagePath);
+                }
+
+                string result = InlineHtmlCreator.CreateInlineHtml(new List<string> { htmlPath, imagePath });
+
+                Assert.Contains("src=\"data:image/png;base64,", result, StringComparison.OrdinalIgnoreCase);
+            }
+            finally
+            {
+                Directory.Delete(testDirectory, true);
+            }
+        }
+
+        [Fact]
+        public void CreateInlineHtml_ImageIsAlreadyInline_KeepsImage()
+        {
+            string testDirectory = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+            Directory.CreateDirectory(testDirectory);
+
+            try
+            {
+                const string inlineImage = "data:image/png;base64,AA==";
+                string htmlPath = Path.Combine(testDirectory, "results.html");
+                File.WriteAllText(htmlPath, $"<html><body><img src=\"{inlineImage}\" /></body></html>");
+
+                string result = InlineHtmlCreator.CreateInlineHtml(new List<string> { htmlPath });
+
+                Assert.Contains(inlineImage, result, StringComparison.OrdinalIgnoreCase);
+            }
+            finally
+            {
+                Directory.Delete(testDirectory, true);
+            }
+        }
+
+        [Theory]
+        [InlineData("https://example.test/image.png")]
+        [InlineData("data:image/svg+xml;base64,PHN2Zz48L3N2Zz4=")]
+        public void CreateInlineHtml_UnsafeImageReference_RemovesImage(string imageSource)
+        {
+            string testDirectory = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+            Directory.CreateDirectory(testDirectory);
+
+            try
+            {
+                string htmlPath = Path.Combine(testDirectory, "results.html");
+                File.WriteAllText(htmlPath, $"<html><body><p>Results</p><img src=\"{imageSource}\" /></body></html>");
+
+                string result = InlineHtmlCreator.CreateInlineHtml(new List<string> { htmlPath });
+
+                Assert.Contains("<p>Results</p>", result, StringComparison.OrdinalIgnoreCase);
+                Assert.DoesNotContain("<img", result, StringComparison.OrdinalIgnoreCase);
             }
             finally
             {
