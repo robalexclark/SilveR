@@ -29,11 +29,7 @@ namespace SilveR.Helpers
 
             string htmlFile = htmlFiles[0];
 
-            //read in the html and reconvert any dodgy characters back
-            string theHTML = File.ReadAllText(htmlFile, Encoding.UTF8); // Encoding.GetEncoding(1252));
-
-            ArgumentFormatter argFormatter = new ArgumentFormatter();
-            theHTML = argFormatter.ConvertIllegalCharactersBack(theHTML);
+            string theHTML = File.ReadAllText(htmlFile, new UTF8Encoding(false, true));
 
             HtmlDocument document = new HtmlDocument();
             document.LoadHtml(theHTML);
@@ -41,11 +37,57 @@ namespace SilveR.Helpers
             SanitizeHtml(document, resultsFiles);
             ValidateResultImageReferences(document, resultsFiles);
             document = InlineImages(document, resultsFiles);
+            RestoreDisplayNames(document);
 
             List<char> trimChars = new List<char>(Environment.NewLine.ToCharArray());
             trimChars.Add(' ');
             string inlineHtml = document.DocumentNode.OuterHtml.Trim(trimChars.ToArray());
             return inlineHtml;
+        }
+
+        private static void RestoreDisplayNames(HtmlDocument document)
+        {
+            ArgumentFormatter argumentFormatter = new ArgumentFormatter();
+
+            foreach (HtmlTextNode textNode in document.DocumentNode
+                .DescendantsAndSelf()
+                .OfType<HtmlTextNode>()
+                .ToList())
+            {
+                textNode.Text = argumentFormatter.ConvertIllegalCharactersBack(
+                    textNode.Text,
+                    EncodeHtmlText);
+            }
+
+            string[] displayAttributes = { "alt", "title" };
+            foreach (HtmlAttribute attribute in document.DocumentNode
+                .Descendants()
+                .SelectMany(node => node.Attributes)
+                .Where(attribute => displayAttributes.Contains(attribute.Name, StringComparer.OrdinalIgnoreCase))
+                .ToList())
+            {
+                attribute.Value = argumentFormatter.ConvertIllegalCharactersBack(
+                    attribute.Value,
+                    EncodeHtmlAttribute);
+            }
+        }
+
+        private static string EncodeHtmlText(string value)
+        {
+            return value
+                .Replace("&", "&amp;", StringComparison.Ordinal)
+                .Replace("<", "&lt;", StringComparison.Ordinal)
+                .Replace(">", "&gt;", StringComparison.Ordinal);
+        }
+
+        private static string EncodeHtmlAttribute(string value)
+        {
+            return value
+                .Replace("&", "&amp;", StringComparison.Ordinal)
+                .Replace("<", "&lt;", StringComparison.Ordinal)
+                .Replace(">", "&gt;", StringComparison.Ordinal)
+                .Replace("\"", "&quot;", StringComparison.Ordinal)
+                .Replace("'", "&#39;", StringComparison.Ordinal);
         }
 
         private static void ValidateResultImageReferences(HtmlDocument document, List<string> resultsFiles)

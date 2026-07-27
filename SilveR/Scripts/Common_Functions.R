@@ -311,15 +311,62 @@ mytheme <- theme(
 #===================================================================================================================
 #FUNCTIONS TO REPLACE ILLEGAL CHARACTERS
 #===================================================================================================================
+decode_identifier_v2_one <- function(value) {
+	if (is.na(value) || !grepl("ivs2_[0-9]+_[0-9A-F]+_ivs", value)) {
+		return(value)
+	}
+
+	repeat {
+		token_match <- regexpr("ivs2_[0-9]+_[0-9A-F]+_ivs", value)
+		if (token_match[1] < 0) {
+			break
+		}
+
+		token <- regmatches(value, token_match)[1]
+		parts <- strsplit(token, "_", fixed = TRUE)[[1]]
+		expected_length <- suppressWarnings(as.integer(parts[2]))
+		hex_value <- parts[3]
+
+		if (is.na(expected_length) || nchar(hex_value) != expected_length * 2) {
+			break
+		}
+
+		byte_pairs <- substring(
+			hex_value,
+			seq(1, nchar(hex_value), 2),
+			seq(2, nchar(hex_value), 2)
+		)
+		decoded <- tryCatch(
+			rawToChar(as.raw(strtoi(byte_pairs, base = 16L))),
+			error = function(e) token
+		)
+		Encoding(decoded) <- "UTF-8"
+		value <- sub(token, decoded, value, fixed = TRUE)
+	}
+
+	return(value)
+}
+
+decode_identifier_v2 <- function(value) {
+	if (is.null(value)) {
+		return(value)
+	}
+
+	value <- as.character(value)
+	vapply(value, decode_identifier_v2_one, character(1), USE.NAMES = FALSE)
+}
+
 namereplace2 <- function(axistitle) {
 
 	for (i in 1:20) {
 		axistitle <- gsub("ivs_sp_ivs*ivs_sp_ivs", " * ", axistitle, fixed = TRUE)
+		axistitle <- gsub("ivs2_1_20_ivs*ivs2_1_20_ivs", " * ", axistitle, fixed = TRUE)
 	}
 	return(axistitle)
 }
 
 namereplace <- function(axistitle) {
+		axistitle <- decode_identifier_v2(axistitle)
 	#for (i in 1:20) {
 		axistitle <- gsub("ivs_questionmark_ivs", "?", axistitle)
 		axistitle <- gsub("ivs_tilde_ivs", "~", axistitle)
@@ -359,6 +406,7 @@ namereplace <- function(axistitle) {
 
 
 namereplaceGSUB <- function(axistitle) {
+		axistitle <- decode_identifier_v2(axistitle)
 
 	#for (i in 1:20) {
 		axistitle <- gsub("ivs_questionmark_ivs", "?", axistitle)

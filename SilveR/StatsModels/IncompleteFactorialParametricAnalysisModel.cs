@@ -180,7 +180,7 @@ namespace SilveR.StatsModels
 
             //fix any columns with illegal chars here (at the end)
             ArgumentFormatter argFormatter = new ArgumentFormatter();
-            csvArray[0] = argFormatter.ConvertIllegalCharacters(csvArray[0]);
+            csvArray[0] = argFormatter.ConvertCsvHeader(csvArray[0]);
 
             return csvArray;
         }

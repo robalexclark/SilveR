@@ -19,7 +19,7 @@ namespace SilveR.UnitTests.Helpers
             string result = sut.ConvertIllegalCharacters(nastyString);
 
             //Assert
-            Assert.Equal("ivs_sp_ivsivs_ob_ivsivs_cb_ivsivs_div_ivsivs_pc_ivsivs_hash_ivsivs_pt_ivsivs_hyphen_ivsivs_at_ivsivs_colon_ivsivs_exclam_ivsivs_dblquote_ivsivs_pound_ivsivs_dollar_ivsivs_hat_ivsivs_amper_ivsivs_obrace_ivsivs_cbrace_ivsivs_semi_ivsivs_pipe_ivsivs_slash_ivsivs_osb_ivsivs_csb_ivsivs_eq_ivsivs_lt_ivsivs_gt_ivsivs_quote_ivs", result);
+            Assert.Equal(nastyString, sut.ConvertIllegalCharactersBack(result));
         }
 
         [Fact]
@@ -120,7 +120,7 @@ namespace SilveR.UnitTests.Helpers
             string result = sut.GetFormattedArgument(" ()/%#.-@:!\"£$^&{};|\\[]=<>'", true);
 
             //Assert
-            Assert.Equal("ivs_sp_ivsivs_ob_ivsivs_cb_ivsivs_div_ivsivs_pc_ivsivs_hash_ivsivs_pt_ivsivs_hyphen_ivsivs_at_ivsivs_colon_ivsivs_exclam_ivsivs_dblquote_ivsivs_pound_ivsivs_dollar_ivsivs_hat_ivsivs_amper_ivsivs_obrace_ivsivs_cbrace_ivsivs_semi_ivsivs_pipe_ivsivs_slash_ivsivs_osb_ivsivs_csb_ivsivs_eq_ivsivs_lt_ivsivs_gt_ivsivs_quote_ivs", result);
+            Assert.Equal(" ()/%#.-@:!\"£$^&{};|\\[]=<>'", sut.ConvertIllegalCharactersBack(result));
         }
 
         [Fact]
@@ -164,6 +164,49 @@ namespace SilveR.UnitTests.Helpers
 
             //Assert
             Assert.Equal(" ()/%#.-@:!\"£$^&{};|\\[]=<>'", result);
+        }
+
+        [Theory]
+        [InlineData("Cost (£)")]
+        [InlineData("Café")]
+        [InlineData("日本語")]
+        [InlineData("Result 🧪")]
+        [InlineData("مرحبا")]
+        [InlineData("<script>alert(\"x\")</script>")]
+        [InlineData("literal_ivs_pound_ivs")]
+        public void Version2Identifier_RoundTripsAllUnicodeWithoutLegacyCollisions(string value)
+        {
+            ArgumentFormatter sut = new ArgumentFormatter();
+
+            string encoded = sut.ConvertIllegalCharacters(value);
+            string decoded = sut.ConvertIllegalCharactersBack(encoded);
+
+            Assert.NotEqual(value, encoded);
+            Assert.Equal(value, decoded);
+        }
+
+        [Fact]
+        public void ConvertIllegalCharacters_CanonicallyEquivalentNames_ProduceSameIdentifier()
+        {
+            ArgumentFormatter sut = new ArgumentFormatter();
+
+            Assert.Equal(
+                sut.ConvertIllegalCharacters("Caf\u00E9"),
+                sut.ConvertIllegalCharacters("Cafe\u0301"));
+        }
+
+        [Fact]
+        public void ConvertCsvHeader_QuotedSpecialCharacterNames_EncodesEachColumnSeparately()
+        {
+            ArgumentFormatter sut = new ArgumentFormatter();
+
+            string result = sut.ConvertCsvHeader("\"Cost, gross (£)\",Café,Simple");
+            string[] fields = result.Split(',');
+
+            Assert.Equal(3, fields.Length);
+            Assert.Equal("Cost, gross (£)", sut.ConvertIllegalCharactersBack(fields[0]));
+            Assert.Equal("Café", sut.ConvertIllegalCharactersBack(fields[1]));
+            Assert.Equal("Simple", fields[2]);
         }
     }
 }

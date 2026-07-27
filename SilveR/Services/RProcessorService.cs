@@ -24,6 +24,7 @@ namespace SilveR.Services
 
     public class RProcessorService : IRProcessorService
     {
+        private static readonly UTF8Encoding StrictUtf8 = new UTF8Encoding(false, true);
         private readonly IServiceProvider services;
 
         public RProcessorService(IServiceProvider services)
@@ -57,21 +58,21 @@ namespace SilveR.Services
                     //save the useroptions to the working dir
                     UserOption userOptions = await silveRRepository.GetUserOptions();
 
-                    File.WriteAllLines(Path.Combine(workingDir, analysisGuid + ".useroptions"), userOptions.GetOptionLines());
+                    File.WriteAllLines(Path.Combine(workingDir, analysisGuid + ".useroptions"), userOptions.GetOptionLines(), StrictUtf8);
 
                     //combine script files into analysisGuid.R
                     string scriptFileName = Path.Combine(workingDir, analysisGuid + ".R");
 
                     List<string> scriptLines = new List<string>();
-                    scriptLines.AddRange(File.ReadAllLines(Path.Combine(Startup.ContentRootPath, "Scripts", "Common_Functions.R")));
-                    scriptLines.AddRange(File.ReadAllLines(Path.Combine(Startup.ContentRootPath, "Scripts", analysis.Script.ScriptFileName + ".R")));
+                    scriptLines.AddRange(File.ReadAllLines(Path.Combine(Startup.ContentRootPath, "Scripts", "Common_Functions.R"), StrictUtf8));
+                    scriptLines.AddRange(File.ReadAllLines(Path.Combine(Startup.ContentRootPath, "Scripts", analysis.Script.ScriptFileName + ".R"), StrictUtf8));
 
                     if (analysisModel.CustomRCode != null)
                     {
                         scriptLines.Add(analysisModel.CustomRCode);
                     }
 
-                    File.WriteAllLines(scriptFileName, scriptLines);
+                    File.WriteAllLines(scriptFileName, scriptLines, StrictUtf8);
 
                     //csvfilename is built from the analysis guid and is also used in R to name the output at this time
                     string csvFileName = Path.Combine(workingDir, analysisGuid + ".csv");
@@ -79,7 +80,7 @@ namespace SilveR.Services
                     if (analysisModel is AnalysisDataModelBase analysisDataModelBase) //then has data component
                     {
                         string[] csvData = analysisDataModelBase.ExportData();
-                        File.WriteAllLines(csvFileName, csvData);
+                        File.WriteAllLines(csvFileName, csvData, StrictUtf8);
                     }
 
                     //if there is a custom R install setup then use that 
@@ -115,6 +116,8 @@ namespace SilveR.Services
                     psi.CreateNoWindow = true;
                     psi.RedirectStandardOutput = true;
                     psi.RedirectStandardError = true;
+                    psi.StandardOutputEncoding = StrictUtf8;
+                    psi.StandardErrorEncoding = StrictUtf8;
 
                     //start rscript.exe
                     Process R = Process.Start(psi);

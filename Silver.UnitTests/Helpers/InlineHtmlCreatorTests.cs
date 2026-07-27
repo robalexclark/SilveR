@@ -21,13 +21,89 @@ namespace SilveR.UnitTests.Helpers
                 string htmlPath = Path.Combine(testDirectory, "results.html");
                 string imagePath = Path.Combine(testDirectory, "results.png");
                 File.WriteAllText(htmlPath, "<html><body><p>Fixed factors: ivs_lt_ivsscriptivs_gt_ivsalert(1)ivs_lt_ivs/ scriptivs_gt_ivs</p><img src=\"results.png\" onerror=\"alert(1)\" /><a href=\"javascript:alert(1)\">unsafe</a></body></html>");
-                File.WriteAllBytes(imagePath, Convert.FromBase64String("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAF/gL+qM1hTAAAAABJRU5ErkJggg=="));
+                using (Image<Rgba32> image = new Image<Rgba32>(1, 1))
+                {
+                    image.SaveAsPng(imagePath);
+                }
 
                 string result = InlineHtmlCreator.CreateInlineHtml(new List<string> { htmlPath, imagePath });
 
                 Assert.DoesNotContain("<script", result, StringComparison.OrdinalIgnoreCase);
                 Assert.DoesNotContain("onerror", result, StringComparison.OrdinalIgnoreCase);
                 Assert.DoesNotContain("javascript:", result, StringComparison.OrdinalIgnoreCase);
+                Assert.Contains("&lt;script&gt;alert(1)&lt;/ script&gt;", result, StringComparison.OrdinalIgnoreCase);
+            }
+            finally
+            {
+                Directory.Delete(testDirectory, true);
+            }
+        }
+
+        [Fact]
+        public void CreateInlineHtml_Version2UnicodeIdentifier_RestoresItAsText()
+        {
+            string testDirectory = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+            Directory.CreateDirectory(testDirectory);
+
+            try
+            {
+                ArgumentFormatter formatter = new ArgumentFormatter();
+                string encoded = formatter.ConvertIllegalCharacters("Cost (£), Café 🧪");
+                string htmlPath = Path.Combine(testDirectory, "results.html");
+                File.WriteAllText(htmlPath, $"<html><body><p>{encoded}</p></body></html>");
+
+                string result = InlineHtmlCreator.CreateInlineHtml(new List<string> { htmlPath });
+
+                Assert.Contains("Cost (£), Café 🧪", result);
+                Assert.DoesNotContain("ivs2_", result);
+            }
+            finally
+            {
+                Directory.Delete(testDirectory, true);
+            }
+        }
+
+        [Fact]
+        public void CreateInlineHtml_EncodedMarkupName_RemainsTextNotMarkup()
+        {
+            string testDirectory = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+            Directory.CreateDirectory(testDirectory);
+
+            try
+            {
+                ArgumentFormatter formatter = new ArgumentFormatter();
+                string encoded = formatter.ConvertIllegalCharacters("<script>alert(1)</script>");
+                string htmlPath = Path.Combine(testDirectory, "results.html");
+                File.WriteAllText(htmlPath, $"<html><body><p>{encoded}</p></body></html>");
+
+                string result = InlineHtmlCreator.CreateInlineHtml(new List<string> { htmlPath });
+
+                Assert.DoesNotContain("<script", result, StringComparison.OrdinalIgnoreCase);
+                Assert.Contains("&lt;script&gt;alert(1)&lt;/script&gt;", result, StringComparison.OrdinalIgnoreCase);
+            }
+            finally
+            {
+                Directory.Delete(testDirectory, true);
+            }
+        }
+
+        [Fact]
+        public void CreateInlineHtml_EntityLikeIdentifier_RestoresLiteralText()
+        {
+            string testDirectory = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+            Directory.CreateDirectory(testDirectory);
+
+            try
+            {
+                ArgumentFormatter formatter = new ArgumentFormatter();
+                string encoded = formatter.ConvertIllegalCharacters("&lt;");
+                string htmlPath = Path.Combine(testDirectory, "results.html");
+                File.WriteAllText(htmlPath, $"<html><body><p>{encoded}</p></body></html>");
+
+                string result = InlineHtmlCreator.CreateInlineHtml(new List<string> { htmlPath });
+
+                Assert.Contains("&amp;lt;", result);
+                Assert.DoesNotContain("<p>&lt;</p>", result);
             }
             finally
             {

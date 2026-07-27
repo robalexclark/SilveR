@@ -72,7 +72,7 @@ namespace SilveR.StatsModels
 
             string[] csvArray = exportData.GetCSVArray();
             ArgumentFormatter argumentFormatter = new ArgumentFormatter();
-            csvArray[0] = argumentFormatter.ConvertIllegalCharacters(csvArray[0]);
+            csvArray[0] = argumentFormatter.ConvertCsvHeader(csvArray[0]);
             return csvArray;
         }
 
