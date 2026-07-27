@@ -11,6 +11,8 @@ namespace SilveR.Validators
     //SHARED
     public class CheckUsedOnceOnlyAttribute : ValidationAttribute
     {
+        public bool SingularizeDisplayName { get; set; } = true;
+
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             if (value == null)
@@ -65,7 +67,9 @@ namespace SilveR.Validators
             }
             else
             {
-                string displayName = validationContext.DisplayName.TrimEnd('s');
+                string displayName = SingularizeDisplayName
+                    ? validationContext.DisplayName.TrimEnd('s')
+                    : validationContext.DisplayName;
                 return new ValidationResult(displayName + " (" + duplicateVarName + ") has been selected in more than one input category, please change your input options.");
             }
         }

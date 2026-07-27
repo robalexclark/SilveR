@@ -62,6 +62,32 @@ namespace SilveR.UnitTests.Helpers
         }
 
         [Fact]
+        public void CreateInlineHtml_ImageSourceIsAbsoluteResultPath_InlinesImage()
+        {
+            string testDirectory = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+            Directory.CreateDirectory(testDirectory);
+
+            try
+            {
+                string htmlPath = Path.Combine(testDirectory, "results.html");
+                string imagePath = Path.Combine(testDirectory, "results.png");
+                File.WriteAllText(htmlPath, $"<html><body><img src=\"{imagePath}\" /></body></html>");
+                using (Image<Rgba32> image = new Image<Rgba32>(1, 1))
+                {
+                    image.SaveAsPng(imagePath);
+                }
+
+                string result = InlineHtmlCreator.CreateInlineHtml(new List<string> { htmlPath, imagePath });
+
+                Assert.Contains("src=\"data:image/png;base64,", result, StringComparison.OrdinalIgnoreCase);
+            }
+            finally
+            {
+                Directory.Delete(testDirectory, true);
+            }
+        }
+
+        [Fact]
         public void CreateInlineHtml_ImageIsAlreadyInline_KeepsImage()
         {
             string testDirectory = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
@@ -76,6 +102,31 @@ namespace SilveR.UnitTests.Helpers
                 string result = InlineHtmlCreator.CreateInlineHtml(new List<string> { htmlPath });
 
                 Assert.Contains(inlineImage, result, StringComparison.OrdinalIgnoreCase);
+            }
+            finally
+            {
+                Directory.Delete(testDirectory, true);
+            }
+        }
+
+        [Theory]
+        [InlineData("<img />")]
+        [InlineData("<img src=\"\" />")]
+        [InlineData("<img src=\"   \" />")]
+        public void CreateInlineHtml_ImageSourceIsEmpty_RemovesImage(string imageMarkup)
+        {
+            string testDirectory = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+            Directory.CreateDirectory(testDirectory);
+
+            try
+            {
+                string htmlPath = Path.Combine(testDirectory, "results.html");
+                File.WriteAllText(htmlPath, $"<html><body><p>Results</p>{imageMarkup}</body></html>");
+
+                string result = InlineHtmlCreator.CreateInlineHtml(new List<string> { htmlPath });
+
+                Assert.Contains("<p>Results</p>", result, StringComparison.OrdinalIgnoreCase);
+                Assert.DoesNotContain("<img", result, StringComparison.OrdinalIgnoreCase);
             }
             finally
             {

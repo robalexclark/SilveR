@@ -108,7 +108,7 @@ namespace SilveR.Services
                     psi.WorkingDirectory = workingDir;
 
                     theArguments = analysisModel.GetCommandLineArguments();
-                    psi.Arguments = FormatPreArgument(scriptFileName) + " --vanilla --args " + FormatPreArgument(csvFileName) + " " + theArguments;
+                    psi.Arguments = "--encoding=UTF-8 " + FormatPreArgument(scriptFileName) + " --vanilla --args " + FormatPreArgument(csvFileName) + " " + theArguments;
 
                     //Configure some options for the R process
                     psi.UseShellExecute = false;

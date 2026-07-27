@@ -320,7 +320,9 @@ namespace SilveR.IntegrationTests
         private async Task AssertOutput(HasseDiagramGeneratorModel model, string testName)
         {
             HttpClient client = _factory.CreateClient();
-            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, ModuleName, new FormUrlEncodedContent(model.ToKeyValue()));
+            IDictionary<string, string> modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, ModuleName, new FormUrlEncodedContent(modelIgnoreWarnings));
             Helpers.SaveTestOutput(ModuleName, model, testName, statsOutput);
 
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", ModuleName, testName + ".html"));

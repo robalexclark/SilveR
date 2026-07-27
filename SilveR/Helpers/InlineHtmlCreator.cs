@@ -105,7 +105,7 @@ namespace SilveR.Helpers
                 {
                     string source = HtmlEntity.DeEntitize(node.GetAttributeValue("src", String.Empty)).Trim();
                     bool isInlineImage = source.StartsWith("data:image/png;base64,", StringComparison.OrdinalIgnoreCase);
-                    bool isResultImage = resultsFiles != null && resultsFiles.Any(x => Path.GetFileName(x).Equals(Path.GetFileName(source), StringComparison.OrdinalIgnoreCase));
+                    bool isResultImage = IsResultImageReference(source, resultsFiles);
                     if (!isInlineImage && !isResultImage)
                     {
                         node.Remove();
@@ -117,14 +117,25 @@ namespace SilveR.Helpers
                 {
                     string attributeName = attribute.Name;
                     string attributeValue = attribute.Value?.Trim() ?? String.Empty;
+                    bool isResultImageSource = node.Name.Equals("img", StringComparison.OrdinalIgnoreCase)
+                        && attributeName.Equals("src", StringComparison.OrdinalIgnoreCase)
+                        && IsResultImageReference(HtmlEntity.DeEntitize(attributeValue).Trim(), resultsFiles);
                     if (attributeName.StartsWith("on", StringComparison.OrdinalIgnoreCase)
-                        || IsUnsafeUri(attributeName, attributeValue)
+                        || (!isResultImageSource && IsUnsafeUri(attributeName, attributeValue))
                         || (attributeName.Equals("style", StringComparison.OrdinalIgnoreCase) && ContainsUnsafeStyle(attributeValue)))
                     {
                         node.Attributes.Remove(attribute);
                     }
                 }
             }
+        }
+
+        private static bool IsResultImageReference(string source, List<string> resultsFiles)
+        {
+            return !String.IsNullOrEmpty(source)
+                && resultsFiles != null
+                && resultsFiles.Any(file => Path.GetFileName(file).Equals(
+                    Path.GetFileName(source), StringComparison.OrdinalIgnoreCase));
         }
 
         private static bool IsUnsafeUri(string attributeName, string attributeValue)
@@ -170,9 +181,15 @@ namespace SilveR.Helpers
 
         private static HtmlDocument InlineImages(HtmlDocument document, List<string> resultsFiles)
         {
-            foreach (HtmlNode d in document.DocumentNode.Descendants("img"))
+            foreach (HtmlNode d in document.DocumentNode.Descendants("img").ToList())
             {
                 string src = HtmlEntity.DeEntitize(d.GetAttributeValue("src", String.Empty)).Trim();
+                if (String.IsNullOrEmpty(src))
+                {
+                    d.Remove();
+                    continue;
+                }
+
                 if (src.StartsWith("data:image/png;base64,", StringComparison.OrdinalIgnoreCase))
                 {
                     continue;

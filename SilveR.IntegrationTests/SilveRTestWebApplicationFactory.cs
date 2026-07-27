@@ -2,64 +2,76 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using SilveR.Models;
-using SilveR.Services;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace SilveR.IntegrationTests
 {
     public class SilveRTestWebApplicationFactory<TStartup> : WebApplicationFactory<Startup>
     {
+        private readonly string databaseDirectory;
+        private readonly string connectionString;
+
         public Dictionary<int, string> SheetNames { get; }
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             builder.ConfigureServices(services =>
             {
-                services.AddDbContext<SilveRContext>(options => options.UseSqlite("Data Source=SilveR.db"));
-                services.AddScoped<ISilveRRepository, SilveRRepository>();
-
-                //R processing services comprising of R processor and queue services
-                services.AddSingleton<IRProcessorService, RProcessorService>();
-                services.AddHostedService<QueuedHostedService>();
-                services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
-
-                services.AddMvc();
+                services.RemoveAll<DbContextOptions<SilveRContext>>();
+                services.RemoveAll<SilveRContext>();
+                services.AddDbContext<SilveRContext>(options => options.UseSqlite(connectionString));
             });
         }
 
         public SilveRTestWebApplicationFactory()
         {
+            databaseDirectory = Path.Combine(Path.GetTempPath(), "SilveR.IntegrationTests", Guid.NewGuid().ToString("N"));
+            Directory.CreateDirectory(databaseDirectory);
+
+            string sourceDatabasePath = Path.Combine(AppContext.BaseDirectory, "SilveR.db");
+            string isolatedDatabasePath = Path.Combine(databaseDirectory, "SilveR.db");
+            File.Copy(sourceDatabasePath, isolatedDatabasePath);
+
+            connectionString = new Microsoft.Data.Sqlite.SqliteConnectionStringBuilder
+            {
+                DataSource = isolatedDatabasePath,
+                Pooling = false
+            }.ToString();
+
             DbContextOptionsBuilder<SilveRContext> optionsBuilder = new DbContextOptionsBuilder<SilveRContext>();
-            optionsBuilder.UseSqlite("Data Source=SilveR.db");
-            SilveRContext silverContext = new SilveRContext(optionsBuilder.Options);
+            optionsBuilder.UseSqlite(connectionString);
+            using SilveRContext silverContext = new SilveRContext(optionsBuilder.Options);
             silverContext.Database.Migrate();
 
-            //if(silverContext.UserOptions.Any() == false)
-            //{
-            //    silverContext.UserOptions.Add(new UserOption()
-            //    {
-            //        //UserOptionID = 1
-            //    });
-
-            //    silverContext.SaveChanges();
-            //}
-
-            if (silverContext.UserOptions.Single().GraphicsHeightJitter != 0 || silverContext.UserOptions.Single().GraphicsWidthJitter != 0)
+            UserOption userOptions = silverContext.UserOptions.Single();
+            if (userOptions.GraphicsHeightJitter != 0 || userOptions.GraphicsWidthJitter != 0)
             {
-                silverContext.UserOptions.Single().GraphicsHeightJitter = 0;
-                silverContext.UserOptions.Single().GraphicsWidthJitter = 0;
+                userOptions.GraphicsHeightJitter = 0;
+                userOptions.GraphicsWidthJitter = 0;
 
                 silverContext.SaveChanges();
             }
 
-
             SheetNames = silverContext.Datasets.Select(x => new KeyValuePair<int, string>(x.DatasetID, x.DatasetName)).ToDictionary(x => x.Key, x => x.Value);
 
-            if(SheetNames == null || SheetNames.Count == 0)
+            if (SheetNames.Count == 0)
             {
-                throw new System.Exception("No datasets found in SilveR database. Please add datasets before running integration tests.");
+                throw new InvalidOperationException("No datasets found in SilveR database. Please add datasets before running integration tests.");
+            }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            if (disposing && Directory.Exists(databaseDirectory))
+            {
+                Directory.Delete(databaseDirectory, true);
             }
         }
     }

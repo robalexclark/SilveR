@@ -144,7 +144,7 @@ HTML("Factor A is said to be nested within factor B, denoted as A(B), if each le
 
 HTML("The two factors, A and B, are fully crossed if all levels of A occur with all levels of B and vice versa (Montgomery, 2017, Chapter 7).", align = "left") 
 
-HTML("Following Bailey (1996) and Tjur (1984), a generalised factor whose levels correspond to combinations of the crossed factors A and B is defined as: A ∧ B.", align = "left")
+HTML("Following Bailey (1996) and Tjur (1984), a generalised factor whose levels correspond to combinations of the crossed factors A and B is defined as: A &#8743; B.", align = "left")
 
 HTML("Two factors, A and B, are partially crossed if they are not fully crossed, but at least one level of A occurs with more than one level of B and vice versa.", align = "left")
 
@@ -163,11 +163,11 @@ HTML.title("References", HR = 2, align = "left")
 
 Ref_list <- R_refs()
 HTML(Ref_list$IVS_ref, align = "left")
-HTML("Bailey, R.A. (1996) Orthogonal partitions in designed experiments. Designs, Codes and Cryptography, 8:45–77.", align = "left")
+HTML("Bailey, R.A. (1996) Orthogonal partitions in designed experiments. Designs, Codes and Cryptography, 8:45&#8211;77.", align = "left")
 HTML("Bailey, R.A. (2008) Design of comparative experiments, volume 25. Cambridge University Press.", align = "left")
 HTML("Bate, S.T. and Chatfield, M.J. (2016) Identifying the structure of the experimental design. Journal of Quality Technology 48(4): 343-364.", align = "left")
 HTML("Montgomery, D.C. (2017) Design and analysis of experiments. John wiley & sons.", align = "left")
-HTML("Tjur, T. (1984) Analysis of variance models in orthogonal designs. International Statistical Review/Revue Internationale de Statistique, pages 33–65.", align = "left")
+HTML("Tjur, T. (1984) Analysis of variance models in orthogonal designs. International Statistical Review/Revue Internationale de Statistique, pages 33&#8211;65.", align = "left")
 
 HTML.title("R references", HR = 4, align = "left")
 HTML(Ref_list$R_ref, align = "left")

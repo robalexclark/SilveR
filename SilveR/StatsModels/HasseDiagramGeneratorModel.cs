@@ -3,6 +3,7 @@ using SilveR.Models;
 using SilveR.Validators;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Data;
 using System.Linq;
@@ -12,10 +13,12 @@ namespace SilveR.StatsModels
 {
     public class HasseDiagramGeneratorModel : AnalysisDataModelBase
     {
-        [CheckUsedOnceOnly]
+        [Display(Name = "Fixed factors")]
+        [CheckUsedOnceOnly(SingularizeDisplayName = false)]
         public IEnumerable<string> FixedFactors { get; set; }
 
-        [CheckUsedOnceOnly]
+        [Display(Name = "Random factors")]
+        [CheckUsedOnceOnly(SingularizeDisplayName = false)]
         public IEnumerable<string> RandomFactors { get; set; }
 
         public bool CheckForConfoundedDegreesOfFreedom { get; set; } = true;
@@ -50,18 +53,8 @@ namespace SilveR.StatsModels
 
         public override ValidationInfo Validate()
         {
-            ValidationInfo validationInfo = new ValidationInfo();
-            if ((FixedFactors == null || !FixedFactors.Any()) && (RandomFactors == null || !RandomFactors.Any()))
-            {
-                validationInfo.AddErrorMessage("Enter at least one fixed or random factor.");
-            }
-
-            if (FixedFactors != null && RandomFactors != null && FixedFactors.Intersect(RandomFactors).Any())
-            {
-                validationInfo.AddErrorMessage("A factor cannot be both fixed and random.");
-            }
-
-            return validationInfo;
+            HasseDiagramGeneratorValidator hasseDiagramGeneratorValidator = new HasseDiagramGeneratorValidator(this);
+            return hasseDiagramGeneratorValidator.Validate();
         }
 
         public override string[] ExportData()

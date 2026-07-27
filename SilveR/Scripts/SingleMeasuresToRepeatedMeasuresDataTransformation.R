@@ -200,7 +200,9 @@ HTML(Desc, align="left")
 
 RMlong2<-RMlong
 tempnames2<-colnames(RMlong2)
-tempnames2<-namereplaceGSUB(tempnames2)
+# Keep encoded variable names intact until the generated HTML is read by
+# InlineHtmlCreator, which restores special characters using the same
+# cross-platform conversion as the other result tables.
 
 ID2<- c(1:dim(RMlong2)[1])
 RMlong2<-cbind(ID2, RMlong2)
