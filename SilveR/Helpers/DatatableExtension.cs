@@ -232,7 +232,7 @@ namespace SilveR.Helpers
                     headerOut = headerOut.Append(',');
                 }
 
-                headerOut = headerOut.Append(col.ColumnName.Trim());
+                headerOut = headerOut.Append(EscapeCsvField(col.ColumnName.Trim()));
 
                 firstHeader = false;
             }
@@ -255,7 +255,7 @@ namespace SilveR.Helpers
                     }
 
                     string value = row[col.ColumnName].ToString();
-                    rowOut = rowOut.Append(value);
+                    rowOut = rowOut.Append(EscapeCsvField(value));
 
                     firstColumn = false;
                 }
@@ -264,6 +264,16 @@ namespace SilveR.Helpers
             }
 
             return lines.ToArray();
+        }
+
+        private static string EscapeCsvField(string value)
+        {
+            if (value.IndexOfAny(new[] { ',', '"', '\r', '\n' }) < 0)
+            {
+                return value;
+            }
+
+            return "\"" + value.Replace("\"", "\"\"") + "\"";
         }
 
         public static IEnumerable<string> GetVariableNames(this DataTable dataTable)

@@ -182,6 +182,7 @@ LS_YAxisTitle<-YAxisTitle
 selectedEffectname <-selectedEffect
 selectedEffect<-gsub(eval(timeFactor), "Time_IVS",selectedEffect) 
 selectedEffect<-gsub("ivs_sp_ivs*ivs_sp_ivs", "*",selectedEffect,fixed=TRUE) 
+selectedEffect<-gsub("ivs2_1_20_ivs*ivs2_1_20_ivs", "*",selectedEffect,fixed=TRUE)
 
 #===================================================================================================================
 # Titles and description
