@@ -239,11 +239,14 @@ HTML("This plot illustrates the proportion of the variability explained by each 
 
 #===================================================================================================================
 #Loading table
-table2<-pca$rotation
+table2<-pca$rotation %*% diag(pca$sdev)
 
 HTML.title("Principal component loadings", HR=2, align="left")
 HTML(table2, classfirstline="second", align="left", row.names = "FALSE")
-HTML("This table summarises the loadings of principal components. Responses with the larger absolute loadings have a greater influence on the corresponding principal component.", align="left")
+HTML("This table summarises the loadings of principal components. Responses with the larger absolute loadings have a greater influence on the corresponding principal component. 
+Loadings are defined as the correlation of the standardised original variable with each principal component.", align="left")
+HTML("<div style='height:20px'></div>")
+
 
 #===================================================================================================================
 #Biplot
@@ -280,8 +283,6 @@ HTML("These axes are scaled to allow both loading and scores to be included on t
 
 #===================================================================================================================
 #Categorised scatterplot of first two principal components
-
-#dat<-biplot(pca)
 
 title<-c("Plot of the first two principal components, ")
 if (catPred_ != "NULL") {
