@@ -1,11 +1,13 @@
 rlang::check_installed("shiny", version = "1.8.1")
 rlang::check_installed("bslib", version = "0.8.0.9000")
+rlang::check_installed("brand.yml")
 rlang::check_installed("future")
 rlang::check_installed("ggplot2")
 rlang::check_installed("markdown")
 
 library(shiny)
 library(bslib)
+library(brand.yml)
 library(ggplot2)
 
 library(future)
@@ -16,43 +18,61 @@ options(
   # shiny.autoreload.pattern = "_brand[.]yml|app[.]R|[.]s?css" ## TODO: Enable after fixing autoreload
 )
 
-if (!file.exists("Monda.ttf")) {
-  download.file(
-    "https://github.com/google/fonts/raw/48db77e32954f6f5e65a7122ecbe8a2093c4f5d7/ofl/monda/Monda%5Bwght%5D.ttf",
-    "Monda.ttf"
-  )
-  download.file(
-    "https://github.com/google/fonts/raw/48db77e32954f6f5e65a7122ecbe8a2093c4f5d7/ofl/monda/OFL.txt",
-    "Monda-OFL.txt"
-  )
-}
-
-theme_brand <- bs_theme(brand = TRUE)
+theme_brand <- bs_theme()
 
 brand <- attr(theme_brand, "brand")
+BRAND_PATH <- brand$path %||% "_brand.yml"
 
 theme_set(theme_minimal())
 
 if (requireNamespace("thematic", quietly = TRUE)) {
-  if (!is.null(brand)) {
+  base_font <- brand_pluck(brand, "typography", "base", "family")
+  if (!is.null(base_font)) {
     # TODO: Update plot fonts dynamically
-    thematic::thematic_shiny(
-      font = bslib:::brand_pluck(brand, "typography", "base", "family")
-    )
+    thematic::thematic_shiny(font = base_font)
   } else {
     thematic::thematic_shiny()
   }
 }
 
+use_download_button <- FALSE
+
+# ---- For hosted demo, delete if local ----
 is_app_hosted <-
   Sys.getenv("R_CONFIG_ACTIVE") %in%
-    c("shinylive", "shinyapps", "rsconnect", "rstudio_cloud")
+  c("shinylive", "shinyapps", "rsconnect", "rstudio_cloud")
 is_app_packaged <-
-  getwd() != system.file("examples-shiny/brand.yml", package = "bslib")
+  getwd() == system.file("examples-shiny/brand.yml", package = "bslib")
+use_download_button <- is_app_hosted || is_app_packaged
+
+if (brand_has(brand, "typography", "fonts")) {
+  tryCatch(
+    {
+      if (brand$typography$fonts[[2]]$files[[1]]$path == "Monda.ttf") {
+        if (!file.exists("Monda.ttf")) {
+          download.file(
+            "https://github.com/google/fonts/raw/48db77e32954f6f5e65a7122ecbe8a2093c4f5d7/ofl/monda/Monda%5Bwght%5D.ttf",
+            "Monda.ttf"
+          )
+          download.file(
+            "https://github.com/google/fonts/raw/48db77e32954f6f5e65a7122ecbe8a2093c4f5d7/ofl/monda/OFL.txt",
+            "Monda-OFL.txt"
+          )
+        }
+      }
+    },
+    error = function(err) {}
+  )
+}
+# ---- For hosted demo, delete if local ----
 
 ui <- page_navbar(
   theme = bs_add_rules(theme_brand, sass::sass_file("_colors.scss")),
-  title = "brand.yml Demo",
+  title = tagList(
+    uiOutput("brand_icon", inline = TRUE),
+    uiOutput("brand_name", inline = TRUE)
+  ),
+  window_title = "brand.yml Demo",
   fillable = TRUE,
 
   sidebar = sidebar(
@@ -62,6 +82,7 @@ ui <- page_navbar(
     width = "40%",
     bg = "var(--bs-dark)",
     fg = "var(--bs-light)",
+    `data-bs-theme` = "dark",
 
     card(
       card_header(
@@ -88,7 +109,9 @@ ui <- page_navbar(
         textAreaInput(
           "txt_brand_yml",
           label = NULL,
-          value = paste(readLines("_brand.yml", warn = FALSE), collapse = "\n"),
+          value = if (!is.null(brand)) {
+            paste(readLines(brand$path, warn = FALSE), collapse = "\n")
+          },
           width = "100%",
           height = "80%",
           rows = 20
@@ -147,16 +170,24 @@ initBrandEditor();
       )
     ),
 
-    if (is_app_hosted || is_app_packaged) {
+    if (use_download_button) {
       shiny::downloadButton(
         "download",
-        label = span("Download", code("_brand.yml"), "file"),
+        label = span(
+          "Download",
+          code("_brand.yml", style = "color: currentColor"),
+          "file"
+        ),
         class = "btn-outline-light"
       )
     } else {
       actionButton(
         "save",
-        label = span("Save", code("_brand.yml"), "file"),
+        label = span(
+          "Save",
+          code("_brand.yml", style = "color: currentColor"),
+          "file"
+        ),
         class = "btn-outline-light"
       )
     }
@@ -382,7 +413,7 @@ server <- function(input, output, session) {
     tryCatch(
       {
         b <- yaml::yaml.load(brand_yml_text())
-        b$path <- normalizePath("_brand.yml")
+        b$path <- normalizePath(BRAND_PATH, mustWork = FALSE)
         brand_yml(b)
       },
       error = error_notification(
@@ -406,6 +437,35 @@ server <- function(input, output, session) {
     )
   })
 
+  output$brand_name <- renderUI({
+    brand_name <-
+      brand_pluck(brand_yml(), "meta", "name", "short") %||%
+      brand_pluck(brand_yml(), "meta", "name")
+
+    if (rlang::is_string(brand_name)) brand_name else "brand.yml Demo"
+  })
+
+  output$brand_icon <- renderUI({
+    brand <- brand_yml()
+
+    logo <-
+      brand_pluck(brand, "logo", "small") %||%
+      brand_pluck(brand, "logo")
+
+    req(rlang::is_string(logo))
+
+    logo_path <- file.path(dirname(BRAND_PATH), logo)
+    if (file.exists(logo_path)) {
+      img(
+        src = base64enc::dataURI(
+          file = logo_path,
+          mime = mime::guess_type(logo_path)
+        ),
+        height = 30
+      )
+    }
+  })
+
   observeEvent(input$save, {
     validate(
       need(input$txt_brand_yml, "_brand.yml file contents cannot be empty.")
@@ -413,7 +473,7 @@ server <- function(input, output, session) {
 
     tryCatch(
       {
-        writeLines(input$txt_brand_yml, "_brand.yml")
+        writeLines(input$txt_brand_yml, BRAND_PATH)
         showNotification(markdown("Saved `_brand.yml`!"))
       },
       error = error_notification("Could not save `_brand.yml`.")

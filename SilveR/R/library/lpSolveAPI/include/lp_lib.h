@@ -952,7 +952,6 @@ typedef MYBOOL (__WINAPI is_trace_func)(lprec *lp);
 typedef void (__WINAPI lp_solve_version_func)(int *majorversion, int *minorversion, int *release, int *build);
 typedef lprec * (__WINAPI make_lp_func)(int rows, int columns);
 typedef void (__WINAPI print_constraints_func)(lprec *lp, int columns);
-typedef MYBOOL (__WINAPI print_debugdump_func)(lprec *lp, char *filename);
 typedef void (__WINAPI print_duals_func)(lprec *lp);
 typedef void (__WINAPI print_lp_func)(lprec *lp);
 typedef void (__WINAPI print_objective_func)(lprec *lp);
@@ -1247,7 +1246,6 @@ struct _lprec
   lp_solve_version_func         *lp_solve_version;
   make_lp_func                  *make_lp;
   print_constraints_func        *print_constraints;
-  print_debugdump_func          *print_debugdump;
   print_duals_func              *print_duals;
   print_lp_func                 *print_lp;
   print_objective_func          *print_objective;
@@ -1999,8 +1997,6 @@ MYBOOL __EXPORT_TYPE __WINAPI is_debug(lprec *lp);
 
 void __EXPORT_TYPE __WINAPI set_trace(lprec *lp, MYBOOL trace);
 MYBOOL __EXPORT_TYPE __WINAPI is_trace(lprec *lp);
-
-MYBOOL __EXPORT_TYPE __WINAPI print_debugdump(lprec *lp, char *filename);
 
 void __EXPORT_TYPE __WINAPI set_anti_degen(lprec *lp, int anti_degen);
 int __EXPORT_TYPE __WINAPI get_anti_degen(lprec *lp);

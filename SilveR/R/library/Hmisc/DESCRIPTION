@@ -1,6 +1,6 @@
 Package: Hmisc
-Version: 5.2-4
-Date: 2025-10-02
+Version: 5.2-6
+Date: 2026-06-18
 Title: Harrell Miscellaneous
 Authors@R: 
     c(person(given   = "Frank E",
@@ -22,7 +22,7 @@ Imports: methods, ggplot2, cluster, rpart, nnet, foreign, gtable, grid,
 Suggests: survival, qreport, acepack, chron, rms, mice, rstudioapi,
         tables, plotly (>= 4.5.6), rlang, VGAM, leaps, pcaPP, digest,
         parallel, polspline, abind, kableExtra, rio, lattice,
-        latticeExtra, gt, sparkline, jsonlite, htmlwidgets, qs,
+        latticeExtra, gt, sparkline, jsonlite, htmlwidgets, qs2,
         getPass, keyring, safer, htm2txt, boot
 Description: Contains many functions useful for data
 	analysis, high-level graphics, utility operations, functions for
@@ -34,15 +34,15 @@ License: GPL (>= 2)
 LazyLoad: Yes
 URL: https://hbiostat.org/R/Hmisc/
 Encoding: UTF-8
-RoxygenNote: 7.3.3
+Config/roxygen2/version: 8.0.0
 NeedsCompilation: yes
-Packaged: 2025-10-03 20:24:42 UTC; harrelfe
+Packaged: 2026-06-18 19:06:02 UTC; harrelfe
 Author: Frank E Harrell Jr [aut, cre] (ORCID:
     <https://orcid.org/0000-0002-8271-5493>),
   Cole Beck [ctb],
   Charles Dupont [ctb]
 Maintainer: Frank E Harrell Jr <fh@fharrell.com>
 Repository: CRAN
-Date/Publication: 2025-10-05 06:50:02 UTC
-Built: R 4.5.2; x86_64-w64-mingw32; 2025-12-03 05:43:33 UTC; windows
+Date/Publication: 2026-06-19 05:10:39 UTC
+Built: R 4.5.3; x86_64-w64-mingw32; 2026-07-28 17:15:08 UTC; windows
 Archs: x64

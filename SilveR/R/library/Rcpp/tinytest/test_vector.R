@@ -1,5 +1,6 @@
 
-##  Copyright (C) 2010 - 2019  Dirk Eddelbuettel and Romain Francois
+##  Copyright (C) 2010 - 2025  Dirk Eddelbuettel and Romain François
+##  Copyright (C) 2026         Dirk Eddelbuettel, Romain François and Iñaki Ucar
 ##
 ##  This file is part of Rcpp.
 ##
@@ -117,7 +118,10 @@ expect_equal( fun(), 0:3, info = "assign(int*, int*)" )
 
 #    test.IntegerVector.names.set <- function(){
 fun <- integer_names_set
-expect_equal(names(fun()), c("foo", "bar"), info = "Vector::names" )
+x <- 1:2
+expect_equal(names(fun(x, c("foo", "bar"))), c("foo", "bar"), info = "Vector::names set" )
+expect_equal(names(fun(x, "foo")), c("foo", NA), info = "Vector::names set shorter" )
+expect_equal(names(fun(x, NULL)), NULL, info = "Vector::names unset" )
 
 #    test.IntegerVector.names.get <- function(){
 fun <- integer_names_get
@@ -701,4 +705,9 @@ expect_true( !CharacterVector_test_equality_crosspolicy("foo", "bar") )
 #expect_warning(NumericVector_test_out_of_bounds_read(numeric(1), 1))
 #expect_warning(CharacterVector_test_out_of_bounds_read(character(0), 0))
 #expect_warning(CharacterVector_test_out_of_bounds_read(character(1), 1))
+
+
+# https://github.com/RcppCore/Rcpp/issues/1461
+expect_equal(vec_copy(as.numeric(1:10)), as.numeric(1:10))
+expect_equal(vec_copy(numeric(0)), numeric(0))
 

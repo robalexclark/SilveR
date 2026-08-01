@@ -1,8 +1,7 @@
-// -*- mode: C++; c-indent-level: 4; c-basic-offset: 4; indent-tabs-mode: nil; -*-
-//
+
 // Nullable.h: Rcpp R/C++ interface class library -- SEXP container which can be NULL
 //
-// Copyright (C) 2015         Dirk Eddelbuettel and Daniel C. Dillon
+// Copyright (C) 2015-2026  Dirk Eddelbuettel and Daniel C. Dillon
 //
 // This file is part of Rcpp.
 //
@@ -81,6 +80,18 @@ namespace Rcpp {
             return m_sexp;
         }
 
+#if R_VERSION > R_Version(4,3,0) && !defined(RCPP_DISABLE_NULLABLE_T)
+        /**
+         * operator T() to return nullable object
+         *
+         * @throw 'not initialized' if object has not been set
+         */
+        inline operator T() const {
+            checkIfSet();
+            return Rcpp::as<T>(m_sexp);
+        }
+#endif
+
         /**
          * get() accessor for object
          *
@@ -126,7 +137,7 @@ namespace Rcpp {
         /**
          * Returns m_sexp as a T
          */
-        inline T as() { return get(); }
+        inline T as() { return Rcpp::as<T>(get()); }
 
         /**
          * Return a clone of m_sexp as a T

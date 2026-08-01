@@ -8,4 +8,5 @@ flog.threshold          Get and set the threshold for a logger
 ftry                    Wrap a try block in futile.logger
 futile.logger-package   A Logging Utility for R
 logger.options          Constants for 'futile.logger'
+prepare_arg             Provide basic parsing for layout string
 scat                    Print formatted messages

@@ -25,7 +25,8 @@ export(
     writeBibentry,
     charToBib,
     rbibutils_formats,
-    register_JSSextra,
+    ## register_JSSextra, # TODO: stop exporting later
     bibentryExtra,
-    as.bibentryExtra
+    as.bibentryExtra,
+    bibstyle_JSSextra
 )

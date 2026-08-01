@@ -1,10 +1,10 @@
 Package: carData
-Version: 3.0-5
-Date: 2022-01-05
+Version: 3.0-6
+Date: 2026-01-30
 Title: Companion to Applied Regression Data Sets
-Authors@R: c(person("John", "Fox", role = c("aut", "cre"), email = "jfox@mcmaster.ca"),
+Authors@R: c(person("John", "Fox", role = "aut", email = "jfox@mcmaster.ca"),
 	person("Sanford", "Weisberg", role = "aut", email = "sandy@umn.edu"),
-    person("Brad", "Price", role = "aut", email = "brad.price@mail.wvu.edu"))
+    person("Brad", "Price", role = c("aut", "cre"), email = "brad.price@mail.wvu.edu"))
 Depends: R (>= 3.5.0)
 Suggests: car (>= 3.0-0)
 LazyLoad: yes
@@ -15,16 +15,13 @@ Description:
 License: GPL (>= 2)
 URL: https://r-forge.r-project.org/projects/car/,
         https://CRAN.R-project.org/package=carData,
-        https://socialsciences.mcmaster.ca/jfox/Books/Companion/index.html
-Author: John Fox [aut, cre],
-  Sanford Weisberg [aut],
-  Brad Price [aut]
-Maintainer: John Fox <jfox@mcmaster.ca>
-Repository: CRAN
-Repository/R-Forge/Project: car
-Repository/R-Forge/Revision: 694
-Repository/R-Forge/DateTimeStamp: 2022-01-05 19:40:37
-Date/Publication: 2022-01-06 00:20:07 UTC
+        https://z.umn.edu/carbook
 NeedsCompilation: no
-Packaged: 2022-01-05 19:48:10 UTC; rforge
-Built: R 4.5.1; ; 2025-08-04 00:20:10 UTC; windows
+Packaged: 2026-01-30 13:46:36 UTC; user
+Author: John Fox [aut],
+  Sanford Weisberg [aut],
+  Brad Price [aut, cre]
+Maintainer: Brad Price <brad.price@mail.wvu.edu>
+Repository: CRAN
+Date/Publication: 2026-01-30 15:10:02 UTC
+Built: R 4.5.3; ; 2026-07-28 13:37:16 UTC; windows

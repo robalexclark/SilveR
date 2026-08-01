@@ -1,6 +1,6 @@
 Package: vroom
 Title: Read and Write Rectangular Text Data Quickly
-Version: 1.6.7
+Version: 1.7.1
 Authors@R: c(
     person("Jim", "Hester", role = "aut",
            comment = c(ORCID = "0000-0002-2739-7082")),
@@ -23,11 +23,11 @@ Description: The goal of 'vroom' is to read and write data (like 'csv',
     actually use needs to be read.  The writer formats the data in
     parallel and writes to disk asynchronously from formatting.
 License: MIT + file LICENSE
-URL: https://vroom.r-lib.org, https://github.com/tidyverse/vroom
+URL: https://vroom.tidyverse.org, https://github.com/tidyverse/vroom
 BugReports: https://github.com/tidyverse/vroom/issues
 Depends: R (>= 4.1)
 Imports: bit64, cli (>= 3.2.0), crayon, glue, hms, lifecycle (>=
-        1.0.3), methods, rlang (>= 0.4.2), stats, tibble (>= 2.0.0),
+        1.0.3), methods, rlang (>= 1.1.0), stats, tibble (>= 2.0.0),
         tidyselect, tzdb (>= 0.1.1), vctrs (>= 0.2.0), withr
 Suggests: archive, bench (>= 1.1.0), covr, curl, dplyr, forcats, fs,
         ggplot2, knitr, patchwork, prettyunits, purrr, rmarkdown,
@@ -43,8 +43,9 @@ Copyright: file COPYRIGHTS
 Encoding: UTF-8
 Language: en-US
 RoxygenNote: 7.3.3
+Config/build/compilation-database: true
 NeedsCompilation: yes
-Packaged: 2025-11-26 19:47:11 UTC; jenny
+Packaged: 2026-03-30 20:25:37 UTC; jenny
 Author: Jim Hester [aut] (ORCID: <https://orcid.org/0000-0002-2739-7082>),
   Hadley Wickham [aut] (ORCID: <https://orcid.org/0000-0003-4757-117X>),
   Jennifer Bryan [aut, cre] (ORCID:
@@ -56,6 +57,6 @@ Author: Jim Hester [aut] (ORCID: <https://orcid.org/0000-0002-2739-7082>),
   Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)
 Maintainer: Jennifer Bryan <jenny@posit.co>
 Repository: CRAN
-Date/Publication: 2025-11-28 14:10:02 UTC
-Built: R 4.5.2; x86_64-w64-mingw32; 2025-12-03 00:54:25 UTC; windows
+Date/Publication: 2026-03-31 05:10:02 UTC
+Built: R 4.5.3; x86_64-w64-mingw32; 2026-07-28 16:21:35 UTC; windows
 Archs: x64

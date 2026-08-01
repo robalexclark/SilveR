@@ -3,6 +3,7 @@ DebugReporter           Interactively debug failing tests
 FailReporter            Fail if any tests fail
 JunitReporter           Report results in jUnit XML format
 ListReporter            Capture test results and metadata
+LlmReporter             Report test progress for LLMs
 LocationReporter        Test reporter: location
 MinimalReporter         Report minimal results as compactly as possible
 MultiReporter           Run multiple reporters at the same time

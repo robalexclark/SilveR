@@ -1,8 +1,8 @@
-// -*- mode: C++; c-indent-level: 4; c-basic-offset: 4; indent-tabs-mode: nil; -*-
-//
+
 // Function.h: Rcpp R/C++ interface class library -- functions (also primitives and builtins)
 //
-// Copyright (C) 2010 - 2013  Dirk Eddelbuettel and Romain Francois
+// Copyright (C) 2010 - 2025  Dirk Eddelbuettel and Romain Francois
+// Copyright (C) 2026         Dirk Eddelbuettel, Romain François and Iñaki Ucar
 //
 // This file is part of Rcpp.
 //
@@ -43,12 +43,12 @@ namespace Rcpp{
             case BUILTINSXP:
                 Storage::set__(x);
                 break;
-            default:
+            default:						// #nocov start
                 const char* fmt = "Cannot convert object to a function: "
                                   "[type=%s; target=CLOSXP, SPECIALSXP, or "
                                   "BUILTINSXP].";
                 throw not_compatible(fmt, Rf_type2char(TYPEOF(x)));
-            }
+            }								// #nocov end
         }
 
         /**
@@ -70,10 +70,23 @@ namespace Rcpp{
         }
 
         Function_Impl(const std::string& name, const std::string& ns) {
+#if R_VERSION < R_Version(4,5,0)
+            // before R 4.5.0 we would use Rf_findVarInFrame
             Shield<SEXP> env(Rf_findVarInFrame(R_NamespaceRegistry, Rf_install(ns.c_str())));
-            if (env == R_UnboundValue) {
+            if (env == R_UnboundValue)
                 stop("there is no namespace called \"%s\"", ns);
-            }
+#elif R_VERSION < R_Version(4,6,0) || R_SVN_REVISION < 89746
+            // during R 4.5.* and before final R 4.6.0 we could use R_getVarEx
+            // along with R_NamespaceRegistry but avoid R_UnboundValue
+            Shield<SEXP> env(R_getVarEx(Rf_install(ns.c_str()), R_NamespaceRegistry, FALSE, R_NilValue));
+            if (env == R_NilValue)
+                stop("there is no namespace called \"%s\"", ns);
+#else
+            // late R 4.6.0 development got us R_getRegisteredNamespace
+            Shield<SEXP> env(R_getRegisteredNamespace(ns.c_str()));
+            if (env == R_NilValue)
+                stop("there is no namespace called \"%s\"", ns);
+#endif
             get_function(name, env);
         }
 

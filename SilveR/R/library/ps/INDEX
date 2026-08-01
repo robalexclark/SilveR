@@ -47,6 +47,7 @@ ps_shared_lib_users     List all processes that loaded a shared library
 ps_shared_libs          List the dynamically loaded libraries of a
                         process
 ps_status               Current process status
+ps_string               Encode a 'ps_handle' as a short string
 ps_suspend              Suspend (stop) the process
 ps_system_cpu_times     System CPU times.
 ps_system_memory        Statistics about system memory usage

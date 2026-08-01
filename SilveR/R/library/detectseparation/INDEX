@@ -8,8 +8,8 @@ detect_infinite_estimates
                         Detect Infinite Estimates
 detect_separation       Detect Separation
 detect_separation_control
-                        Auxiliary function for the 'glm' interface when
-                        'method' is 'detect_separation'.
+                        Auxiliary function for the 'glm()' interface
+                        when 'method' is 'detect_separation()'
 detectseparation        detectseparation: Methods for Detecting and
                         Checking for Separation and Infinite Maximum
                         Likelihood Estimates

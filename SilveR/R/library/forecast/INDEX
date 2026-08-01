@@ -8,14 +8,12 @@ CV                      Cross-validation statistic
 CVar                    k-fold Cross-Validation applied to an
                         autoregressive model
 StatForecast            Forecast plot
-accuracy.default        Accuracy measures for a forecast model
+accuracy.forecast       Accuracy measures for a forecast model
 arfima                  Fit a fractionally differenced ARFIMA model
 arima.errors            Errors from a regression model with ARIMA
                         errors
 arimaorder              Return the order of an ARIMA or ARFIMA model
 auto.arima              Fit best ARIMA model to univariate time series
-autolayer               Create a ggplot layer appropriate to a
-                        particular data type
 autolayer.mts           Automatically create a ggplot for time series
                         objects
 autoplot.acf            ggplot (Partial) Autocorrelation and
@@ -34,8 +32,7 @@ bld.mbb.bootstrap       Box-Cox and Loess-based decomposition
                         bootstrap.
 checkresiduals          Check that residuals from a time series model
                         look like white noise
-croston                 Forecasts for intermittent demand using
-                        Croston's method
+croston_model           Croston forecast model
 dm.test                 Diebold-Mariano test for predictive accuracy
 dshw                    Double-Seasonal Holt-Winters Forecasting
 easter                  Easter holidays in each season
@@ -43,22 +40,29 @@ ets                     Exponential smoothing state space model
 findfrequency           Find dominant frequency of a time series
 fitted.ARFIMA           h-step in-sample forecasts for time series
                         models.
-forecast-package        forecast: Forecasting Functions for Time Series
-                        and Linear Models
 forecast.HoltWinters    Forecasting using Holt-Winters objects
 forecast.StructTS       Forecasting using Structural Time Series models
 forecast.baggedModel    Forecasting using a bagged model
 forecast.bats           Forecasting using BATS and TBATS models
+forecast.croston_model
+                        Forecasts for intermittent demand using
+                        Croston's method
 forecast.ets            Forecasting using ETS models
 forecast.fracdiff       Forecasting using ARIMA or ARFIMA models
 forecast.lm             Forecast a linear model with possible time
                         series components
+forecast.mean_model     Mean Forecast
 forecast.mlm            Forecast a multiple linear model with possible
                         time series components
 forecast.modelAR        Forecasting using user-defined model
 forecast.mts            Forecasting time series
 forecast.nnetar         Forecasting using neural network models
+forecast.rw_model       Naive and Random Walk Forecasts
+forecast.spline_model   Returns local linear forecasts and prediction
+                        intervals using cubic smoothing splines
+                        estimated with 'spline_model()'.
 forecast.stl            Forecasting using stl objects
+forecast.theta_model    Theta method forecasts.
 forecast.ts             Forecasting time series
 fourier                 Fourier terms for modelling seasonality
 gas                     Australian monthly gas production
@@ -74,7 +78,7 @@ is.acf                  Is an object a particular model type?
 is.constant             Is an object constant?
 is.forecast             Is an object a particular forecast type?
 ma                      Moving-average smoothing
-meanf                   Mean Forecast
+mean_model              Mean Forecast Model
 modelAR                 Time Series Forecasts with a user-defined model
 modeldf                 Compute model degrees of freedom
 monthdays               Number of days in each season
@@ -93,7 +97,7 @@ plot.bats               Plot components from BATS model
 plot.ets                Plot components from ETS model
 plot.forecast           Forecast plot
 residuals.forecast      Residuals for various time series models
-rwf                     Naive and Random Walk Forecasts
+rw_model                Random walk model
 seasadj                 Seasonal adjustment
 seasonal                Extract components from a time series
                         decomposition
@@ -101,14 +105,16 @@ seasonaldummy           Seasonal dummy variables
 ses                     Exponential smoothing forecasts
 simulate.ets            Simulation from a time series model
 sindexf                 Forecast seasonal index
-splinef                 Cubic Spline Forecast
+spline_model            Cubic spline stochastic model
+stlm                    Forecasting model using STL with a generative
+                        time series model
 subset.ts               Subsetting a time series
 taylor                  Half-hourly electricity demand
 tbats                   TBATS model (Exponential smoothing state space
                         model with Box-Cox transformation, ARMA errors,
                         Trend and Seasonal components)
 tbats.components        Extract components of a TBATS model
-thetaf                  Theta method forecast
+theta_model             Theta model
 tsCV                    Time series cross-validation
 tsclean                 Identify and replace outliers and missing
                         values in a time series

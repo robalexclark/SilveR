@@ -1,8 +1,6 @@
 Math.Surv               Methods for Surv objects
 Surv                    Create a Survival Object
 Surv2                   Create a survival object
-Surv2data               Convert data from timecourse to (time1,time2)
-                        style
 aareg                   Aalen's additive regression model for censored
                         data
 aeqSurv                 Adjudicate near ties in a Surv object
@@ -43,6 +41,7 @@ finegray                Create data for a Fine-Gray model
 flchain                 Assay of serum free light chain for 7874
                         subjects.
 frailty                 Random effects terms
+fromtimeline            Create counting process data from timeline data
 gbsg                    Breast cancer data sets used in Royston and
                         Altman (2013)
 heart                   Stanford Heart Transplant data
@@ -54,6 +53,7 @@ lines.survfit           Add Lines or Points to a Survival Plot
 logLik.coxph            logLik method for a Cox model
 logan                   Data from the 1972-78 GSS data used by Logan
 lung                    NCCTG Lung Cancer Data
+lvcf                    Last Value Carried Forward
 mgus                    Monoclonal gammopathy data
 mgus2                   Monoclonal gammopathy data
 model.frame.coxph       Model.frame method for coxph objects
@@ -64,6 +64,7 @@ myeloma                 Survival times of patients with multiple
 nafld                   Non-alcoholic fatty liver disease
 neardate                Find the index of the closest value in data set
                         2, for each entry in data set one.
+nostutter               Remove repeated events
 nsk                     Natural splines with knot heights as the basis.
 nwtco                   Data from the National Wilm's Tumor Study
 ovarian                 Ovarian Cancer Survival Data
@@ -124,6 +125,7 @@ survfit.matrix          Create Aalen-Johansen estimates of multi-state
                         survival from a matrix of hazards.
 survfit.object          Survival Curve Object
 survfit0                Convert the format of a survfit object.
+survfit_confint         Confidence intervals for survival curves
 survfitcoxph.fit        A direct interface to the 'computational
                         engine' of survfit.coxph
 survival-deprecated     Deprecated functions in package 'survival'
@@ -135,7 +137,6 @@ survreg.distributions   Parametric Survival Distributions
 survreg.object          Parametric Survival Model Object
 survregDtest            Verify a survreg distribution
 tcut                    Factors for person-year calculations
-timeline                Convert to/from a timeline data set format
 tmerge                  Time based merge for survival data
 tobin                   Tobin's Tobit data
 transplant              Liver transplant waiting list

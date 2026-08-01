@@ -22,9 +22,8 @@ POSIXct
 Parsers
 Preprocess
 README
+ROR
 RStudio
-RStudio's
-RStudio’s
 Rcpp
 Rdatatable
 Romain
@@ -32,7 +31,9 @@ TSV
 Tierney
 UBSAN
 UNK
+Unclosed
 UseR
+YMD
 Zstandard
 afl
 backslashed
@@ -57,7 +58,6 @@ github
 grisu
 gz
 gzip
-gzipped
 https
 lbzip
 libc
@@ -77,6 +77,7 @@ readr's
 recognised
 relicensing
 stringi
+tempfile
 testthat
 tibble
 tidyverse

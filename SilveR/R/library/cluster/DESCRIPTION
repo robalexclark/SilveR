@@ -1,8 +1,8 @@
 Package: cluster
-Version: 2.1.8.1
-VersionNote: Last CRAN: 2.1.8 on 2024-12-10; 2.1.7 on 2024-12-06; 2.1.6
-        on 2023-11-30; 2.1.5 on 2023-11-27
-Date: 2025-03-11
+Version: 2.1.8.3
+VersionNote: Last CRAN: 2.1.8.2 on 2026-02-03; 2.1.8.1 on 2025-03-11;
+        2.1.8 on 2024-12-10; 2.1.7 on 2024-12-06;
+Date: 2026-07-28
 Priority: recommended
 Title: "Finding Groups in Data": Cluster Analysis Extended Rousseeuw et
         al.
@@ -43,22 +43,24 @@ BuildResaveData: no
 License: GPL (>= 2)
 URL: https://svn.r-project.org/R-packages/trunk/cluster/
 NeedsCompilation: yes
-Packaged: 2025-03-11 22:34:24 UTC; maechler
-Author: Martin Maechler [aut, cre] (<https://orcid.org/0000-0002-8685-9910>),
-  Peter Rousseeuw [aut] (Fortran original,
+Packaged: 2026-07-28 13:14:45 UTC; maechler
+Author: Martin Maechler [aut, cre] (ORCID:
+    <https://orcid.org/0000-0002-8685-9910>),
+  Peter Rousseeuw [aut] (Fortran original, ORCID:
     <https://orcid.org/0000-0002-3807-5353>),
   Anja Struyf [aut] (S original),
-  Mia Hubert [aut] (S original, <https://orcid.org/0000-0001-6398-4850>),
-  Kurt Hornik [trl, ctb] (port to R; maintenance(1999-2000),
+  Mia Hubert [aut] (S original, ORCID:
+    <https://orcid.org/0000-0001-6398-4850>),
+  Kurt Hornik [trl, ctb] (port to R; maintenance(1999-2000), ORCID:
     <https://orcid.org/0000-0003-4198-9911>),
   Matthias Studer [ctb],
   Pierre Roudier [ctb],
   Juan Gonzalez [ctb],
   Kamil Kozlowski [ctb],
-  Erich Schubert [ctb] (fastpam options for pam(),
+  Erich Schubert [ctb] (fastpam options for pam(), ORCID:
     <https://orcid.org/0000-0001-9143-4880>),
   Keefe Murphy [ctb] (volume.ellipsoid({d >= 3}))
 Repository: CRAN
-Date/Publication: 2025-03-12 17:20:02 UTC
-Built: R 4.5.1; x86_64-w64-mingw32; 2025-06-13 07:58:01 UTC; windows
+Date/Publication: 2026-07-30 15:30:09 UTC
+Built: R 4.5.3; x86_64-w64-mingw32; 2026-07-31 10:48:17 UTC; windows
 Archs: x64

@@ -1,7 +1,7 @@
 Package: xts
 Type: Package
 Title: eXtensible Time Series
-Version: 0.14.1
+Version: 0.14.2
 Authors@R: c(
   person(given=c("Jeffrey","A."), family="Ryan", role=c("aut","cph")),
   person(given=c("Joshua","M."), family="Ulrich", role=c("cre","aut"), email="josh.m.ulrich@gmail.com"),
@@ -20,13 +20,13 @@ URL: https://joshuaulrich.github.io/xts/,
 BugReports: https://github.com/joshuaulrich/xts/issues
 Encoding: UTF-8
 NeedsCompilation: yes
-Packaged: 2024-10-15 15:25:09 UTC; josh
+Packaged: 2026-02-27 23:01:11 UTC; josh
 Author: Jeffrey A. Ryan [aut, cph],
   Joshua M. Ulrich [cre, aut],
   Ross Bennett [ctb],
   Corwin Joy [ctb]
 Maintainer: Joshua M. Ulrich <josh.m.ulrich@gmail.com>
 Repository: CRAN
-Date/Publication: 2024-10-15 17:30:02 UTC
-Built: R 4.5.2; x86_64-w64-mingw32; 2025-12-03 04:16:04 UTC; windows
+Date/Publication: 2026-02-28 06:10:03 UTC
+Built: R 4.5.3; x86_64-w64-mingw32; 2026-07-28 14:54:28 UTC; windows
 Archs: x64

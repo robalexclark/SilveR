@@ -1,5 +1,6 @@
 Package: tseries
-Version: 0.10-58
+Version: 0.10-62
+Encoding: UTF-8
 Title: Time Series Analysis and Computational Finance
 Authors@R: c(person("Adrian", "Trapletti", role = "aut",
                     email = "adrian@trapletti.org"),
@@ -10,16 +11,15 @@ Authors@R: c(person("Adrian", "Trapletti", role = "aut",
                     comment = "BDS test code"))
 Description: Time series analysis and computational finance.
 Depends: R (>= 3.4.0)
-Imports: graphics, stats, utils, quadprog, zoo, quantmod (>= 0.4-9),
-        jsonlite
+Imports: graphics, stats, utils, quadprog, zoo, quantmod (>= 0.4-9)
 License: GPL-2 | GPL-3
 NeedsCompilation: yes
-Packaged: 2024-09-23 09:27:59 UTC; hornik
+Packaged: 2026-07-13 08:52:34 UTC; hornik
 Author: Adrian Trapletti [aut],
-  Kurt Hornik [aut, cre] (<https://orcid.org/0000-0003-4198-9911>),
+  Kurt Hornik [aut, cre] (ORCID: <https://orcid.org/0000-0003-4198-9911>),
   Blake LeBaron [ctb] (BDS test code)
 Maintainer: Kurt Hornik <Kurt.Hornik@R-project.org>
 Repository: CRAN
-Date/Publication: 2024-09-23 10:00:16 UTC
-Built: R 4.5.2; x86_64-w64-mingw32; 2025-12-03 05:07:48 UTC; windows
+Date/Publication: 2026-07-13 09:22:43 UTC
+Built: R 4.5.3; x86_64-w64-mingw32; 2026-07-28 15:53:21 UTC; windows
 Archs: x64

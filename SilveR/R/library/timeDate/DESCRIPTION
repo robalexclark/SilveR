@@ -1,6 +1,6 @@
 Package: timeDate
 Title: Rmetrics - Chronological and Calendar Objects
-Version: 4051.111
+Version: 4052.112
 Authors@R: c(person("Diethelm", "Wuertz", role="aut", comment = "original code")
 	   , person("Tobias", "Setz", role = c("aut"), email = "tobias.setz@live.com")
 	   , person("Yohan", "Chalabi", role = "aut")
@@ -26,11 +26,11 @@ Suggests: RUnit
 License: GPL (>= 2)
 Encoding: UTF-8
 URL: https://geobosh.github.io/timeDateDoc/ (doc),
-        https://r-forge.r-project.org/scm/viewvc.php/pkg/timeDate/?root=rmetrics
-        (devel), https://www.rmetrics.org
-BugReports: https://r-forge.r-project.org/projects/rmetrics
+        https://CRAN.R-project.org/package=timeDate,
+        https://www.rmetrics.org
+BugReports: https://r-forge.r-project.org/tracker/?atid=633&group_id=156&func=browse
 NeedsCompilation: no
-Packaged: 2025-10-17 05:55:14 UTC; georgi
+Packaged: 2026-01-26 09:43:57 UTC; georgi
 Author: Diethelm Wuertz [aut] (original code),
   Tobias Setz [aut],
   Yohan Chalabi [aut],
@@ -40,5 +40,5 @@ Author: Diethelm Wuertz [aut] (original code),
     <https://orcid.org/0000-0003-2839-346X>)
 Maintainer: Georgi N. Boshnakov <georgi.boshnakov@manchester.ac.uk>
 Repository: CRAN
-Date/Publication: 2025-10-17 11:50:02 UTC
-Built: R 4.5.2; ; 2025-11-01 00:31:23 UTC; windows
+Date/Publication: 2026-01-28 14:30:02 UTC
+Built: R 4.5.3; ; 2026-06-04 18:09:51 UTC; windows

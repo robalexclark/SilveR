@@ -2,7 +2,6 @@ extract_p               Extracts p-values
 multcompBoxplot         boxplot with multcomp graphics
 multcompLetters         Letter summary of similarities and differences
 multcompTs              "T" depiction of undifferentiated classes
-multcompView-package    Summarize multiple paired comparisons
 plot.multcompLetters    plot multcomp graphics
 plot.multcompTs         plot multcomp graphics
 print.multcompLetters   print a multcompLetters object

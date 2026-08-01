@@ -1,6 +1,7 @@
 Package: bitops
-Version: 1.0-9
-Date: 2024-10-03
+Version: 1.1-0
+VersionNote: Last CRAN: 1.0-9 on 2024-10-03
+Date: 2026-07-30
 Authors@R: c(
    person("Steve", "Dutky", role = "aut", email = "sdutky@terpalum.umd.edu",
     	     comment = "S original; then (after MM's port) revised and modified"),
@@ -12,13 +13,13 @@ License: GPL (>= 2)
 URL: https://github.com/mmaechler/R-bitops
 BugReports: https://github.com/mmaechler/R-bitops/issues
 NeedsCompilation: yes
-Packaged: 2024-10-03 09:17:35 UTC; maechler
+Packaged: 2026-07-30 09:28:52 UTC; maechler
 Author: Steve Dutky [aut] (S original; then (after MM's port) revised and
     modified),
-  Martin Maechler [cre, aut] (Initial R port; tweaks,
+  Martin Maechler [cre, aut] (Initial R port; tweaks, ORCID:
     <https://orcid.org/0000-0002-8685-9910>)
 Maintainer: Martin Maechler <maechler@stat.math.ethz.ch>
 Repository: CRAN
-Date/Publication: 2024-10-03 23:00:54 UTC
-Built: R 4.5.0; x86_64-w64-mingw32; 2025-04-08 00:43:33 UTC; windows
+Date/Publication: 2026-07-30 15:50:15 UTC
+Built: R 4.5.3; x86_64-w64-mingw32; 2026-07-31 10:48:17 UTC; windows
 Archs: x64

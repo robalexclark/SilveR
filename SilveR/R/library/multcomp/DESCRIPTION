@@ -1,14 +1,15 @@
 Package: multcomp
 Title: Simultaneous Inference in General Parametric Models
-Version: 1.4-29
-Date: 2025-10-19
+Version: 1.4-31
 Authors@R: c(person("Torsten", "Hothorn", role = c("aut", "cre"), 
                     email = "Torsten.Hothorn@R-project.org", comment = c(ORCID = "0000-0001-8301-0471")), 
         person("Frank", "Bretz", role = "aut"), 
         person("Peter", "Westfall", role = "aut"),
         person("Richard M.", "Heiberger", role = "ctb"),
         person("Andre", "Schuetzenmeister", role = "ctb"),
-        person("Susan", "Scheibe", role = "ctb"))
+        person("Susan", "Scheibe", role = "ctb"),
+        person("Christian", "Ritz", role = "ctb"),
+        person("Christian B.", "Pipper", role = "ctb"))
 Description: Simultaneous tests and confidence intervals
   for general linear hypotheses in parametric models, including 
   linear, generalized linear, linear mixed effects, and survival models.
@@ -21,21 +22,23 @@ Imports: sandwich (>= 2.3-0), codetools
 Suggests: lme4 (>= 0.999375-16), nlme, robustbase, coin, MASS, foreign,
         xtable, lmtest, coxme (>= 2.2-1), SimComp, ISwR, tram (>=
         0.2-5), fixest (>= 0.10), glmmTMB, DoseFinding, HH, asd,
-        gsDesign, lattice
-URL: http://multcomp.R-forge.R-project.org,
+        gsDesign, lattice, bibtex
+URL: https://codeberg.org/thothorn/multcomp,
         https://www.routledge.com/Multiple-Comparisons-Using-R/Bretz-Hothorn-Westfall/p/book/9781584885740
 LazyData: yes
 License: GPL-2
 NeedsCompilation: no
-Packaged: 2025-10-19 13:56:54 UTC; hothorn
+Packaged: 2026-07-10 11:28:08 UTC; hothorn
 Author: Torsten Hothorn [aut, cre] (ORCID:
     <https://orcid.org/0000-0001-8301-0471>),
   Frank Bretz [aut],
   Peter Westfall [aut],
   Richard M. Heiberger [ctb],
   Andre Schuetzenmeister [ctb],
-  Susan Scheibe [ctb]
+  Susan Scheibe [ctb],
+  Christian Ritz [ctb],
+  Christian B. Pipper [ctb]
 Maintainer: Torsten Hothorn <Torsten.Hothorn@R-project.org>
 Repository: CRAN
-Date/Publication: 2025-10-20 05:10:29 UTC
-Built: R 4.5.2; ; 2025-12-03 04:28:37 UTC; windows
+Date/Publication: 2026-07-12 07:50:02 UTC
+Built: R 4.5.3; ; 2026-07-28 15:51:48 UTC; windows

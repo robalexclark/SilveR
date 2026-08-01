@@ -12,7 +12,7 @@
 <div style="text-align: center;">
 <a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]"></a>
 <a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]"></a>
-</div><h2>Documentation for package &lsquo;igraph&rsquo; version 2.2.1</h2>
+</div><h2>Documentation for package &lsquo;igraph&rsquo; version 2.3.3</h2>
 
 <ul><li><a href="../DESCRIPTION" type="text/plain; charset=utf-8">DESCRIPTION file</a>.</li>
 <li><a href="../doc/index.html">User guides, package vignettes and other documentation.</a></li>
@@ -224,6 +224,8 @@
 <td>Create an extended chordal ring graph</td></tr>
 <tr><td style="width: 25%;"><a href="sample_chung_lu.html">chung_lu</a></td>
 <td>Random graph with given expected degrees</td></tr>
+<tr><td style="width: 25%;"><a href="make_circulant.html">circulant</a></td>
+<td>Create a circulant graph</td></tr>
 <tr><td style="width: 25%;"><a href="sample_last_cit.html">cit_cit_types</a></td>
 <td>Random citation graphs</td></tr>
 <tr><td style="width: 25%;"><a href="sample_last_cit.html">cit_types</a></td>
@@ -312,12 +314,16 @@
 <td>Connected components of a graph</td></tr>
 <tr><td style="width: 25%;"><a href="count_isomorphisms.html">count_isomorphisms</a></td>
 <td>Count the number of isomorphic mappings between two graphs</td></tr>
+<tr><td style="width: 25%;"><a href="which_multiple.html">count_loops</a></td>
+<td>Find the multiple or loop edges in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="cliques.html">count_max_cliques</a></td>
 <td>Functions to find cliques, i.e. complete subgraphs in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="count_motifs.html">count_motifs</a></td>
 <td>Graph motifs</td></tr>
 <tr><td style="width: 25%;"><a href="which_multiple.html">count_multiple</a></td>
 <td>Find the multiple or loop edges in a graph</td></tr>
+<tr><td style="width: 25%;"><a href="count_reachable.html">count_reachable</a></td>
+<td>Count reachable vertices</td></tr>
 <tr><td style="width: 25%;"><a href="count_subgraph_isomorphisms.html">count_subgraph_isomorphisms</a></td>
 <td>Count the isomorphic mappings between a graph and the subgraphs of another graph</td></tr>
 <tr><td style="width: 25%;"><a href="count_triangles.html">count_triangles</a></td>
@@ -487,6 +493,8 @@
 <td>Create a complete (full) citation graph</td></tr>
 <tr><td style="width: 25%;"><a href="make_full_graph.html">full_graph</a></td>
 <td>Create a full graph</td></tr>
+<tr><td style="width: 25%;"><a href="make_full_multipartite.html">full_multipartite</a></td>
+<td>Create a full multipartite graph</td></tr>
 </table>
 
 <h2><a id="G">-- G --</a></h2>
@@ -690,6 +698,8 @@
 <td>Intersection of edge sequences</td></tr>
 <tr><td style="width: 25%;"><a href="intersection.igraph.vs.html">intersection.igraph.vs</a></td>
 <td>Intersection of vertex sequences</td></tr>
+<tr><td style="width: 25%;"><a href="invalidate_cache.html">invalidate_cache</a></td>
+<td>Invalidate the cache of a graph</td></tr>
 <tr><td style="width: 25%;"><a href="layout_in_circle.html">in_circle</a></td>
 <td>Graph layout with vertices on a circle.</td></tr>
 <tr><td style="width: 25%;"><a href="isomorphic.html">isomorphic</a></td>
@@ -800,6 +810,8 @@
 <td>Merging graph layouts</td></tr>
 <tr><td style="width: 25%;"><a href="layout_in_circle.html">layout_in_circle</a></td>
 <td>Graph layout with vertices on a circle.</td></tr>
+<tr><td style="width: 25%;"><a href="layout_modifier.html">layout_modifier</a></td>
+<td>Create a layout modifier</td></tr>
 <tr><td style="width: 25%;"><a href="layout_nicely.html">layout_nicely</a></td>
 <td>Choose an appropriate graph layout algorithm automatically</td></tr>
 <tr><td style="width: 25%;"><a href="layout_on_grid.html">layout_on_grid</a></td>
@@ -849,6 +861,8 @@
 <td>Create a bipartite graph</td></tr>
 <tr><td style="width: 25%;"><a href="make_chordal_ring.html">make_chordal_ring</a></td>
 <td>Create an extended chordal ring graph</td></tr>
+<tr><td style="width: 25%;"><a href="make_circulant.html">make_circulant</a></td>
+<td>Create a circulant graph</td></tr>
 <tr><td style="width: 25%;"><a href="make_clusters.html">make_clusters</a></td>
 <td>Creates a communities object.</td></tr>
 <tr><td style="width: 25%;"><a href="make_de_bruijn_graph.html">make_de_bruijn_graph</a></td>
@@ -867,6 +881,8 @@
 <td>Create a complete (full) citation graph</td></tr>
 <tr><td style="width: 25%;"><a href="make_full_graph.html">make_full_graph</a></td>
 <td>Create a full graph</td></tr>
+<tr><td style="width: 25%;"><a href="make_full_multipartite.html">make_full_multipartite</a></td>
+<td>Create a full multipartite graph</td></tr>
 <tr><td style="width: 25%;"><a href="make_graph.html">make_graph</a></td>
 <td>Create an igraph graph from a list of edges, or a notable graph</td></tr>
 <tr><td style="width: 25%;"><a href="make_kautz_graph.html">make_kautz_graph</a></td>
@@ -883,8 +899,12 @@
 <td>Create a star graph, a tree with n vertices and n - 1 leaves</td></tr>
 <tr><td style="width: 25%;"><a href="make_tree.html">make_tree</a></td>
 <td>Create tree graphs</td></tr>
+<tr><td style="width: 25%;"><a href="make_turan.html">make_turan</a></td>
+<td>Create a Turán graph</td></tr>
 <tr><td style="width: 25%;"><a href="make_graph.html">make_undirected_graph</a></td>
 <td>Create an igraph graph from a list of edges, or a notable graph</td></tr>
+<tr><td style="width: 25%;"><a href="make_wheel.html">make_wheel</a></td>
+<td>Create a wheel graph</td></tr>
 <tr><td style="width: 25%;"><a href="match_vertices.html">match_vertices</a></td>
 <td>Match Graphs given a seeding of vertex correspondences</td></tr>
 <tr><td style="width: 25%;"><a href="matching.html">max_bipartite_match</a></td>
@@ -901,6 +921,8 @@
 <td>Maximum flow in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="ivs.html">max_ivs</a></td>
 <td>Independent vertex sets</td></tr>
+<tr><td style="width: 25%;"><a href="degree.html">mean_degree</a></td>
+<td>Degree and degree distribution of the vertices</td></tr>
 <tr><td style="width: 25%;"><a href="distances.html">mean_distance</a></td>
 <td>Shortest (directed or undirected) paths between vertices</td></tr>
 <tr><td style="width: 25%;"><a href="sir.html">median.sir</a></td>
@@ -1268,6 +1290,8 @@
 <td>Graph generation based on different vertex types</td></tr>
 <tr><td style="width: 25%;"><a href="sample_traits_callaway.html">traits_callaway</a></td>
 <td>Graph generation based on different vertex types</td></tr>
+<tr><td style="width: 25%;"><a href="transitive_closure.html">transitive_closure</a></td>
+<td>Transitive closure of a graph</td></tr>
 <tr><td style="width: 25%;"><a href="transitivity.html">transitivity</a></td>
 <td>Transitivity of a graph</td></tr>
 <tr><td style="width: 25%;"><a href="make_tree.html">tree</a></td>
@@ -1276,6 +1300,8 @@
 <td>Triad census, subgraphs with three vertices</td></tr>
 <tr><td style="width: 25%;"><a href="count_triangles.html">triangles</a></td>
 <td>Find triangles in graphs</td></tr>
+<tr><td style="width: 25%;"><a href="make_turan.html">turan</a></td>
+<td>Create a Turán graph</td></tr>
 </table>
 
 <h2><a id="U">-- U --</a></h2>
@@ -1343,6 +1369,8 @@
 <td>Functions to find weighted cliques, i.e. vertex-weighted complete subgraphs in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="cliques.html">weighted_clique_num</a></td>
 <td>Functions to find cliques, i.e. complete subgraphs in a graph</td></tr>
+<tr><td style="width: 25%;"><a href="make_wheel.html">wheel</a></td>
+<td>Create a wheel graph</td></tr>
 <tr><td style="width: 25%;"><a href="which_multiple.html">which_loop</a></td>
 <td>Find the multiple or loop edges in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="which_multiple.html">which_multiple</a></td>

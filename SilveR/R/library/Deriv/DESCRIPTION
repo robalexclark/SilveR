@@ -1,8 +1,8 @@
 Package: Deriv
 Type: Package
 Title: Symbolic Differentiation
-Version: 4.2.0
-Date: 2025-06-20
+Version: 4.3.0
+Date: 2026-07-22
 Authors@R: c(person(given="Andrew", family="Clausen", role="aut"),
     person(given="Serguei", family="Sokol", role=c("aut", "cre"),
     email="sokol@insa-toulouse.fr", comment = c(ORCID = "0000-0002-5674-3327")),
@@ -12,18 +12,21 @@ Description: R-based solution for symbolic differentiation. It admits
     in arguments of functions to be differentiated. Some symbolic
     simplification is part of the work.
 License: GPL (>= 3)
+Depends: Rcpp
+LinkingTo: Rcpp
+NeedsCompilation: yes
 Suggests: testthat (>= 0.11.0)
 BugReports: https://github.com/sgsokol/Deriv/issues
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.3
 Imports: methods
 Encoding: UTF-8
-NeedsCompilation: no
-Packaged: 2025-06-20 13:25:20 UTC; sokol
+Packaged: 2026-07-22 08:37:51 UTC; sokol
 Author: Andrew Clausen [aut],
   Serguei Sokol [aut, cre] (ORCID:
     <https://orcid.org/0000-0002-5674-3327>),
   Andreas Rappold [ctb]
 Maintainer: Serguei Sokol <sokol@insa-toulouse.fr>
 Repository: CRAN
-Date/Publication: 2025-06-20 15:20:02 UTC
-Built: R 4.5.1; ; 2025-08-04 00:19:45 UTC; windows
+Date/Publication: 2026-07-23 05:20:02 UTC
+Built: R 4.5.3; x86_64-w64-mingw32; 2026-07-28 14:29:54 UTC; windows
+Archs: x64

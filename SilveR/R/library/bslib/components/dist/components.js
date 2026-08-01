@@ -1,4 +1,4 @@
-/*! bslib 0.9.0 | (c) 2012-2025 RStudio, PBC. | License: MIT + file LICENSE */
+/*! bslib 0.11.0 | (c) 2012-2026 RStudio, PBC. | License: MIT + file LICENSE */
 "use strict";
 (() => {
   var __getOwnPropNames = Object.getOwnPropertyNames;
@@ -62,6 +62,17 @@
       );
     }
   }
+  function showShinyClientMessage({
+    headline = "",
+    message,
+    status = "warning"
+  }) {
+    document.dispatchEvent(
+      new CustomEvent("shiny:client-message", {
+        detail: { headline, message, status }
+      })
+    );
+  }
   function hasDefinedProperty(obj, prop) {
     return Object.prototype.hasOwnProperty.call(obj, prop) && obj[prop] !== void 0;
   }
@@ -94,6 +105,27 @@
         return yield Shiny.renderContentAsync.apply(null, args);
       } else {
         return yield Shiny.renderContent.apply(null, args);
+      }
+    });
+  }
+  function updateLabel(labelContent, labelNode) {
+    return __async(this, null, function* () {
+      if (typeof labelContent === "undefined")
+        return;
+      if (labelNode.length !== 1) {
+        throw new Error("labelNode must be of length 1");
+      }
+      if (typeof labelContent === "string") {
+        labelContent = {
+          html: labelContent,
+          deps: []
+        };
+      }
+      if (labelContent.html === "") {
+        labelNode.addClass("shiny-label-null");
+      } else {
+        yield shinyRenderContent(labelNode, labelContent);
+        labelNode.removeClass("shiny-label-null");
       }
     });
   }
@@ -847,6 +879,16 @@
   });
 
   // srcts/src/components/sidebar.ts
+  function whenChangedCallback(watchFn, callback) {
+    let lastValue = watchFn();
+    return () => {
+      const currentValue = watchFn();
+      if (currentValue !== lastValue) {
+        callback();
+      }
+      lastValue = currentValue;
+    };
+  }
   var _Sidebar, Sidebar, SidebarInputBinding;
   var init_sidebar = __esm({
     "srcts/src/components/sidebar.ts"() {
@@ -860,6 +902,42 @@
          * @param {HTMLElement} container
          */
         constructor(container) {
+          /**
+           * Resize state tracking
+           * @private
+           */
+          this.resizeState = {
+            isResizing: false,
+            startX: 0,
+            startWidth: 0,
+            minWidth: 150,
+            maxWidth: () => window.innerWidth - 50,
+            constrainedWidth: (width) => {
+              return Math.max(
+                this.resizeState.minWidth,
+                Math.min(this.resizeState.maxWidth(), width)
+              );
+            }
+          };
+          /**
+           * Whether the resize handle has been activated by the mouse crossing the
+           * sidebar's outer edge. This prevents clicks on the sidebar scrollbar
+           * (which overlaps the handle) from starting a resize.
+           * @private
+           */
+          this.resizeHandleActivated = false;
+          /**
+           * The clientX where the handle was activated, used to detect when the mouse
+           * reverses direction back past this point (which dismisses the handle).
+           * @private
+           */
+          this.resizeHandleEngagementX = 0;
+          /**
+           * The peak displacement from the engagement point, used to detect direction
+           * reversal past the engagement point.
+           * @private
+           */
+          this.resizeHandlePeakDx = 0;
           /**
            * The current window size, either `"desktop"` or `"mobile"`.
            * @private
@@ -888,6 +966,7 @@
           if (this._isCollapsible("desktop") || this._isCollapsible("mobile")) {
             this._initEventListeners();
           }
+          this._initResizeHandle();
           _Sidebar.shinyResizeObserver.observe(this.layout.main);
           container.removeAttribute("data-bslib-sidebar-init");
           const initScript = container.querySelector(
@@ -973,6 +1052,302 @@
           containers.forEach((container) => new _Sidebar(container));
         }
         /**
+         * Initialize sidebar resize functionality.
+         * @private
+         */
+        _initResizeHandle() {
+          if (!this.layout.sidebar.hasAttribute("data-resizable"))
+            return;
+          if (!this.layout.resizeHandle) {
+            const handle = this._createResizeHandle();
+            this.layout.container.appendChild(handle);
+            this.layout.resizeHandle = handle;
+            this._attachResizeEventListeners(handle);
+          }
+          this._updateResizeAvailability();
+        }
+        /**
+         * Create the resize handle element.
+         * @private
+         */
+        _createResizeHandle() {
+          const handle = document.createElement("div");
+          handle.className = _Sidebar.classes.RESIZE_HANDLE;
+          handle.setAttribute("role", "separator");
+          handle.setAttribute("aria-orientation", "vertical");
+          handle.setAttribute("aria-label", "Resize sidebar");
+          handle.setAttribute("tabindex", "0");
+          handle.setAttribute("aria-keyshortcuts", "ArrowLeft ArrowRight Home End");
+          handle.title = "Drag to resize sidebar";
+          const indicator = document.createElement("div");
+          indicator.className = "resize-indicator";
+          handle.appendChild(indicator);
+          const instructions = document.createElement("div");
+          instructions.className = "visually-hidden";
+          instructions.textContent = "Use arrow keys to resize the sidebar, Shift for larger steps, Home/End for min/max width.";
+          handle.appendChild(instructions);
+          return handle;
+        }
+        /**
+         * Attach event listeners for resize functionality.
+         * @private
+         */
+        _attachResizeEventListeners(handle) {
+          handle.addEventListener("mousedown", this._onResizeStart.bind(this));
+          handle.addEventListener(
+            "mousemove",
+            this._onResizeHandlePointerMove.bind(this)
+          );
+          handle.addEventListener(
+            "mouseleave",
+            this._onResizeHandlePointerLeave.bind(this)
+          );
+          document.addEventListener("mousemove", this._onResizeMove.bind(this));
+          document.addEventListener("mouseup", this._onResizeEnd.bind(this));
+          handle.addEventListener("touchstart", this._onResizeStart.bind(this), {
+            passive: false
+          });
+          document.addEventListener("touchmove", this._onResizeMove.bind(this), {
+            passive: false
+          });
+          document.addEventListener("touchend", this._onResizeEnd.bind(this));
+          handle.addEventListener("keydown", this._onResizeKeyDown.bind(this));
+          window.addEventListener(
+            "resize",
+            whenChangedCallback(
+              () => this._getWindowSize(),
+              () => this._updateResizeAvailability()
+            )
+          );
+        }
+        /**
+         * Check if the sidebar should be resizable in the current state.
+         * @private
+         * @returns {boolean}
+         */
+        _shouldEnableResize() {
+          const isDesktop = this._getWindowSize() === "desktop";
+          const notTransitioning = !this.layout.container.classList.contains(
+            _Sidebar.classes.TRANSITIONING
+          );
+          const notClosed = !this.isClosed;
+          return (
+            // Allow resizing only when the sidebar...
+            isDesktop && notTransitioning && notClosed
+          );
+        }
+        /**
+         * Handle resize start (mouse/touch down).
+         * @private
+         * @param {MouseEvent | TouchEvent} event
+         */
+        _onResizeStart(event) {
+          if (!this._shouldEnableResize())
+            return;
+          if (!("touches" in event) && !this.resizeHandleActivated)
+            return;
+          event.preventDefault();
+          const clientX = "touches" in event ? event.touches[0].clientX : event.clientX;
+          this.resizeState.isResizing = true;
+          this.resizeState.startX = clientX;
+          this.resizeState.startWidth = this._getCurrentSidebarWidth();
+          this.layout.container.style.setProperty("--_transition-duration", "0ms");
+          this.layout.container.classList.add(_Sidebar.classes.RESIZING);
+          document.documentElement.setAttribute(
+            `data-bslib-${_Sidebar.classes.RESIZING}`,
+            "true"
+          );
+          this._dispatchResizeEvent("start", this.resizeState.startWidth);
+        }
+        /**
+         * Handle resize move (mouse/touch move).
+         * @private
+         * @param {MouseEvent | TouchEvent} event
+         */
+        _onResizeMove(event) {
+          if (!this.resizeState.isResizing)
+            return;
+          event.preventDefault();
+          const clientX = "touches" in event ? event.touches[0].clientX : event.clientX;
+          const deltaX = clientX - this.resizeState.startX;
+          const isRight = this._isRightSidebar();
+          const newWidth = isRight ? this.resizeState.startWidth - deltaX : this.resizeState.startWidth + deltaX;
+          const constrainedWidth = this.resizeState.constrainedWidth(newWidth);
+          this._updateSidebarWidth(constrainedWidth);
+          this._dispatchResizeEvent("move", constrainedWidth);
+        }
+        /**
+         * Handle resize end (mouse/touch up).
+         * @private
+         */
+        _onResizeEnd() {
+          if (!this.resizeState.isResizing)
+            return;
+          this.resizeState.isResizing = false;
+          this.layout.container.style.removeProperty("--_transition-duration");
+          this.layout.container.classList.remove(_Sidebar.classes.RESIZING);
+          document.documentElement.removeAttribute(
+            `data-bslib-${_Sidebar.classes.RESIZING}`
+          );
+          this._deactivateResizeHandle();
+          _Sidebar.shinyResizeObserver.flush();
+          this._dispatchResizeEvent("end", this._getCurrentSidebarWidth());
+        }
+        /**
+         * Handle keyboard events for resize accessibility.
+         * @private
+         * @param {KeyboardEvent} event
+         */
+        _onResizeKeyDown(event) {
+          if (!this._shouldEnableResize())
+            return;
+          const step = event.shiftKey ? 50 : 10;
+          let newWidth = this._getCurrentSidebarWidth();
+          switch (event.key) {
+            case "ArrowLeft":
+              newWidth = this._isRightSidebar() ? newWidth + step : newWidth - step;
+              break;
+            case "ArrowRight":
+              newWidth = this._isRightSidebar() ? newWidth - step : newWidth + step;
+              break;
+            case "Home":
+              newWidth = this.resizeState.minWidth;
+              break;
+            case "End":
+              newWidth = this.resizeState.maxWidth();
+              break;
+            default:
+              return;
+          }
+          event.preventDefault();
+          newWidth = this.resizeState.constrainedWidth(newWidth);
+          this._updateSidebarWidth(newWidth);
+          _Sidebar.shinyResizeObserver.flush();
+          this._dispatchResizeEvent("keyboard", newWidth);
+        }
+        /**
+         * Get the current sidebar width in pixels.
+         * @private
+         * @returns {number}
+         */
+        _getCurrentSidebarWidth() {
+          const sidebarWidth = this.layout.sidebar.getBoundingClientRect().width;
+          return sidebarWidth || 250;
+        }
+        /**
+         * Update the sidebar width.
+         * @private
+         * @param {number} newWidth
+         */
+        _updateSidebarWidth(newWidth) {
+          const { container, resizeHandle } = this.layout;
+          container.style.setProperty("--_sidebar-width", `${newWidth}px`);
+          if (resizeHandle) {
+            resizeHandle.setAttribute("aria-valuenow", newWidth.toString());
+            resizeHandle.setAttribute(
+              "aria-valuemin",
+              this.resizeState.minWidth.toString()
+            );
+            resizeHandle.setAttribute(
+              "aria-valuemax",
+              this.resizeState.maxWidth().toString()
+            );
+          }
+        }
+        /**
+         * Check if this is a right-aligned sidebar.
+         * @private
+         * @returns {boolean}
+         */
+        _isRightSidebar() {
+          return this.layout.container.classList.contains("sidebar-right");
+        }
+        /**
+         * Track mouse movement over the resize handle to detect when the cursor
+         * crosses the sidebar's outer edge, which activates the handle for grabbing.
+         * After activation, dismisses if the mouse reverses back past the
+         * engagement point.
+         * @private
+         * @param {MouseEvent} event
+         */
+        _onResizeHandlePointerMove(event) {
+          if (this.resizeState.isResizing)
+            return;
+          const handle = this.layout.resizeHandle;
+          if (!handle)
+            return;
+          if (!this.resizeHandleActivated) {
+            const sidebarRect = this.layout.sidebar.getBoundingClientRect();
+            const midpoint = this._isRightSidebar() ? sidebarRect.left : sidebarRect.right;
+            if (Math.abs(event.clientX - midpoint) <= 2) {
+              this.resizeHandleActivated = true;
+              this.resizeHandleEngagementX = event.clientX;
+              this.resizeHandlePeakDx = 0;
+              handle.classList.add(_Sidebar.classes.HANDLE_ACTIVE);
+            }
+            return;
+          }
+          const dx = event.clientX - this.resizeHandleEngagementX;
+          if (Math.abs(dx) > Math.abs(this.resizeHandlePeakDx)) {
+            this.resizeHandlePeakDx = dx;
+          }
+          if (Math.abs(this.resizeHandlePeakDx) > 3 && Math.sign(dx) !== Math.sign(this.resizeHandlePeakDx)) {
+            this._deactivateResizeHandle();
+          }
+        }
+        /**
+         * Remove the active state from the resize handle.
+         * @private
+         */
+        _deactivateResizeHandle() {
+          var _a;
+          this.resizeHandleActivated = false;
+          this.resizeHandlePeakDx = 0;
+          (_a = this.layout.resizeHandle) == null ? void 0 : _a.classList.remove(_Sidebar.classes.HANDLE_ACTIVE);
+        }
+        /**
+         * Reset resize handle activation when the mouse leaves the handle.
+         * @private
+         */
+        _onResizeHandlePointerLeave() {
+          if (this.resizeState.isResizing)
+            return;
+          this._deactivateResizeHandle();
+        }
+        /**
+         * Update resize handle availability based on current state.
+         * @private
+         */
+        _updateResizeAvailability() {
+          if (!this.layout.resizeHandle)
+            return;
+          const shouldEnable = this._shouldEnableResize();
+          this.layout.resizeHandle.style.display = shouldEnable ? "" : "none";
+          this.layout.resizeHandle.setAttribute(
+            "aria-hidden",
+            shouldEnable ? "false" : "true"
+          );
+          if (shouldEnable) {
+            this.layout.resizeHandle.setAttribute("tabindex", "0");
+          } else {
+            this.layout.resizeHandle.removeAttribute("tabindex");
+          }
+        }
+        /**
+         * Dispatch a custom resize event.
+         * @private
+         * @param {string} phase The phase of the resize event lifecycle, e.g.
+         *   "start", "move", "end", or "keyboard".
+         * @param {number} width The new width of the sidebar in pixels.
+         */
+        _dispatchResizeEvent(phase, width) {
+          const event = new CustomEvent("bslib.sidebar.resize", {
+            bubbles: true,
+            detail: { phase, width, sidebar: this }
+          });
+          this.layout.sidebar.dispatchEvent(event);
+        }
+        /**
          * Initialize event listeners for the sidebar toggle button.
          * @private
          */
@@ -983,11 +1358,19 @@
             ev.preventDefault();
             this.toggle("toggle");
           });
-          (_a = toggle.querySelector(".collapse-icon")) == null ? void 0 : _a.addEventListener("transitionend", () => this._finalizeState());
+          (_a = toggle.querySelector(".collapse-icon")) == null ? void 0 : _a.addEventListener("transitionend", () => {
+            this._finalizeState();
+          });
           if (this._isCollapsible("desktop") && this._isCollapsible("mobile")) {
             return;
           }
-          window.addEventListener("resize", () => this._handleWindowResizeEvent());
+          window.addEventListener(
+            "resize",
+            whenChangedCallback(
+              () => this._getWindowSize(),
+              () => this._initSidebarState()
+            )
+          );
         }
         /**
          * Initialize nested sidebar counters.
@@ -1077,17 +1460,6 @@
           this.toggle(initState, true);
         }
         /**
-         * Updates the sidebar state when the window is resized across the mobile-
-         * desktop boundary.
-         */
-        _handleWindowResizeEvent() {
-          const newSize = this._getWindowSize();
-          if (!newSize || newSize == this.windowSize) {
-            return;
-          }
-          this._initSidebarState();
-        }
-        /**
          * Toggle the sidebar's open/closed state.
          * @public
          * @param {SidebarToggleMethod | undefined} method Whether to `"open"`,
@@ -1134,6 +1506,7 @@
           container.classList.remove(_Sidebar.classes.TRANSITIONING);
           sidebar.hidden = this.isClosed;
           toggle.setAttribute("aria-expanded", this.isClosed ? "false" : "true");
+          this._updateResizeAvailability();
           const event = new CustomEvent("bslib.sidebar", {
             bubbles: true,
             detail: { open: !this.isClosed }
@@ -1165,7 +1538,13 @@
         // eslint-disable-next-line @typescript-eslint/naming-convention
         COLLAPSE: "sidebar-collapsed",
         // eslint-disable-next-line @typescript-eslint/naming-convention
-        TRANSITIONING: "transitioning"
+        TRANSITIONING: "transitioning",
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        RESIZE_HANDLE: "bslib-sidebar-resize-handle",
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        RESIZING: "sidebar-resizing",
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        HANDLE_ACTIVE: "handle-active"
       };
       /**
        * If sidebars are initialized before the DOM is ready, we re-schedule the
@@ -1289,6 +1668,361 @@
     }
   });
 
+  // srcts/src/components/toolbarInputButton.ts
+  var _clickCount2, _clickListeners2, _hideTooltip, hideTooltip_fn, BslibToolbarInputButtonBinding;
+  var init_toolbarInputButton = __esm({
+    "srcts/src/components/toolbarInputButton.ts"() {
+      "use strict";
+      init_utils();
+      BslibToolbarInputButtonBinding = class extends InputBinding {
+        constructor() {
+          super(...arguments);
+          __privateAdd(this, _hideTooltip);
+          __privateAdd(this, _clickCount2, /* @__PURE__ */ new WeakMap());
+          __privateAdd(this, _clickListeners2, /* @__PURE__ */ new WeakMap());
+        }
+        find(scope) {
+          return $(scope).find(".bslib-toolbar-input-button");
+        }
+        getValue(el) {
+          var _a;
+          return (_a = __privateGet(this, _clickCount2).get(el)) != null ? _a : 0;
+        }
+        getType() {
+          return "bslib.toolbar.button";
+        }
+        subscribe(el, callback) {
+          if (__privateGet(this, _clickListeners2).has(el)) {
+            this.unsubscribe(el);
+          }
+          const eventListener = () => {
+            var _a;
+            __privateGet(this, _clickCount2).set(el, ((_a = __privateGet(this, _clickCount2).get(el)) != null ? _a : 0) + 1);
+            __privateMethod(this, _hideTooltip, hideTooltip_fn).call(this, el);
+            callback(true);
+          };
+          __privateGet(this, _clickListeners2).set(el, eventListener);
+          el.addEventListener("click", eventListener);
+        }
+        unsubscribe(el) {
+          const listener = __privateGet(this, _clickListeners2).get(el);
+          if (listener) {
+            el.removeEventListener("click", listener);
+          }
+        }
+        receiveMessage(el, message) {
+          return __async(this, null, function* () {
+            if (hasDefinedProperty(message, "disabled")) {
+              el.disabled = message.disabled;
+            }
+            if (hasDefinedProperty(message, "label") && message.label !== void 0) {
+              const labelEl = el.querySelector(".bslib-toolbar-label");
+              yield shinyRenderContent(labelEl, message.label);
+            }
+            if (hasDefinedProperty(message, "showLabel")) {
+              const labelEl = el.querySelector(".bslib-toolbar-label");
+              if (message.showLabel === false) {
+                labelEl.setAttribute("hidden", "");
+                el.setAttribute("data-type", "icon");
+              } else {
+                labelEl.removeAttribute("hidden");
+                el.setAttribute("data-type", "both");
+              }
+            }
+            if (hasDefinedProperty(message, "icon") && message.icon !== void 0) {
+              const iconEl = el.querySelector(".bslib-toolbar-icon");
+              yield shinyRenderContent(iconEl, message.icon);
+            }
+          });
+        }
+      };
+      _clickCount2 = new WeakMap();
+      _clickListeners2 = new WeakMap();
+      _hideTooltip = new WeakSet();
+      hideTooltip_fn = function(el) {
+        const tooltipEl = el.closest("bslib-tooltip");
+        if (tooltipEl) {
+          tooltipEl.hide();
+        }
+      };
+      registerBinding(BslibToolbarInputButtonBinding, "toolbar-input-button");
+    }
+  });
+
+  // srcts/src/components/toolbarInputSelect.ts
+  var _hideTooltip2, hideTooltip_fn2, BslibToolbarInputSelectBinding;
+  var init_toolbarInputSelect = __esm({
+    "srcts/src/components/toolbarInputSelect.ts"() {
+      "use strict";
+      init_utils();
+      BslibToolbarInputSelectBinding = class extends InputBinding {
+        constructor() {
+          super(...arguments);
+          __privateAdd(this, _hideTooltip2);
+        }
+        find(scope) {
+          return $(scope).find(".bslib-toolbar-input-select");
+        }
+        getId(el) {
+          return el.id || "";
+        }
+        getValue(el) {
+          const selectEl = el.querySelector("select");
+          return selectEl == null ? void 0 : selectEl.value;
+        }
+        subscribe(el, callback) {
+          const selectEl = el.querySelector("select");
+          if (selectEl) {
+            $(selectEl).on("change.bslibToolbarInputSelect", () => {
+              __privateMethod(this, _hideTooltip2, hideTooltip_fn2).call(this, el);
+              callback(false);
+            });
+          }
+        }
+        unsubscribe(el) {
+          const selectEl = el.querySelector("select");
+          if (selectEl) {
+            $(selectEl).off(".bslibToolbarInputSelect");
+          }
+        }
+        receiveMessage(el, message) {
+          return __async(this, null, function* () {
+            const selectEl = el.querySelector("select");
+            if (hasDefinedProperty(message, "label") && message.label !== void 0) {
+              const labelEl = el.querySelector(".bslib-toolbar-label");
+              yield shinyRenderContent(labelEl, message.label);
+            }
+            if (hasDefinedProperty(message, "showLabel")) {
+              const labelEl = el.querySelector(".bslib-toolbar-label");
+              if (message.showLabel === false) {
+                labelEl.classList.add("visually-hidden");
+              } else {
+                labelEl.classList.remove("visually-hidden");
+              }
+            }
+            if (hasDefinedProperty(message, "icon") && message.icon !== void 0) {
+              const iconEl = el.querySelector(".bslib-toolbar-icon");
+              yield shinyRenderContent(iconEl, message.icon);
+            }
+            if (hasDefinedProperty(message, "options") && selectEl) {
+              if (message.options) {
+                selectEl.innerHTML = message.options;
+              }
+            }
+            if (hasDefinedProperty(message, "value") && selectEl) {
+              if (message.value !== void 0) {
+                selectEl.value = message.value;
+                $(selectEl).trigger("change");
+              }
+            }
+          });
+        }
+      };
+      _hideTooltip2 = new WeakSet();
+      hideTooltip_fn2 = function(el) {
+        const tooltipEl = el.closest("bslib-tooltip");
+        if (tooltipEl) {
+          tooltipEl.hide();
+        }
+      };
+      registerBinding(BslibToolbarInputSelectBinding, "toolbar-input-select");
+    }
+  });
+
+  // srcts/src/components/submitTextArea.ts
+  function updateDisabledState(el) {
+    const btn = findSubmitButton(el);
+    const isDisabled = !el.value;
+    btn.classList.toggle("disabled", isDisabled);
+    btn.setAttribute("aria-disabled", isDisabled.toString());
+    isDisabled ? btn.setAttribute("tabindex", "-1") : btn.removeAttribute("tabindex");
+  }
+  function updateHeight(el) {
+    if (el.scrollHeight === 0) {
+      return;
+    }
+    el.style.height = "auto";
+    el.style.height = el.scrollHeight + "px";
+  }
+  function maybeUpdateSubmitButtonLabel(el) {
+    if (!el.hasAttribute("data-needs-modifier")) {
+      return;
+    }
+    const btn = findSubmitButton(el);
+    if (!btn.querySelector(`.${CSS_CLASSES.submitKey}`)) {
+      return;
+    }
+    const isMac = navigator.userAgent.indexOf("Mac") !== -1;
+    btn.querySelectorAll(`.${CSS_CLASSES.submitKey}`).forEach((span) => {
+      const modifierKey2 = isMac ? "\u2318" : "Ctrl";
+      span.textContent = `${modifierKey2} \u23CE`;
+    });
+    const modifierKey = isMac ? "Command" : "Ctrl";
+    btn.title = btn.title.replace("Press Enter", `Press ${modifierKey}+Enter`);
+    const ariaLabel = btn.getAttribute("aria-label");
+    if (ariaLabel) {
+      btn.setAttribute(
+        "aria-label",
+        ariaLabel.replace("Press Enter", `Press ${modifierKey}+Enter`)
+      );
+    }
+  }
+  function findSubmitButton(el) {
+    var _a;
+    const btn = (_a = el.parentElement) == null ? void 0 : _a.querySelector(`.${CSS_CLASSES.button}`);
+    if (btn instanceof HTMLButtonElement) {
+      return btn;
+    }
+    throw new Error(
+      "Expected input_submit_textarea()'s container to have a button with class of 'bslib-submit-textarea-btn'"
+    );
+  }
+  function insertNewLineAtCursor(el) {
+    const start = el.selectionStart;
+    const end = el.selectionEnd;
+    el.value = el.value.substring(0, start) + "\n" + el.value.substring(end);
+    el.selectionStart = el.selectionEnd = start + 1;
+    el.dispatchEvent(new Event("input", { bubbles: true }));
+  }
+  var EVENT_NAMESPACE, CSS_CLASSES, intersectObserver, TextAreaSubmitInputBinding;
+  var init_submitTextArea = __esm({
+    "srcts/src/components/submitTextArea.ts"() {
+      "use strict";
+      init_utils();
+      EVENT_NAMESPACE = "textSubmitInputBinding";
+      CSS_CLASSES = {
+        // Top-level container for the entire input (label and everything)
+        input: "bslib-input-submit-textarea",
+        // Container for the textarea and submit button
+        container: "bslib-submit-textarea-container",
+        // Class assigned to the submit button
+        button: "bslib-submit-textarea-btn",
+        // Class assigned to the span within the button that shows the key combo
+        submitKey: "bslib-submit-key"
+      };
+      intersectObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            updateHeight(entry.target);
+          }
+        });
+      });
+      TextAreaSubmitInputBinding = class extends InputBinding {
+        find(scope) {
+          return $(scope).find(`.${CSS_CLASSES.input} textarea`);
+        }
+        initialize(el) {
+          updateDisabledState(el);
+          updateHeight(el);
+          maybeUpdateSubmitButtonLabel(el);
+        }
+        // Read a 'proxy' value instead of the actual value since we
+        // intentionally don't want the value server-side until it's submitted.
+        getValue(el) {
+          return $(el).data("val");
+        }
+        setValue(el, value) {
+          el.value = value;
+        }
+        subscribe(el, callback) {
+          function doSendValue() {
+            $(el).data("val", el.value);
+            el.value = "";
+            el.dispatchEvent(new Event("input", { bubbles: true }));
+            callback("event");
+          }
+          const btn = findSubmitButton(el);
+          if (btn.classList.contains("shiny-bound-input")) {
+            $(btn).on(`shiny:inputchanged.${EVENT_NAMESPACE}`, doSendValue);
+          } else {
+            $(btn).on(`click.${EVENT_NAMESPACE}`, doSendValue);
+          }
+          $(el).on(`input.${EVENT_NAMESPACE}`, function() {
+            updateDisabledState(el);
+            updateHeight(el);
+          });
+          $(el).on(
+            `keydown.${EVENT_NAMESPACE}`,
+            // event: JQuery.KeyboardEventObject
+            function(event) {
+              if (event.key !== "Enter") {
+                return;
+              }
+              if (!el.value) {
+                event.preventDefault();
+                return;
+              }
+              if (event.shiftKey) {
+                return;
+              }
+              if (event.altKey) {
+                event.preventDefault();
+                insertNewLineAtCursor(el);
+                return;
+              }
+              const needsModifier = el.hasAttribute("data-needs-modifier");
+              if (!needsModifier) {
+                event.preventDefault();
+                btn.click();
+                return;
+              }
+              const hasModifier = event.ctrlKey || event.metaKey;
+              if (needsModifier && hasModifier) {
+                event.preventDefault();
+                btn.click();
+                return;
+              }
+            }
+          );
+          const container = el.closest(`.${CSS_CLASSES.container}`);
+          $(container).on(
+            `click.${EVENT_NAMESPACE}`,
+            // event: JQuery.KeyboardEventObject
+            (event) => {
+              if (event.target.classList.contains(CSS_CLASSES.container)) {
+                el.focus();
+              }
+            }
+          );
+          intersectObserver.observe(el);
+        }
+        unsubscribe(el) {
+          $(el).off(`.${EVENT_NAMESPACE}`);
+          const btn = el.nextElementSibling;
+          $(btn).off(`.${EVENT_NAMESPACE}`);
+          const container = el.closest(`.${CSS_CLASSES.container}`);
+          $(container).off(`.${EVENT_NAMESPACE}`);
+          intersectObserver.unobserve(el);
+        }
+        receiveMessage(el, data) {
+          return __async(this, null, function* () {
+            const oldValue = el.value;
+            if (data.value !== void 0) {
+              el.value = data.value;
+              el.dispatchEvent(new Event("input", { bubbles: true }));
+            }
+            if (data.placeholder !== void 0) {
+              el.placeholder = data.placeholder;
+            }
+            if (data.label !== void 0) {
+              const labEl = $(el).closest(`.${CSS_CLASSES.input}`).find("label");
+              yield updateLabel(data.label, labEl);
+            }
+            if (data.submit) {
+              const btn = findSubmitButton(el);
+              btn.click();
+              el.value = oldValue;
+            }
+            if (data.focus) {
+              el.focus();
+            }
+          });
+        }
+      };
+      registerBinding(TextAreaSubmitInputBinding, "submit-text-area");
+    }
+  });
+
   // srcts/src/components/_shinyAddCustomMessageHandlers.ts
   function shinyAddCustomMessageHandlers(handlers) {
     if (!window.Shiny) {
@@ -1304,6 +2038,305 @@
     }
   });
 
+  // srcts/src/components/toast.ts
+  function showToast(message) {
+    return __async(this, null, function* () {
+      var _a, _b;
+      const { html, deps, autohide, duration, position, id } = message;
+      if (!window.bootstrap || !window.bootstrap.Toast) {
+        showShinyClientMessage({
+          headline: "Bootstrap 5 Required",
+          message: "Toast notifications require Bootstrap 5.",
+          status: "error"
+        });
+        return;
+      }
+      const existingToastEl = document.getElementById(id);
+      if (existingToastEl) {
+        const existingInstance = toastInstances.get(existingToastEl);
+        if (existingInstance) {
+          existingInstance.hide();
+          toastInstances.delete(existingToastEl);
+        }
+        (_b = (_a = window == null ? void 0 : window.Shiny) == null ? void 0 : _a.unbindAll) == null ? void 0 : _b.call(_a, existingToastEl);
+        existingToastEl.remove();
+      }
+      const toaster = toasterManager.getOrCreateToaster(position);
+      yield shinyRenderContent(toaster, { html, deps }, "beforeEnd");
+      const toastEl = document.getElementById(id);
+      if (!toastEl) {
+        showShinyClientMessage({
+          headline: "Toast Creation Failed",
+          message: `Failed to create toast with id "${id}".`,
+          status: "error"
+        });
+        return;
+      }
+      const toastInstance = new BslibToastInstance(toastEl, { autohide, duration });
+      toastInstances.set(toastEl, toastInstance);
+      toastInstance.show();
+      toastEl.addEventListener("hidden.bs.toast", () => {
+        var _a2, _b2;
+        (_b2 = (_a2 = window == null ? void 0 : window.Shiny) == null ? void 0 : _a2.unbindAll) == null ? void 0 : _b2.call(_a2, toastEl);
+        toastEl.remove();
+        toastInstances.delete(toastEl);
+        if (toaster.children.length === 0) {
+          toaster.remove();
+        }
+      });
+    });
+  }
+  function hideToast(message) {
+    const { id } = message;
+    const toastEl = document.getElementById(id);
+    if (!toastEl) {
+      showShinyClientMessage({
+        headline: "Toast Not Found",
+        message: `No toast with id "${id}" was found.`,
+        status: "warning"
+      });
+      return;
+    }
+    const toastInstance = toastInstances.get(toastEl);
+    if (toastInstance) {
+      toastInstance.hide();
+    }
+  }
+  var bootstrapToast, ToasterManager, toasterManager, BslibToastInstance, toastInstances;
+  var init_toast = __esm({
+    "srcts/src/components/toast.ts"() {
+      "use strict";
+      init_shinyAddCustomMessageHandlers();
+      init_utils();
+      bootstrapToast = window.bootstrap ? window.bootstrap.Toast : class {
+      };
+      ToasterManager = class {
+        constructor() {
+          this.containers = /* @__PURE__ */ new Map();
+        }
+        /**
+         * Gets an existing toaster for the position or creates a new one.
+         *
+         * @param position - The toast position (e.g., "top-right", "bottom-center")
+         * @returns The DOM container element for the specified position
+         */
+        getOrCreateToaster(position) {
+          let toaster = this.containers.get(position);
+          if (!toaster || !document.body.contains(toaster)) {
+            toaster = ToasterManager._createToaster(position);
+            document.body.appendChild(toaster);
+            this.containers.set(position, toaster);
+          }
+          return toaster;
+        }
+        /**
+         * Creates a new toast container (toaster) DOM element for the specified
+         * position.
+         *
+         * @param position - The toast position to create a container for
+         * @returns A new DOM container element positioned and styled for toasts
+         * @private
+         */
+        static _createToaster(position) {
+          const toaster = document.createElement("div");
+          toaster.className = "toast-container position-fixed p-1 p-md-2";
+          toaster.setAttribute("data-bslib-toast-container", position);
+          toaster.classList.add(...ToasterManager._positionClasses(position));
+          return toaster;
+        }
+        /**
+         * Maps toast positions to their corresponding Bootstrap utility classes.
+         *
+         * @param position - The toast position
+         * @returns Array of CSS class names for positioning the container
+         * @private
+         */
+        static _positionClasses(position) {
+          const classMap = {
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            "top-left": ["top-0", "start-0"],
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            "top-center": ["top-0", "start-50", "translate-middle-x"],
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            "top-right": ["top-0", "end-0"],
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            "middle-left": ["top-50", "start-0", "translate-middle-y"],
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            "middle-center": ["top-50", "start-50", "translate-middle"],
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            "middle-right": ["top-50", "end-0", "translate-middle-y"],
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            "bottom-left": ["bottom-0", "start-0"],
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            "bottom-center": ["bottom-0", "start-50", "translate-middle-x"],
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            "bottom-right": ["bottom-0", "end-0"]
+          };
+          return classMap[position];
+        }
+      };
+      toasterManager = new ToasterManager();
+      BslibToastInstance = class {
+        constructor(element, options) {
+          this.progressBar = null;
+          this.timeStart = 0;
+          this.timeRemaining = 0;
+          this.hideTimeoutId = null;
+          this.isPaused = false;
+          this.isPointerOver = false;
+          this.hasFocus = false;
+          this.element = element;
+          this.timeRemaining = options.duration || 5e3;
+          const bsOptions = { animation: true, autohide: false };
+          this.bsToast = new bootstrapToast(element, bsOptions);
+          if (options.autohide) {
+            this._addProgressBar();
+            this._setupInteractionPause();
+          }
+        }
+        /**
+         * Shows the toast notification.
+         */
+        show() {
+          this.bsToast.show();
+        }
+        /**
+         * Hides the toast notification.
+         */
+        hide() {
+          if (this.hideTimeoutId !== null) {
+            clearTimeout(this.hideTimeoutId);
+            this.hideTimeoutId = null;
+          }
+          this.bsToast.hide();
+        }
+        /**
+         * Adds an animated progress bar to the toast element.
+         * @private
+         */
+        _addProgressBar() {
+          this.progressBar = document.createElement("div");
+          this.progressBar.className = "bslib-toast-progress-bar";
+          this.progressBar.style.cssText = `
+      animation: bslib-toast-progress ${this.timeRemaining}ms linear forwards;
+      animation-play-state: running;
+    `;
+          const toastHeader = this.element.querySelector(".toast-header");
+          if (toastHeader) {
+            toastHeader.insertBefore(this.progressBar, toastHeader.firstChild);
+          } else {
+            this.element.insertBefore(this.progressBar, this.element.firstChild);
+          }
+        }
+        /**
+         * Sets up interaction-based pause behavior for autohiding toasts.
+         * Pauses auto-hide when user interacts via pointer (mouse/touch) or keyboard focus.
+         * @private
+         */
+        _setupInteractionPause() {
+          this.timeStart = Date.now();
+          this._startHideTimeout(this.timeRemaining);
+          this.element.addEventListener(
+            "pointerenter",
+            () => this._handlePointerEnter()
+          );
+          this.element.addEventListener(
+            "pointerleave",
+            () => this._handlePointerLeave()
+          );
+          this.element.addEventListener("focusin", () => this._handleFocusIn());
+          this.element.addEventListener("focusout", () => this._handleFocusOut());
+        }
+        /**
+         * Handles pointer enter event - pauses the auto-hide timer.
+         * @private
+         */
+        _handlePointerEnter() {
+          this.isPointerOver = true;
+          this._pause();
+        }
+        /**
+         * Handles pointer leave event - resumes the auto-hide timer if not focused.
+         * @private
+         */
+        _handlePointerLeave() {
+          this.isPointerOver = false;
+          if (!this.hasFocus) {
+            this._resume();
+          }
+        }
+        /**
+         * Handles focus in event - pauses the auto-hide timer.
+         * @private
+         */
+        _handleFocusIn() {
+          this.hasFocus = true;
+          this._pause();
+        }
+        /**
+         * Handles focus out event - resumes the auto-hide timer if pointer not over.
+         * @private
+         */
+        _handleFocusOut() {
+          this.hasFocus = false;
+          if (!this.isPointerOver) {
+            this._resume();
+          }
+        }
+        /**
+         * Pauses the auto-hide timer and progress bar animation.
+         * @private
+         */
+        _pause() {
+          if (this.isPaused)
+            return;
+          this.isPaused = true;
+          const elapsed = Date.now() - this.timeStart;
+          this.timeRemaining = Math.max(100, this.timeRemaining - elapsed);
+          if (this.hideTimeoutId !== null) {
+            clearTimeout(this.hideTimeoutId);
+          }
+          if (this.progressBar) {
+            this.progressBar.style.animationPlayState = "paused";
+          }
+        }
+        /**
+         * Resumes the auto-hide timer and progress bar animation.
+         * @private
+         */
+        _resume() {
+          if (!this.isPaused)
+            return;
+          this.isPaused = false;
+          this.timeStart = Date.now();
+          this._startHideTimeout(this.timeRemaining);
+          if (this.progressBar) {
+            this.progressBar.style.animationPlayState = "running";
+          }
+        }
+        /**
+         * Starts or restarts the hide timeout.
+         * @private
+         */
+        _startHideTimeout(delay) {
+          if (this.hideTimeoutId !== null) {
+            clearTimeout(this.hideTimeoutId);
+          }
+          this.hideTimeoutId = window.setTimeout(() => {
+            this.bsToast.hide();
+          }, delay);
+        }
+      };
+      toastInstances = /* @__PURE__ */ new WeakMap();
+      shinyAddCustomMessageHandlers({
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        "bslib.show-toast": showToast,
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        "bslib.hide-toast": hideToast
+      });
+    }
+  });
+
   // srcts/src/components/index.ts
   var require_components = __commonJS({
     "srcts/src/components/index.ts"(exports) {
@@ -1311,6 +2344,10 @@
       init_card();
       init_sidebar();
       init_taskButton();
+      init_toolbarInputButton();
+      init_toolbarInputSelect();
+      init_submitTextArea();
+      init_toast();
       init_utils();
       init_shinyAddCustomMessageHandlers();
       var bslibMessageHandlers = {

@@ -78,24 +78,29 @@ public:
     }
 
     std::vector<std::string> attributeNames() const {
-        std::vector<std::string> v ;
-        SEXP attrs = ATTRIB( static_cast<const CLASS&>(*this).get__());
+        std::vector<std::string> v;
+#if R_VERSION >= R_Version(4, 6, 0)
+        SEXP attrs = R_getAttribNames( static_cast<const CLASS&>(*this));
+        R_xlen_t n = XLENGTH(attrs);
+        for (R_xlen_t i = 0; i < n; i++) {
+            v.push_back(std::string(CHAR(STRING_ELT(attrs, i))));
+        }
+#else
+        SEXP attrs = ATTRIB( static_cast<const CLASS&>(*this) );
         while( attrs != R_NilValue ){
             v.push_back( std::string(CHAR(PRINTNAME(TAG(attrs)))) ) ;
             attrs = CDR( attrs ) ;
         }
-        return v ;
+#endif
+        return v;
     }
 
-    bool hasAttribute( const std::string& attr) const {
-        SEXP attrs = ATTRIB(static_cast<const CLASS&>(*this).get__());
-        while( attrs != R_NilValue ){
-            if( attr == CHAR(PRINTNAME(TAG(attrs))) ){
-                return true ;
-            }
-            attrs = CDR( attrs ) ;
-        }
-        return false; /* give up */
+    bool hasAttribute(const std::string& attr) const {
+#if R_VERSION >= R_Version(4, 6, 0)
+        return R_hasAttrib(static_cast<const CLASS&>(*this), Rf_install(attr.c_str()));
+#else
+        return static_cast<const CLASS&>(*this).attr(attr) != R_NilValue;
+#endif
     }
 
 

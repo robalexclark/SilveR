@@ -4,6 +4,7 @@ concatHtmlTables        Function for concatenating 'htmlTable()'s
 getHtmlTableStyle       Get style options for object
 getHtmlTableTheme       Retrieve the 'htmlTable()' theme list
 hasHtmlTableStyle       Check if object has a style set to it
+highlightRow            Highlight matching rows
 htmlTable               Output an HTML table
 htmlTableWidget         htmlTable with pagination widget
 htmlTableWidget-shiny   Shiny bindings for htmlTableWidget

@@ -9,6 +9,9 @@ base64_uri              Generate the Data URI for a file
 base_pkgs               Get base R package names
 bg_process              Start a background process
 broken_packages         Find out broken packages and reinstall them
+browser_dom             Execute JavaScript on an HTML page via a
+                        headless browser and dump the DOM
+browser_print           Print a web page to PDF/PNG/JPEG
 bump_version            Bump version numbers
 cache_exec              Cache the execution of an expression in memory
                         or on disk
@@ -65,7 +68,7 @@ mime_type               Get the MIME types of files
 msg_cat                 Generate a message with 'cat()'
 native_encode           Try to use the system native encoding to
                         represent a character vector
-new_app                 Create a local web application
+new_app                 Create or stop a local web application
 news2md                 Convert package news to the Markdown format
 normalize_path          Normalize paths
 numbers_to_words        Convert numbers to English words
@@ -75,6 +78,7 @@ pkg_attach              Attach or load packages, and automatically
                         install missing packages if requested
 pkg_bib                 Generate BibTeX bibliography databases for R
                         packages
+post_release            Perform post-CRAN-release routine tasks
 proc_kill               Kill a process and (optionally) all its child
                         processes
 process_file            Read a text file, process the text with a
@@ -87,6 +91,7 @@ protect_math            Protect math expressions in pairs of backticks
                         in Markdown
 rand_unit               Pseudo-random numbers on [0, 1) based on a
                         linear congruential generator
+random_port             Find a random available TCP port
 raw_string              Print a character vector in its raw form
 read_all                Read all text files and concatenate their
                         content
@@ -106,6 +111,7 @@ rstudio_type            Type a character vector into the RStudio source
                         editor
 same_path               Test if two paths are the same after they are
                         normalized
+serve_dir               Serve a static directory
 session_info            An alternative to sessionInfo() to print
                         session information
 set_envvar              Set environment variables
@@ -116,8 +122,7 @@ str_wrap                Wrap character vectors
 strict_list             Strict lists
 strip_html              Strip HTML tags
 submit_cran             Submit a source package to CRAN
-system3                 Run 'system2()' and mark its character output
-                        as UTF-8 if appropriate
+system3                 A customized wrapper for 'system2()'
 tabset                  Represent a (recursive) list with (nested)
                         tabsets
 taml_load               A simple YAML reader and writer

@@ -32,7 +32,6 @@ cube3d                  Sample 3D mesh objects
 cylinder3d              Create cylindrical or "tube" plots
 decorate3d              Add decorations to a 3D plot
 drape3d                 Drape lines over a scene.
-elementId2Prefix        Use widget with old-style controls
 ellipse3d               Make an ellipsoid
 expect_known_scene      Helper for 'testthat' testing.
 extrude3d               Generate extrusion mesh

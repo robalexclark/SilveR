@@ -1,7 +1,7 @@
 Package: highr
 Type: Package
 Title: Syntax Highlighting for R Source Code
-Version: 0.11
+Version: 0.12
 Authors@R: c(
     person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666")),
     person("Yixuan", "Qiu", role = "aut"),
@@ -19,14 +19,14 @@ URL: https://github.com/yihui/highr
 BugReports: https://github.com/yihui/highr/issues
 VignetteBuilder: knitr
 Encoding: UTF-8
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.3
 NeedsCompilation: no
-Packaged: 2024-05-26 19:27:21 UTC; yihui
-Author: Yihui Xie [aut, cre] (<https://orcid.org/0000-0003-0645-5666>),
+Packaged: 2026-03-05 19:48:41 UTC; yihui
+Author: Yihui Xie [aut, cre] (ORCID: <https://orcid.org/0000-0003-0645-5666>),
   Yixuan Qiu [aut],
   Christopher Gandrud [ctb],
   Qiang Li [ctb]
 Maintainer: Yihui Xie <xie@yihui.name>
 Repository: CRAN
-Date/Publication: 2024-05-26 20:00:03 UTC
-Built: R 4.5.1; ; 2025-08-04 01:05:23 UTC; windows
+Date/Publication: 2026-03-06 06:30:47 UTC
+Built: R 4.5.3; ; 2026-07-28 14:29:54 UTC; windows

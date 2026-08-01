@@ -1,5 +1,5 @@
 Package: ROI
-Version: 1.0-1
+Version: 1.0-2
 Title: R Optimization Infrastructure
 Authors@R: c( person("Kurt", "Hornik", role = "aut", email = "Kurt.Hornik@R-project.org", comment = c(ORCID = "0000-0003-4198-9911")),
               person("David", "Meyer", role = "aut"),
@@ -16,15 +16,17 @@ License: GPL-3
 Encoding: UTF-8
 URL: https://roi.r-forge.r-project.org/,
         https://r-forge.r-project.org/projects/roi/
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.3
 NeedsCompilation: no
-Packaged: 2023-04-20 19:04:30 UTC; f
-Author: Kurt Hornik [aut] (<https://orcid.org/0000-0003-4198-9911>),
+Packaged: 2026-01-11 19:30:56 UTC; f
+Author: Kurt Hornik [aut] (ORCID: <https://orcid.org/0000-0003-4198-9911>),
   David Meyer [aut],
-  Florian Schwendinger [aut] (<https://orcid.org/0000-0002-3983-9773>),
-  Stefan Theussl [aut, cre] (<https://orcid.org/0000-0002-6523-4620>),
+  Florian Schwendinger [aut] (ORCID:
+    <https://orcid.org/0000-0002-3983-9773>),
+  Stefan Theussl [aut, cre] (ORCID:
+    <https://orcid.org/0000-0002-6523-4620>),
   Diethelm Wuertz [ctb]
 Maintainer: Stefan Theussl <Stefan.Theussl@R-Project.org>
 Repository: CRAN
-Date/Publication: 2023-04-20 19:42:30 UTC
-Built: R 4.5.1; ; 2025-08-04 00:23:41 UTC; windows
+Date/Publication: 2026-01-12 06:10:58 UTC
+Built: R 4.5.3; ; 2026-07-28 13:45:07 UTC; windows
