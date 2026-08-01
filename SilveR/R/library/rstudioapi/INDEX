@@ -14,11 +14,16 @@ document_range          Create a Range
 executeCommand          Execute Command
 file-dialogs            Select a file / folder
 filesPaneNavigate       Navigate to a Directory in the Files Pane
+findOAuthIntegration    Find OAuth Integration by Criteria
 getActiveProject        Retrieve path to active RStudio project
 getDelegatedAzureToken
                         OAuth2 Tokens for Delegated Azure Resources
+getIdentityToken        Get the User's Identity Token
 getMode                 Report whether RStudio Desktop or RStudio
                         Server is in use
+getOAuthCredentials     Retrieve OAuth Credentials for Integrations
+getOAuthIntegration     Get a Specific OAuth Integration
+getOAuthIntegrations    Get OAuth Integrations
 getRStudioPackageDependencies
                         Get RStudio Package Dependencies
 getThemeInfo            Retrieve Themes
@@ -75,6 +80,7 @@ selections              Manipulate User Selections in the RStudio IDE
 sendToConsole           Send code to the R console
 setGhostText            Set ghost text
 showDialog              Show Dialog Box
+showEditSuggestion      Show an Edit Suggestion in RStudio
 showPrompt              Show Prompt Dialog Box
 showQuestion            Show Question Dialog Box
 sourceMarkers           Display source markers

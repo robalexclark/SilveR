@@ -1,6 +1,6 @@
 Package: withr
 Title: Run Code 'With' Temporarily Modified Global State
-Version: 3.0.2
+Version: 3.0.3
 Authors@R: c(
     person("Jim", "Hester", role = "aut"),
     person("Lionel", "Henry", , "lionel@posit.co", role = c("aut", "cre")),
@@ -35,7 +35,7 @@ Collate: 'aaa.R' 'collate.R' 'connection.R' 'db.R' 'defer-exit.R'
         'seed.R' 'wrap.R' 'sink.R' 'tempfile.R' 'timezone.R'
         'torture.R' 'utils.R' 'with.R'
 NeedsCompilation: no
-Packaged: 2024-10-28 10:58:18 UTC; lionel
+Packaged: 2026-06-17 11:51:00 UTC; lionel
 Author: Jim Hester [aut],
   Lionel Henry [aut, cre],
   Kirill Müller [aut],
@@ -47,5 +47,5 @@ Author: Jim Hester [aut],
   Posit Software, PBC [cph, fnd]
 Maintainer: Lionel Henry <lionel@posit.co>
 Repository: CRAN
-Date/Publication: 2024-10-28 13:30:02 UTC
-Built: R 4.5.1; ; 2025-08-02 00:33:19 UTC; windows
+Date/Publication: 2026-06-19 05:30:02 UTC
+Built: R 4.5.3; ; 2026-07-28 13:37:15 UTC; windows

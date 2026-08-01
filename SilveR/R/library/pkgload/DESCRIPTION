@@ -1,6 +1,6 @@
 Package: pkgload
 Title: Simulate Package Installation and Attach
-Version: 1.4.1
+Version: 1.5.3
 Authors@R: c(
     person("Hadley", "Wickham", role = "aut"),
     person("Winston", "Chang", role = "aut"),
@@ -28,7 +28,7 @@ Config/testthat/start-first: dll
 Encoding: UTF-8
 RoxygenNote: 7.3.2
 NeedsCompilation: no
-Packaged: 2025-09-23 09:15:44 UTC; lionel
+Packaged: 2026-06-15 13:09:18 UTC; lionel
 Author: Hadley Wickham [aut],
   Winston Chang [aut],
   Jim Hester [aut],
@@ -38,5 +38,5 @@ Author: Hadley Wickham [aut],
     R)
 Maintainer: Lionel Henry <lionel@posit.co>
 Repository: CRAN
-Date/Publication: 2025-09-23 10:20:02 UTC
-Built: R 4.5.2; ; 2025-12-03 04:51:23 UTC; windows
+Date/Publication: 2026-06-15 15:00:11 UTC
+Built: R 4.5.3; ; 2026-07-28 15:26:30 UTC; windows

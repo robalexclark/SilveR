@@ -8,8 +8,8 @@ lpmvnorm                Multivariate Normal Log-likelihood and Score
 ltMatrices              Multiple Lower Triangular or Symmetric Matrices
 marg_mvnorm             Marginal and Conditional Multivariate Normal
                         Distributions
-mvnorm                  (Experimental) User Interface to Multiple
-                        Multivariate Normal Distributions
+mvnorm                  User Interface to Multiple Multivariate Normal
+                        Distributions
 mvtnorm-package         Multivariate Normal and t Distributions
 pmvnorm                 Multivariate Normal Distribution
 pmvt                    Multivariate t Distribution

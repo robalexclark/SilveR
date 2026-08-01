@@ -1,9 +1,0 @@
-bibentry("article",
-  author = "Hadley Wickham",
-  journal = "Journal of Statistical Software",
-  number = "12",
-  title = "Reshaping data with the reshape package",
-  url = "https://www.jstatsoft.org/v21/i12/",
-  volume = "21",
-  year = "2007"
-)

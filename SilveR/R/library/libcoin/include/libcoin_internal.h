@@ -2,7 +2,7 @@
 /* C Header */
 
 /*
-    Copyright (C) 2017-2023 Torsten Hothorn
+    Copyright (C) 2016-2026 Torsten Hothorn
 
     This file is part of the 'libcoin' R add-on package.
 
@@ -26,7 +26,6 @@
 
 /* R Includes */
 
-#define STRICT_R_HEADERS
 #define USE_FC_LEN_T
 #include <float.h>        /* for DBL_MIN */
 #include <R.h>

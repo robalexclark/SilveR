@@ -31,8 +31,6 @@ void REPORT_modelinfo(lprec *lp, MYBOOL doName, char *datainfo);
 void REPORT_lp(lprec *lp);
 MYBOOL REPORT_tableau(lprec *lp);
 void REPORT_scales(lprec *lp);
-MYBOOL REPORT_debugdump(lprec *lp, char *filename, MYBOOL livedata);
-MYBOOL REPORT_mat_mmsave(lprec *lp, char *filename, int *colndx, MYBOOL includeOF, char *infotext);
 
 #ifdef __cplusplus
  }

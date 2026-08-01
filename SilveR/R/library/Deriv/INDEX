@@ -1,6 +1,9 @@
 Deriv                   Symbolic differentiation of an expression or
                         function
 Deriv-package           Symbolic Differentiation
+Deriv_cpp               Symbolic Differentiation (Supports Vectors of
+                        Variables)
 Simplify                Symbollic simplification of an expression or
                         function
+Simplify_cpp            Simplify Symbolic Expressions
 format1                 Wrapper for base::format() function

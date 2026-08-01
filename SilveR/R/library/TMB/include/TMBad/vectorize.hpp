@@ -278,6 +278,10 @@ ad_segment operator-(ad_segment x, ad_segment y) {
   TMBAD_ASSERT(false);
   return ad_segment();
 }
+template <bool S0, bool S1>
+double log(Vectorized<double, S0, S1> &x) {
+  return std::log((double)x);
+}
 template <class dummy = void>
 ad_segment pow(ad_segment x, ad_segment y);
 template <class dummy>
@@ -442,6 +446,12 @@ struct PackOp : global::DynamicOperator<1, ScalarPack<SegmentRef>::size> {
   /** \brief Unpacked size */
   Index n;
   PackOp(const Index n) : n(n) {}
+
+  static const bool synchronize_on_copy = true;
+  void synchronize(ForwardArgs<Scalar> &args) {
+    SegmentRef *y = (SegmentRef *)args.y_ptr(0);
+    y->glob_ptr = args.glob_ptr;
+  }
   /** \brief Pack values */
   void forward(ForwardArgs<Scalar> &args) {
     SegmentRef *y = (SegmentRef *)args.y_ptr(0);

@@ -2,7 +2,8 @@
 //
 // Vector.cpp: Rcpp R/C++ interface class library -- Vector unit tests
 //
-// Copyright (C) 2012 - 2018    Dirk Eddelbuettel and Romain Francois
+// Copyright (C) 2012 - 2025    Dirk Eddelbuettel and Romain François
+// Copyright (C) 2026           Dirk Eddelbuettel, Romain François and Iñaki Ucar
 //
 // This file is part of Rcpp.
 //
@@ -170,11 +171,7 @@ IntegerVector integer_range_ctor_2(){
 }
 
 // [[Rcpp::export]]
-IntegerVector integer_names_set(){
-    IntegerVector y(2) ;
-    std::vector<std::string> names(2)  ;
-    names[0] = "foo" ;
-    names[1] = "bar" ;
+IntegerVector integer_names_set(IntegerVector y, SEXP names) {
     y.names() = names ;
     return y ;
 }
@@ -895,4 +892,11 @@ double NumericVector_test_out_of_bounds_read(NumericVector v, R_xlen_t i) {
 // [[Rcpp::export]]
 SEXP CharacterVector_test_out_of_bounds_read(CharacterVector v, R_xlen_t i) {
     return v[i];
+}
+
+// [[Rcpp::export]]
+NumericVector vec_copy(NumericVector vec1) {
+    NumericVector vec2(vec1.size());
+    std::copy(vec1.begin(), vec1.end(), vec2.begin());
+    return vec2;
 }

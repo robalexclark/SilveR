@@ -1,7 +1,7 @@
 Type: Package
 Package: clipr
 Title: Read and Write from the System Clipboard
-Version: 0.8.0
+Version: 0.8.1
 Authors@R: c(
     person("Matthew", "Lincoln", , "matthew.d.lincoln@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-4387-3384")),
@@ -21,19 +21,20 @@ Suggests: covr, knitr, rmarkdown, rstudioapi (>= 0.5), testthat (>=
 VignetteBuilder: knitr
 Encoding: UTF-8
 Language: en-US
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.3
 SystemRequirements: xclip (https://github.com/astrand/xclip) or xsel
         (http://www.vergenet.net/~conrad/software/xsel/) for accessing
         the X11 clipboard, or wl-clipboard
         (https://github.com/bugaevc/wl-clipboard) for systems using
         Wayland.
 NeedsCompilation: no
-Packaged: 2022-02-19 02:20:21 UTC; mlincoln
-Author: Matthew Lincoln [aut, cre] (<https://orcid.org/0000-0002-4387-3384>),
+Packaged: 2026-05-25 05:04:26 UTC; mlincoln
+Author: Matthew Lincoln [aut, cre] (ORCID:
+    <https://orcid.org/0000-0002-4387-3384>),
   Louis Maddox [ctb],
   Steve Simpson [ctb],
   Jennifer Bryan [ctb]
 Maintainer: Matthew Lincoln <matthew.d.lincoln@gmail.com>
 Repository: CRAN
-Date/Publication: 2022-02-22 00:58:45 UTC
-Built: R 4.3.2; ; 2024-01-18 01:55:35 UTC; windows
+Date/Publication: 2026-05-25 05:50:02 UTC
+Built: R 4.5.3; ; 2026-07-28 13:37:31 UTC; windows

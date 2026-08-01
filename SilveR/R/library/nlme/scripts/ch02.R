@@ -44,7 +44,26 @@ stoolLRTsim <-
                 m2 = list(fixed = effort ~ Type),
                 method = "ML", nsim = 1000 )
 plot( stoolLRTsim, df = c(3, 4) )    # Figure 2.5
-data( PBIB, package = 'SASmixed' )
+
+## "partially balanced incomplete block" experiment
+## from Littell et al. 1996 (Data Set 1.5.1):
+##data( PBIB, package = 'SASmixed' )  # reproduced below
+PBIB <- data.frame(
+    "response" = c(
+        2.4, 2.5, 2.6, 2.0, 2.7, 2.8, 2.4, 2.7, 2.6, 2.8, 2.4, 2.4,
+        3.4, 3.1, 2.1, 2.3, 4.1, 3.3, 3.3, 2.9, 3.4, 3.2, 2.8, 3.0,
+        3.2, 2.5, 2.4, 2.6, 2.3, 2.3, 2.4, 2.7, 2.8, 2.8, 2.6, 2.5,
+        2.5, 2.7, 2.8, 2.6, 2.6, 2.6, 2.3, 2.4, 2.7, 2.7, 2.5, 2.6,
+        3.0, 3.6, 3.2, 3.2, 3.0, 2.8, 2.4, 2.5, 2.4, 2.5, 3.2, 3.1
+    ),
+    "Treatment" = factor(c(
+        15, 9, 1, 13, 5, 7, 8, 1, 10, 1, 14, 2, 15, 11, 2, 3,
+        6, 15, 4, 7, 12, 4, 3, 1, 12, 14, 15, 8, 6, 3, 14, 5,
+        5, 4, 2, 13, 10, 12, 13, 6, 9, 7, 10, 3, 8, 6, 2, 9,
+        5, 9, 11, 12, 7, 13, 14, 11, 10, 4, 8, 11
+    )),
+    "Block" = as.factor(rep(1:15, each = 4))
+)
 pbibLRTsim <-
     simulate.lme(list( fixed = response ~ 1, data = PBIB,
                        random = ~ 1 | Block ),
@@ -62,7 +81,8 @@ fm3PBIB <- update( fm2PBIB, response ~ 1 )
 anova( fm2PBIB, fm3PBIB )
 anova( fm2Machine )
 
-# cleanup
+##save(orthLRTsim, machineLRTsim, pbibLRTsim, stoolLRTsim,
+##     file = "sims.rda")
 
 summary(warnings())
 

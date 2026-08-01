@@ -2,7 +2,7 @@
 /* C Header */
 
 /*
-    Copyright (C) 2017-2023 Torsten Hothorn
+    Copyright (C) 2016-2026 Torsten Hothorn
 
     This file is part of the 'libcoin' R add-on package.
 

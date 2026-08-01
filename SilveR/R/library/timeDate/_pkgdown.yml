@@ -5,6 +5,7 @@ deploy:
 
 template:
   bootstrap: 5
+  math-rendering: mathjax
   
 search:
   exclude: ['news/index.html']

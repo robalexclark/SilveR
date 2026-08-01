@@ -116,7 +116,7 @@ urlcolor={linkcolor}%
 \chapter*{Licence}
 
 {\setlength{\parindent}{0cm}
-Copyright (C) 2017-2023 Torsten Hothorn \\
+Copyright (C) 2016-2026 Torsten Hothorn \\
 
 This file is part of the \pkg{libcoin} \proglang{R} add-on package. \\
 
@@ -152,7 +152,7 @@ $\X$
 \begin{eqnarray*}
 H_0: D(\Y \mid \X) = D(\Y)
 \end{eqnarray*}
-against arbitrary alternatives. \cite{strasserweber1999} suggest to derive
+against arbitrary alternatives. \cite{Strasser+Weber:1999} suggest to derive
 scalar test statistics for testing $H_0$ from multivariate linear statistics
 of a specific linear form. Let $\A \subseteq \{1, \dots, N\}$ denote some subset of the
 observation numbers and consider the linear statistic
@@ -186,7 +186,7 @@ The conditional expectation $\mub(\A) \in \R^{PQ}$ and covariance
 $\Sigmab(\A) \in \R^{PQ \times PQ}$
 of $\T$ under $H_0$ given
 all permutations $\sigma \in S(\A)$ of the responses are derived by
-\cite{strasserweber1999}:
+\cite{Strasser+Weber:1999}:
 \begin{eqnarray}
 \mub(\A) & = & \E(\T(\A) \mid S(\A)) = \vec \left( \left( \sum_{i \in \A} w_i \x_i \right) \E(h \mid S(\A))^\top
 \right), \nonumber \\
@@ -258,8 +258,8 @@ motivated this little experiment.
 
 \section{\proglang{R} User Interface}
 
-@o libcoin.R -cp
-@{
+@o R/libcoin.R -cp
+@{@%
 @<R Header@>
 @<LinStatExpCov@>
 @<LinStatExpCov1d@>
@@ -284,7 +284,7 @@ data is available in aggregated form; details will be explained later.
  tol = sqrt(.Machine$double.eps))@}
 
 @d LinStatExpCov
-@{
+@{@%
 LinStatExpCov <-
 function@<LinStatExpCov Prototype@>
 {
@@ -329,7 +329,7 @@ the elements $1, \dots, N$ as \code{integer} or \code{double} (for $N > $
 sorted. \code{block} is a factor at $B$ levels of length $N$.
 
 @d Check weights, subset, block
-@{
+@{@%
 if (is.null(weights)) weights <- integer(0)
 
 if (length(weights) > 0) {
@@ -362,7 +362,7 @@ dealt with by excluding the corresponding observations from the subset
 vector.
 
 @d Handle Missing Values
-@{
+@{@%
 ms <- !complete.cases(X, Y)
 if (all(ms))
     stop("all observations are missing")
@@ -384,7 +384,7 @@ standardised scale (the latter only when \code{standardise} is \code{TRUE}).
 Variances smaller than \code{tol} are treated as being zero.
 
 @d LinStatExpCov1d
-@{
+@{@%
 .LinStatExpCov1d <-
 function(X, Y, weights = integer(0), subset = integer(0), block = integer(0),
          checkNAs = TRUE, varonly = FALSE, nresample = 0, standardise = FALSE,
@@ -484,13 +484,13 @@ allowed in \code{ix} and \code{iy}). Thus, the first row of \code{X}
 corresponds to a missing value. If the first row is simply zero, missing
 values do not contribute to any of the sums computed later. Even more
 important is the fact that all entities, such as linear statistics etc., can
-be computed from the two-way tabulation (therefore the abbrevation ``2d'')
+be computed from the two-way tabulation (therefore the abbreviation ``2d'')
 over the $N$ elements of \code{ix} and \code{iy}. Once such a
 table was computed, the remaining computations can be performed in
 dimension $L_x \times L_y$, typically much smaller than $N$.
 
 @d LinStatExpCov2d
-@{
+@{@%
 .LinStatExpCov2d <-
 function(X = numeric(0), Y, ix, iy, weights = integer(0), subset = integer(0),
          block = integer(0), checkNAs = TRUE, varonly = FALSE, nresample = 0,
@@ -537,7 +537,7 @@ function(X = numeric(0), Y, ix, iy, weights = integer(0), subset = integer(0),
 \code{ix} and \code{iy} can be factors but without any missing values
 
 @d Check ix
-@{
+@{@%
 if (is.null(attr(ix, "levels"))) {
     rg <- range(ix)
     if (anyNA(rg))
@@ -554,7 +554,7 @@ if (is.null(attr(ix, "levels"))) {
 @}
 
 @d Check iy
-@{
+@{@%
 if (is.null(attr(iy, "levels"))) {
     rg <- range(iy)
     if (anyNA(rg))
@@ -607,7 +607,7 @@ elements. The \code{vcov} method allows to extract the full covariance
 matrix from such an object.
 
 @d vcov LinStatExpCov
-@{
+@{@%
 vcov.LinStatExpCov <-
 function(object, ...)
 {
@@ -641,7 +641,7 @@ can be computed on the log-scale.
  pargs = GenzBretz())@}
 
 @d doTest
-@{
+@{@%
 ### note: lower = FALSE => p-value; lower = TRUE => 1 - p-value
 doTest <-
 function@<doTest Prototype@>
@@ -720,7 +720,7 @@ implement this, we implement \code{lmult()} so that we can then left-multiply a
 matrix to an object of class \code{"LinStatExpCov"}.
 
 @d Contrasts
-@{
+@{@%
 lmult <-
 function(x, object)
 {
@@ -796,8 +796,8 @@ necessarily computing the corresponding linear statistics via
 @{(ix, iy = integer(0), block = integer(0), weights = integer(0),
  subset = integer(0), checkNAs = TRUE)@}
 
-@o ctabs.R -cp
-@{
+@o R/ctabs.R -cp
+@{@%
 @<R Header@>
 ctabs <-
 function@<ctabs Prototype@>
@@ -835,8 +835,9 @@ max(abs(t1[-1, -1] - t2))
 
 \section{Manual Pages}
 
-@o LinStatExpCov.Rd -cp
-@{
+@o man/LinStatExpCov.Rd
+@{@%
+@<Rd Header@>
 \name{LinStatExpCov}
 \alias{LinStatExpCov}
 \alias{lmult}
@@ -870,12 +871,18 @@ lmult(x, object)
   \item{object}{an object of class \code{"LinStatExpCov"}.}
 }
 \details{
+
+  This function implements the permutation test framework by
+  \bibcitet{libcoin::Strasser+Weber:1999}, see also
+  \bibcitet{libcoin::Hothorn+Hornik+vandeWiel+Zeileis:2006} and
+  \bibcitet{libcoin::Hothorn+Hornik+vandeWiel+Zeileis:2008}.
+
   The function, after minimal preprocessing, calls the underlying C code
   and computes the linear statistic, its expectation and covariance and,
   optionally, \code{nresample} samples from its permutation distribution.
 
   When both \code{ix} and \code{iy} are missing, the number of rows of
-  \code{X} and \code{Y} is the same, ie the number of observations.
+  \code{X} and \code{Y} is the same, i.e., the number of observations.
 
   When \code{X} is missing and \code{ix} a factor, the code proceeds as
   if \code{X} were a dummy matrix of \code{ix} without explicitly
@@ -892,10 +899,7 @@ lmult(x, object)
 \value{
   A list.
 }
-\references{
-  Strasser, H. and Weber, C.  (1999).  On the asymptotic theory of permutation
-  statistics.  \emph{Mathematical Methods of Statistics} \bold{8}(2), 220--250.
-}
+\references{\bibshow{*}}
 \examples{
 wilcox.test(Ozone ~ Month, data = airquality, subset = Month \%in\% c(5, 8),
             exact = FALSE, correct = FALSE)
@@ -908,8 +912,9 @@ doTest(LinStatExpCov(X, Y))
 \keyword{htest}
 @}
 
-@o doTest.Rd -cp
-@{
+@o man/doTest.Rd
+@{@%
+@<Rd Header@>
 \name{doTest}
 \alias{doTest}
 \title{
@@ -949,8 +954,9 @@ doTest@<doTest Prototype@>
 \keyword{htest}
 @}
 
-@o ctabs.Rd -cp
-@{
+@o man/ctabs.Rd
+@{@%
+@<Rd Header@>
 \name{ctabs}
 \alias{ctabs}
 \title{
@@ -999,8 +1005,8 @@ header files.
 
 \section{Header and Source Files}
 
-@o libcoin_internal.h -cc
-@{
+@o src/libcoin_internal.h -cc
+@{@%
 @<C Header@>
 @<R Includes@>
 @<C Macros@>
@@ -1011,8 +1017,7 @@ These includes provide some \proglang{R} infrastructure at \proglang{C}
 level.
 
 @d R Includes
-@{
-#define STRICT_R_HEADERS
+@{@%
 #define USE_FC_LEN_T
 #include <float.h>        /* for DBL_MIN */
 #include <R.h>
@@ -1030,7 +1035,7 @@ stored. \code{LE} implements $\le$ with some tolerance, \code{GE} implements
 $\ge$.
 
 @d C Macros
-@{
+@{@%
 #define S(i, j, n) ((i) >= (j) ? (n) * (j) + (i) - (j) * ((j) + 1) / 2 : (n) * (i) + (j) - (i) * ((i) + 1) / 2)
 #define LE(x, y, tol) ((x) < (y)) || (fabs((x) - (y)) < (tol))
 #define GE(x, y, tol) ((x) > (y)) || (fabs((x) - (y)) < (tol))
@@ -1038,7 +1043,7 @@ $\ge$.
 @}
 
 @d C Global Variables
-@{
+@{@%
 #define ALTERNATIVE_twosided				1
 #define ALTERNATIVE_less				2
 #define ALTERNATIVE_greater				3
@@ -1070,12 +1075,14 @@ $\ge$.
 #define Power1 						1
 #define Power2 						2
 #define Offset0 					0
-@| LinearStatistic_SLOT Expectation_SLOT Covariance_SLOT Variance_SLOT
-ExpectationX_SLOT varonly_SLOT dim_SLOT
-ExpectationInfluence_SLOT CovarianceInfluence_SLOT VarianceInfluence_SLOT
-Xfactor_SLOT tol_SLOT PermutedLinearStatistic_SLOT StandardisedPermutedLinearStatistic_SLOT
-TableBlock_SLOT Sumweights_SLOT Table_SLOT DoSymmetric DoCenter DoVarOnly Power1
-Power2 Offset0
+@| ALTERNATIVE_twosided ALTERNATIVE_less ALTERNATIVE_greater
+   TESTSTAT_maximum TESTSTAT_quadratic
+   LinearStatistic_SLOT Expectation_SLOT Covariance_SLOT Variance_SLOT
+   ExpectationX_SLOT varonly_SLOT dim_SLOT ExpectationInfluence_SLOT
+   CovarianceInfluence_SLOT VarianceInfluence_SLOT Xfactor_SLOT tol_SLOT
+   PermutedLinearStatistic_SLOT StandardisedPermutedLinearStatistic_SLOT
+   TableBlock_SLOT Sumweights_SLOT Table_SLOT
+   DoSymmetric DoCenter DoVarOnly Power1 Power2 Offset0
 @}
 
 The corresponding header file contains definitions of
@@ -1083,15 +1090,15 @@ functions that can be called via \code{.Call()} from the \pkg{libcoin}
 package. In addition, packages linking to \pkg{libcoin} can access these
 function at \proglang{C} level (at your own risk, of course!).
 
-@o libcoin.h -cc
-@{
+@o src/libcoin.h -cc
+@{@%
 @<C Header@>
 #include "libcoin_internal.h"
 @<Function Prototypes@>
 @}
 
 @d Function Prototypes
-@{
+@{@%
 extern @<R_ExpectationCovarianceStatistic Prototype@>;
 extern @<R_PermutedLinearStatistic Prototype@>;
 extern @<R_StandardisePermutedLinearStatistic Prototype@>;
@@ -1122,8 +1129,8 @@ extern @<R_pack_sym Prototype@>;
 The \proglang{C} file \file{libcoin.c} contains all \proglang{C}
 functions and corresponding \proglang{R} interfaces.
 
-@o libcoin.c -cc
-@{
+@o src/libcoin.c -cc
+@{@%
 @<C Header@>
 #include "libcoin_internal.h"
 #include <R_ext/stats_stubs.h> 	/* for S_rcont2 */
@@ -1132,7 +1139,7 @@ functions and corresponding \proglang{R} interfaces.
 @}
 
 @d Function Definitions
-@{
+@{@%
 @<MoreUtils@>
 @<Memory@>
 @<P-Values@>
@@ -1155,142 +1162,142 @@ functions and corresponding \proglang{R} interfaces.
 $N$ is the number of observations
 
 @d R N Input
-@{
+@{@%
 SEXP N,
-@|N
+@| N
 @}
 
 which at \proglang{C} level is represented as \code{R_xlen_t} to allow for
 $N > $ \code{INT_MAX}
 
 @d C integer N Input
-@{
+@{@%
 R_xlen_t N
-@|N
+@| N
 @}
 
 The regressors $\x_i, i = 1, \dots, N$
 
 @d R x Input
-@{
+@{@%
 SEXP x,
-@|x
+@| x
 @}
 
 are either represented as a real matrix with $N$ rows and $P$ columns
 
 @d C integer P Input
-@{
+@{@%
 int P
-@|P
+@| P
 @}
 
 @d C real x Input
-@{
+@{@%
 double *x,
 @<C integer N Input@>,
 @<C integer P Input@>,
-@|x
+@| x
 @}
 
 or as a factor (an integer at \proglang{C} level) at $P$ levels
 
 @d C integer x Input
-@{
+@{@%
 int *x,
 @<C integer N Input@>,
 @<C integer P Input@>,
-@|x
+@| x
 @}
 
 The influence functions are also either a $N \times Q$ real matrix
 
 @d R y Input
-@{
+@{@%
 SEXP y,
-@|y
+@| y
 @}
 
 @d C integer Q Input
-@{
+@{@%
 int Q
-@|Q
+@| Q
 @}
 
 @d C real y Input
-@{
+@{@%
 double *y,
 @<C integer Q Input@>,
-@|y
+@| y
 @}
 
 or a factor at $Q$ levels
 
 @d C integer y Input
-@{
+@{@%
 int *y,
 @<C integer Q Input@>,
-@|y
+@| y
 @}
 
 The case weights $w_i, i = 1, \dots, N$
 
 @d R weights Input
-@{
+@{@%
 SEXP weights
-@|weights
+@| weights
 @}
 
 can be constant one (\code{XLENGTH(weights) == 0} or \code{weights = integer(0)})
 or integer-valued, with \code{HAS_WEIGHTS == 0} in the former case
 
 @d C integer weights Input
-@{
+@{@%
 int *weights,
 int HAS_WEIGHTS,
-@|weights, HAS_WEIGHTS
+@| weights HAS_WEIGHTS
 @}
 
 Case weights larger than \code{INT_MAX} are stored as double
 
 @d C real weights Input
-@{
+@{@%
 double *weights,
 int HAS_WEIGHTS,
-@|weights, HAS_WEIGHTS
+@| weights HAS_WEIGHTS
 @}
 
 The sum of all case weights is a double
 
 @d C sumweights Input
-@{
+@{@%
 double sumweights
-@|sumweights
+@| sumweights
 @}
 
 Subsets $\A \subseteq \{1, \dots, N\}$ are \proglang{R} style indices
 
 @d R subset Input
-@{
+@{@%
 SEXP subset
-@|subset
+@| subset
 @}
 
 are either not existent (\code{XLENGTH(subset) == 0}) or of length
 
 @d C integer Nsubset Input
-@{
+@{@%
 R_xlen_t Nsubset
-@|Nsubset
+@| Nsubset
 @}
 
 Optionally, one can specify a subset of the subset via
 
 @d C subset range Input
-@{
+@{@%
 R_xlen_t offset,
 @<C integer Nsubset Input@>
-@|offset
+@| offset
 @}
 
 where \code{offset} is a \proglang{C} style index for \code{subset}.
@@ -1298,52 +1305,52 @@ where \code{offset} is a \proglang{C} style index for \code{subset}.
 Subsets are stored either as integer
 
 @d C integer subset Input
-@{
+@{@%
 int *subset,
 @<C subset range Input@>
-@|subset
+@| subset
 @}
 
 or double (to allow for indices larger than \code{INT_MAX})
 
 @d C real subset Input
-@{
+@{@%
 double *subset,
 @<C subset range Input@>
-@|subset
+@| subset
 @}
 
 Blocks $\text{block}_i, i = 1, \dots, N$
 
 @d R block Input
-@{
+@{@%
 SEXP block
-@|block
+@| block
 @}
 
 at $B$ levels
 
 @d C integer B Input
-@{
+@{@%
 int B
-@|B
+@| B
 @}
 
 are stored as a factor
 
 @d C integer block Input
-@{
+@{@%
 int *block,
 @<C integer B Input@>,
-@|block
+@| block
 @}
 
 The tabulation of block (potentially in subsets) is
 
 @d R blockTable Input
-@{
+@{@%
 SEXP blockTable
-@|blockTable
+@| blockTable
 @}
 
 where the table is of length $B + 1$ and the first element
@@ -1455,8 +1462,8 @@ LEVxyws <- LinStatExpCov(x, y, weights = weights, subset = subset, varonly = TRU
 
 The following tests compare the high-level \proglang{R} implementation
 (function \code{LSEC()}) with the 1d and 2d \proglang{C} level
-implementations in the two sitations with and without specification of
-\code{X} (ie, the dummy matrix in the latter case).
+implementations in the two situations with and without specification of
+\code{X} (i.e., the dummy matrix in the latter case).
 
 <<tests>>=
 ### with X given
@@ -1518,7 +1525,7 @@ sometimes with dimension (for example: \code{PQ_ans}).
 \subsection{One-Dimensional Case (``1d'')}
 
 @d User Interface
-@{
+@{@%
 @<RC_ExpectationCovarianceStatistic@>
 @<R_ExpectationCovarianceStatistic@>
 @<R_PermutedLinearStatistic@>
@@ -1530,7 +1537,7 @@ with case weights, subset and blocks. The latter three variables are ignored whe
 specified as \code{integer(0)}.
 
 @d User Interface Input
-@{
+@{@%
 @<R x Input@>
 @<R y Input@>
 @<R weights Input@>,
@@ -1539,7 +1546,7 @@ specified as \code{integer(0)}.
 @}
 
 @d R_ExpectationCovarianceStatistic Prototype
-@{
+@{@%
 SEXP R_ExpectationCovarianceStatistic
 (
     @<User Interface Input@>
@@ -1550,8 +1557,8 @@ SEXP R_ExpectationCovarianceStatistic
 
 This function can be called from other packages.
 
-@o libcoinAPI.h -cc
-@{
+@o src/libcoinAPI.h -cc
+@{@%
 @<C Header@>
 #include <R_ext/Rdynload.h>
 #include <libcoin.h>
@@ -1572,7 +1579,7 @@ The \proglang{C} interface essentially sets-up the necessary memory and
 calls a \proglang{C} level function for the computations.
 
 @d R_ExpectationCovarianceStatistic
-@{
+@{@%
 @<R_ExpectationCovarianceStatistic Prototype@>
 {
     SEXP ans;
@@ -1586,7 +1593,7 @@ calls a \proglang{C} level function for the computations.
     UNPROTECT(1);
     return(ans);
 }
-@|R_ExpectationCovarianceStatistic
+@| R_ExpectationCovarianceStatistic
 @}
 
 $P$, $Q$ and $B$ are first extracted from the data. The case where \code{X}
@@ -1594,7 +1601,7 @@ is an implicitly specified dummy matrix, the dimension $P$ is the number of
 levels of \code{x}.
 
 @d Setup Dimensions
-@{
+@{@%
 int P, Q, B;
 
 if (TYPEOF(x) == INTSXP) {
@@ -1619,7 +1626,7 @@ FIXME:  \code{x} being an integer (\code{Xfactor}) with some 0 elements is not h
         \code{LinStatExpCov()})
 
 @d RC_ExpectationCovarianceStatistic
-@{
+@{@%
 void RC_ExpectationCovarianceStatistic
 (
     @<User Interface Input@>
@@ -1670,13 +1677,13 @@ void RC_ExpectationCovarianceStatistic
     R_Free(ExpX); R_Free(VarX); R_Free(CovX);
     UNPROTECT(2);
 }
-@|RC_ExpectationCovarianceStatistic
+@| RC_ExpectationCovarianceStatistic
 @}
 
 The dimensions are available from the return object:
 
 @d Extract Dimensions
-@{
+@{@%
 P = C_get_P(ans);
 Q = C_get_Q(ans);
 N = NROW(x);
@@ -1686,7 +1693,7 @@ B = C_get_B(ans);
 The linear statistic $\T(\A)$ can be computed without taking blocks into account.
 
 @d Compute Linear Statistic
-@{
+@{@%
 RC_LinearStatistic(x, N, P, REAL(y), Q, weights, subset,
                    Offset0, XLENGTH(subset),
                    C_get_LinearStatistic(ans));
@@ -1694,11 +1701,11 @@ RC_LinearStatistic(x, N, P, REAL(y), Q, weights, subset,
 
 We next extract memory from the return object and allocate some additional
 memory. The most important step is to tabulate blocks and to order the
-subset with respect to blocks. In absense of block, this just returns
+subset with respect to blocks. In absence of block, this just returns
 subset.
 
 @d Setup Memory and Subsets in Blocks
-@{
+@{@%
 ExpInf = C_get_ExpectationInfluence(ans);
 VarInf = C_get_VarianceInfluence(ans);
 CovInf = C_get_CovarianceInfluence(ans);
@@ -1737,7 +1744,7 @@ for the subset given by subset and the $b$th level of block. The expectation
 is initialised zero when $b = 0$ and values add-up over blocks.
 
 @d Compute Sum of Weights in Block
-@{
+@{@%
 /* compute sum of case weights in block b of subset */
 if (table[b + 1] > 0) {
     sumweights[b] = RC_Sums(N, weights, subset_block,
@@ -1750,7 +1757,7 @@ if (table[b + 1] > 0) {
 @}
 
 @d Compute Expectation Linear Statistic
-@{
+@{@%
 RC_ExpectationInfluence(N, y, Q, weights, subset_block, offset,
                         (R_xlen_t) table[b + 1], sumweights[b], ExpInf + b * Q);
 RC_ExpectationX(x, N, P, weights, subset_block, offset,
@@ -1765,7 +1772,7 @@ subset and the $b$th level of block. Note that \code{CovInf} stores the
 values for each block in the return object (for later reuse).
 
 @d Compute Covariance Influence
-@{
+@{@%
 /* C_ordered_Xfactor and C_unordered_Xfactor need both VarInf and CovInf */
 RC_CovarianceInfluence(N, y, Q, weights, subset_block, offset,
                       (R_xlen_t) table[b + 1], ExpInf + b * Q, sumweights[b],
@@ -1780,7 +1787,7 @@ We can now compute the variance or covariance of the linear statistic
 $\Sigmab(\A)$:
 
 @d Compute Variance Linear Statistic
-@{
+@{@%
 RC_CovarianceX(x, N, P, weights, subset_block, offset,
                (R_xlen_t) table[b + 1], ExpX, DoVarOnly, VarX);
 C_VarianceLinearStatistic(P, Q, VarInf + b * Q, ExpX, VarX, sumweights[b],
@@ -1788,7 +1795,7 @@ C_VarianceLinearStatistic(P, Q, VarInf + b * Q, ExpX, VarX, sumweights[b],
 @}
 
 @d Compute Covariance Linear Statistic
-@{
+@{@%
 RC_CovarianceX(x, N, P, weights, subset_block, offset,
                (R_xlen_t) table[b + 1], ExpX, !DoVarOnly, CovX);
 C_CovarianceLinearStatistic(P, Q, CovInf + b * Q * (Q + 1) / 2,
@@ -1797,7 +1804,7 @@ C_CovarianceLinearStatistic(P, Q, CovInf + b * Q * (Q + 1) / 2,
 @}
 
 @d Compute Variance from Covariance
-@{
+@{@%
 /* always return variances */
 if (!C_get_varonly(ans)) {
     for (int p = 0; p < mPQB(P, Q, 1); p++)
@@ -1810,7 +1817,7 @@ function. The user interface is the same, except for an additional number of
 permutations to be specified.
 
 @d R_PermutedLinearStatistic Prototype
-@{
+@{@%
 SEXP R_PermutedLinearStatistic
 (
     @<User Interface Input@>
@@ -1820,8 +1827,8 @@ SEXP R_PermutedLinearStatistic
 
 This function can be called from other packages.
 
-@o libcoinAPI.h -cc
-@{
+@o src/libcoinAPI.h -cc
+@{@%
 extern SEXP libcoin_R_PermutedLinearStatistic(
     SEXP x, SEXP y, SEXP weights, SEXP subset, SEXP block, SEXP nresample
 ) {
@@ -1834,7 +1841,7 @@ extern SEXP libcoin_R_PermutedLinearStatistic(
 @}
 
 The dimensions are extracted from the data in the same ways as above. The
-function differentiates between the absense and presense of blocks.
+function differentiates between the absence and presence of blocks.
 Case weights are removed by expanding subset accordingly. Once within-block
 permutations were set-up the Kronecker product of \code{X} and \code{Y} is
 computed. Note that this function returns the matrix of permuted linear
@@ -1843,7 +1850,7 @@ corresponding element of the \code{LinStatExpCov} object (because we are not
 allowed to modify existing \proglang{R} objects at \proglang{C} level).
 
 @d R_PermutedLinearStatistic
-@{
+@{@%
 @<R_PermutedLinearStatistic Prototype@>
 {
     SEXP ans, expand_subset, block_subset, perm, tmp, blockTable;
@@ -1894,11 +1901,11 @@ allowed to modify existing \proglang{R} objects at \proglang{C} level).
     UNPROTECT(4);
     return(ans);
 }
-@|R_PermutedLinearStatistic
+@| R_PermutedLinearStatistic
 @}
 
 @d Setup Linear Statistic
-@{
+@{@%
 if (np % 256 == 0) R_CheckUserInterrupt();
 linstat = REAL(ans) + PQ * np;
 for (int p = 0; p < PQ; p++)
@@ -1909,7 +1916,7 @@ This small function takes an object containing permuted linear statistics
 and returns the matrix of standardised linear statistics.
 
 @d R_StandardisePermutedLinearStatistic Prototype
-@{
+@{@%
 SEXP R_StandardisePermutedLinearStatistic
 (
     SEXP LECV
@@ -1918,8 +1925,8 @@ SEXP R_StandardisePermutedLinearStatistic
 
 This function can be called from other packages.
 
-@o libcoinAPI.h -cc
-@{
+@o src/libcoinAPI.h -cc
+@{@%
 extern SEXP libcoin_R_StandardisePermutedLinearStatistic(
     SEXP LECV
 ) {
@@ -1932,7 +1939,7 @@ extern SEXP libcoin_R_StandardisePermutedLinearStatistic(
 @}
 
 @d R_StandardisePermutedLinearStatistic
-@{
+@{@%
 @<R_StandardisePermutedLinearStatistic Prototype@>
 {
     SEXP ans;
@@ -1964,14 +1971,14 @@ extern SEXP libcoin_R_StandardisePermutedLinearStatistic(
 \subsection{Two-Dimensional Case (``2d'')}
 
 @d 2d User Interface
-@{
+@{@%
 @<RC_ExpectationCovarianceStatistic_2d@>
 @<R_ExpectationCovarianceStatistic_2d@>
 @<R_PermutedLinearStatistic_2d@>
 @}
 
 @d 2d User Interface Input
-@{
+@{@%
 @<R x Input@>
 SEXP ix,
 @<R y Input@>
@@ -1982,7 +1989,7 @@ SEXP iy,
 @}
 
 @d R_ExpectationCovarianceStatistic_2d Prototype
-@{
+@{@%
 SEXP R_ExpectationCovarianceStatistic_2d
 (
     @<2d User Interface Input@>
@@ -1993,8 +2000,8 @@ SEXP R_ExpectationCovarianceStatistic_2d
 
 This function can be called from other packages.
 
-@o libcoinAPI.h -cc
-@{
+@o src/libcoinAPI.h -cc
+@{@%
 extern SEXP libcoin_R_ExpectationCovarianceStatistic_2d(
     SEXP x, SEXP ix, SEXP y, SEXP iy, SEXP weights, SEXP subset, SEXP block,
     SEXP varonly, SEXP tol
@@ -2008,7 +2015,7 @@ extern SEXP libcoin_R_ExpectationCovarianceStatistic_2d(
 @}
 
 @d R_ExpectationCovarianceStatistic_2d
-@{
+@{@%
 @<R_ExpectationCovarianceStatistic_2d Prototype@>
 {
     SEXP ans;
@@ -2040,11 +2047,11 @@ extern SEXP libcoin_R_ExpectationCovarianceStatistic_2d(
     UNPROTECT(1);
     return(ans);
 }
-@|R_ExpectationCovarianceStatistic_2d
+@| R_ExpectationCovarianceStatistic_2d
 @}
 
 @d Setup Dimensions 2d
-@{
+@{@%
 int P, Q, B, Lx, Ly;
 
 if (XLENGTH(x) == 0) {
@@ -2063,7 +2070,7 @@ Ly = NLEVELS(iy);
 @}
 
 @d Linear Statistic 2d
-@{
+@{@%
 if (Xfactor) {
     for (int j = 1; j < Lyp1; j++) {     /* j = 0 means NA */
         for (int i = 1; i < Lxp1; i++) { /* i = 0 means NA */
@@ -2088,7 +2095,7 @@ if (Xfactor) {
 @}
 
 @d 2d Total Table
-@{
+@{@%
 for (int i = 0; i < Lxp1 * Lyp1; i++)
     table2d[i] = 0.0;
 for (int b = 0; b < B; b++) {
@@ -2100,7 +2107,7 @@ for (int b = 0; b < B; b++) {
 @}
 
 @d Col Row Total Sums
-@{
+@{@%
 /* Remember: first row / column count NAs */
 /* column sums */
 for (int q = 1; q < Lyp1; q++) {
@@ -2122,7 +2129,7 @@ for (int i = 1; i < Lxp1; i++) sumweights[b] += rsum[i];
 @}
 
 @d 2d Expectation
-@{
+@{@%
 RC_ExpectationInfluence(NROW(y), y, Q, Rcsum, subset, Offset0, 0, sumweights[b], ExpInf);
 
 if (LENGTH(x) == 0) {
@@ -2136,7 +2143,7 @@ C_ExpectationLinearStatistic(P, Q, ExpInf, ExpX, b, C_get_Expectation(ans));
 @}
 
 @d 2d Covariance
-@{
+@{@%
 /* C_ordered_Xfactor needs both VarInf and CovInf */
 RC_CovarianceInfluence(NROW(y), y, Q, Rcsum, subset, Offset0, 0, ExpInf, sumweights[b],
                        !DoVarOnly, C_get_CovarianceInfluence(ans));
@@ -2166,7 +2173,7 @@ if (C_get_varonly(ans)) {
 @}
 
 @d RC_ExpectationCovarianceStatistic_2d
-@{
+@{@%
 void RC_ExpectationCovarianceStatistic_2d
 (
     @<2d User Interface Input@>
@@ -2202,11 +2209,11 @@ void RC_ExpectationCovarianceStatistic_2d
     R_Free(table2d);
     UNPROTECT(2);
 }
-@|RC_ExpectationCovarianceStatistic
+@| RC_ExpectationCovarianceStatistic
 @}
 
 @d 2d Memory
-@{
+@{@%
 SEXP Rcsum, Rrsum;
 int P, Q, Lxp1, Lyp1, B, Xfactor;
 double *ExpInf, *ExpX, *CovX;
@@ -2244,7 +2251,7 @@ LinStatExpCov(X = iX2d, ix = ix, Y = iY2d, iy = iy,
 @@
 
 @d R_PermutedLinearStatistic_2d Prototype
-@{
+@{@%
 SEXP R_PermutedLinearStatistic_2d
 (
     @<R x Input@>
@@ -2259,8 +2266,8 @@ SEXP R_PermutedLinearStatistic_2d
 
 This function can be called from other packages.
 
-@o libcoinAPI.h -cc
-@{
+@o src/libcoinAPI.h -cc
+@{@%
 extern SEXP libcoin_R_PermutedLinearStatistic_2d(
     SEXP x, SEXP ix, SEXP y, SEXP iy, SEXP block, SEXP nresample,
     SEXP itable
@@ -2274,7 +2281,7 @@ extern SEXP libcoin_R_PermutedLinearStatistic_2d(
 @}
 
 @d R_PermutedLinearStatistic_2d
-@{
+@{@%
 @<R_PermutedLinearStatistic_2d Prototype@>
 {
     SEXP ans, Ritable;
@@ -2324,11 +2331,11 @@ extern SEXP libcoin_R_PermutedLinearStatistic_2d(
     UNPROTECT(2);
     return(ans);
 }
-@|R_PermutedLinearStatistic_2d
+@| R_PermutedLinearStatistic_2d
 @}
 
 @d Convert Table to Integer
-@{
+@{@%
 PROTECT(Ritable = allocVector(INTSXP, LENGTH(itable)));
 for (int i = 0; i < LENGTH(itable); i++) {
     if (REAL(itable)[i] > INT_MAX)
@@ -2338,7 +2345,7 @@ for (int i = 0; i < LENGTH(itable); i++) {
 @}
 
 @d Setup Working Memory
-@{
+@{@%
 csum = R_Calloc(Lyp1 * B, int);
 rsum = R_Calloc(Lxp1 * B, int);
 sumweights = R_Calloc(B, int);
@@ -2348,7 +2355,7 @@ jwork = R_Calloc(Lyp1, int);
 @}
 
 @d Setup Log-Factorials
-@{
+@{@%
 fact = R_Calloc(maxn + 1, double);
 /* Calculate log-factorials.  fact[i] = lgamma(i+1) */
 fact[0] = fact[1] = 0.;
@@ -2358,7 +2365,7 @@ for (int j = 2; j <= maxn; j++)
 
 Note: the interface to \code{S_rcont2} changed in \textsf{R}-4.1.0.
 @d Compute Permuted Linear Statistic 2d
-@{
+@{@%
 #if defined(R_VERSION) && R_VERSION >= R_Version(4, 1, 0)
             S_rcont2(Lx, Ly,
                      rsum + Lxp1 * b + 1,
@@ -2382,14 +2389,14 @@ btab = table;
 \section{Tests}
 
 @d Tests
-@{
+@{@%
 @<R_QuadraticTest@>
 @<R_MaximumTest@>
 @<R_MaximallySelectedTest@>
 @}
 
 @d R_QuadraticTest Prototype
-@{
+@{@%
 SEXP R_QuadraticTest
 (
     @<R LECV Input@>,
@@ -2402,8 +2409,8 @@ SEXP R_QuadraticTest
 
 This function can be called from other packages.
 
-@o libcoinAPI.h -cc
-@{
+@o src/libcoinAPI.h -cc
+@{@%
 extern SEXP libcoin_R_QuadraticTest(
     SEXP LECV, SEXP pvalue, SEXP lower, SEXP give_log, SEXP PermutedStatistics
 ) {
@@ -2416,7 +2423,7 @@ extern SEXP libcoin_R_QuadraticTest(
 @}
 
 @d R_QuadraticTest
-@{
+@{@%
 @<R_QuadraticTest Prototype@>
 {
     SEXP ans, stat, pval, names, permstat;
@@ -2462,7 +2469,7 @@ extern SEXP libcoin_R_QuadraticTest(
 @}
 
 @d Setup Test Memory
-@{
+@{@%
 P = C_get_P(LECV);
 Q = C_get_Q(LECV);
 PQ = mPQB(P, Q, 1);
@@ -2492,7 +2499,7 @@ int PSTAT = INTEGER(PermutedStatistics)[0];
 @}
 
 @d R_MaximumTest Prototype
-@{
+@{@%
 SEXP R_MaximumTest
 (
     @<R LECV Input@>,
@@ -2509,8 +2516,8 @@ SEXP R_MaximumTest
 
 This function can be called from other packages.
 
-@o libcoinAPI.h -cc
-@{
+@o src/libcoinAPI.h -cc
+@{@%
 extern SEXP libcoin_R_MaximumTest(
     SEXP LECV, SEXP alternative, SEXP pvalue, SEXP lower, SEXP give_log,
     SEXP PermutedStatistics, SEXP maxpts, SEXP releps, SEXP abseps
@@ -2525,7 +2532,7 @@ extern SEXP libcoin_R_MaximumTest(
 @}
 
 @d R_MaximumTest
-@{
+@{@%
 @<R_MaximumTest Prototype@>
 {
     SEXP ans, stat, pval, names, permstat;
@@ -2583,7 +2590,7 @@ extern SEXP libcoin_R_MaximumTest(
 @}
 
 @d R_MaximallySelectedTest Prototype
-@{
+@{@%
 SEXP R_MaximallySelectedTest
 (
     SEXP LECV,
@@ -2597,8 +2604,8 @@ SEXP R_MaximallySelectedTest
 
 This function can be called from other packages.
 
-@o libcoinAPI.h -cc
-@{
+@o src/libcoinAPI.h -cc
+@{@%
 extern SEXP libcoin_R_MaximallySelectedTest(
     SEXP LECV, SEXP ordered, SEXP teststat, SEXP minbucket, SEXP lower, SEXP give_log
 ) {
@@ -2611,7 +2618,7 @@ extern SEXP libcoin_R_MaximallySelectedTest(
 @}
 
 @d R_MaximallySelectedTest
-@{
+@{@%
 @<R_MaximallySelectedTest Prototype@>
 {
     SEXP ans, index, stat, pval, names, permstat;
@@ -2657,7 +2664,7 @@ extern SEXP libcoin_R_MaximallySelectedTest(
 \section{Test Statistics}
 
 @d Test Statistics
-@{
+@{@%
 @<C_maxstand_Covariance@>
 @<C_maxstand_Variance@>
 @<C_minstand_Covariance@>
@@ -2673,7 +2680,7 @@ extern SEXP libcoin_R_MaximallySelectedTest(
 @}
 
 @d C_maxstand_Covariance
-@{
+@{@%
 double C_maxstand_Covariance
 (
     const int PQ,
@@ -2692,11 +2699,11 @@ double C_maxstand_Covariance
     }
     return(ans);
 }
-@|C_maxstand_Covariance
+@| C_maxstand_Covariance
 @}
 
 @d C_maxstand_Variance
-@{
+@{@%
 double C_maxstand_Variance
 (
     const int PQ,
@@ -2715,11 +2722,11 @@ double C_maxstand_Variance
     }
     return(ans);
 }
-@|C_maxstand_Variance
+@| C_maxstand_Variance
 @}
 
 @d C_minstand_Covariance
-@{
+@{@%
 double C_minstand_Covariance
 (
     const int PQ,
@@ -2738,11 +2745,11 @@ double C_minstand_Covariance
     }
     return(ans);
 }
-@|C_minstand_Covariance
+@| C_minstand_Covariance
 @}
 
 @d C_minstand_Variance
-@{
+@{@%
 double C_minstand_Variance
 (
     const int PQ,
@@ -2761,11 +2768,11 @@ double C_minstand_Variance
     }
     return(ans);
 }
-@|C_minstand_Variance
+@| C_minstand_Variance
 @}
 
 @d C_maxabsstand_Covariance
-@{
+@{@%
 double C_maxabsstand_Covariance
 (
     const int PQ,
@@ -2785,11 +2792,11 @@ double C_maxabsstand_Covariance
     }
     return(ans);
 }
-@|C_maxabsstand_Covariance
+@| C_maxabsstand_Covariance
 @}
 
 @d C_maxabsstand_Variance
-@{
+@{@%
 double C_maxabsstand_Variance
 (
     const int PQ,
@@ -2808,7 +2815,7 @@ double C_maxabsstand_Variance
     }
     return(ans);
 }
-@|C_maxabsstand_Variance
+@| C_maxabsstand_Variance
 @}
 
 <<quadform>>=
@@ -2840,7 +2847,7 @@ stopifnot(isequal(qf1, qf2))
 @@
 
 @d R_quadform Prototype
-@{
+@{@%
 SEXP R_quadform
 (
     SEXP linstat,
@@ -2851,8 +2858,8 @@ SEXP R_quadform
 
 This function can be called from other packages.
 
-@o libcoinAPI.h -cc
-@{
+@o src/libcoinAPI.h -cc
+@{@%
 extern SEXP libcoin_R_quadform(
     SEXP linstat, SEXP expect, SEXP MPinv_sym
 ) {
@@ -2865,7 +2872,7 @@ extern SEXP libcoin_R_quadform(
 @}
 
 @d R_quadform
-@{
+@{@%
 @<R_quadform Prototype@>
 {
     SEXP ans;
@@ -2886,11 +2893,11 @@ extern SEXP libcoin_R_quadform(
     UNPROTECT(1);
     return(ans);
 }
-@|R_quadform
+@| R_quadform
 @}
 
 @d C_quadform
-@{
+@{@%
 double C_quadform
 (
     const int PQ,
@@ -2909,11 +2916,11 @@ double C_quadform
 
     return(ans);
 }
-@|C_quadform
+@| C_quadform
 @}
 
 @d C_maxtype
-@{
+@{@%
 double C_maxtype
 (
     const int PQ,
@@ -2945,11 +2952,11 @@ double C_maxtype
     }
     return(ret);
 }
-@|C_maxtype
+@| C_maxtype
 @}
 
 @d C_standardise
-@{
+@{@%
 void C_standardise
 (
     const int PQ,
@@ -2974,11 +2981,11 @@ void C_standardise
         }
     }
 }
-@|C_standardise
+@| C_standardise
 @}
 
 @d P-Values
-@{
+@{@%
 @<C_chisq_pvalue@>
 @<C_perm_pvalue@>
 @<C_norm_pvalue@>
@@ -2986,7 +2993,7 @@ void C_standardise
 @}
 
 @d C_chisq_pvalue
-@{
+@{@%
 /* lower = 1 means p-value, lower = 0 means 1 - p-value */
 double C_chisq_pvalue
 (
@@ -2997,11 +3004,11 @@ double C_chisq_pvalue
 ) {
     return(pchisq(stat, (double) df, lower, give_log));
 }
-@|C_chisq_pvalue
+@| C_chisq_pvalue
 @}
 
 @d C_perm_pvalue
-@{
+@{@%
 double C_perm_pvalue
 (
     const int greater,
@@ -3026,11 +3033,11 @@ double C_perm_pvalue
     }
     return(ret);
 }
-@|C_perm_pvalue
+@| C_perm_pvalue
 @}
 
 @d C_norm_pvalue
-@{
+@{@%
 double C_norm_pvalue
 (
     const double stat,
@@ -3063,10 +3070,11 @@ double C_norm_pvalue
     }
     return(NA_REAL);
 }
+@| C_norm_pvalue
 @}
 
 @d C_maxtype_pvalue
-@{
+@{@%
 double C_maxtype_pvalue
 (
     const double stat,
@@ -3122,11 +3130,11 @@ double C_maxtype_pvalue
         return(1 - ans);        /* p-value */
     }
 }
-@|C_maxtype_pvalue
+@| C_maxtype_pvalue
 @}
 
 @d Setup mvtnorm Memory
-@{
+@{@%
 if (n == 2)
     corr = R_Calloc(1, double);
 else
@@ -3154,7 +3162,7 @@ for (i = 0; i < n; i++) {
 covariance matrix to be passed as argument \code{CORREL}
 
 @d Setup mvtnorm Correlation
-@{
+@{@%
 for (int nz = 0; nz < nonzero; nz++) {
     /* handle elements with non-zero variance only */
     i = index[nz];
@@ -3192,7 +3200,7 @@ for (int nz = 0; nz < nonzero; nz++) {
 @}
 
 @d maxstat Xfactor Variables
-@{
+@{@%
 SEXP LECV,
 const int minbucket,
 const int teststat,
@@ -3205,7 +3213,7 @@ const int give_log
 @}
 
 @d C_ordered_Xfactor
-@{
+@{@%
 void C_ordered_Xfactor
 (
     @<maxstat Xfactor Variables@>
@@ -3256,11 +3264,11 @@ void C_ordered_Xfactor
     R_Free(mvar); R_Free(mcovar); R_Free(mMPinv);
     if (nresample == 0) R_Free(blinstat);
 }
-@|C_ordered_Xfactor
+@| C_ordered_Xfactor
 @}
 
 @d Setup maxstat Variables
-@{
+@{@%
 double *linstat, *expect, *covar, *varinf, *covinf, *ExpX, *blinstat, tol, *ls;
 int P, Q, B;
 R_xlen_t nresample;
@@ -3293,7 +3301,7 @@ tol = C_get_tol(LECV);
 @}
 
 @d Setup maxstat Memory
-@{
+@{@%
 mlinstat = R_Calloc(Q, double);
 mexpect = R_Calloc(Q, double);
 if (teststat == TESTSTAT_maximum) {
@@ -3339,7 +3347,7 @@ sumweights = sumright;
 @}
 
 @d Compute maxstat Variance / Covariance from Total Covariance
-@{
+@{@%
 if (teststat == TESTSTAT_maximum) {
     for (int pp = 0; pp < p; pp++)
         mvar[q] += 2 * covar[S(pp + q * P, p + P * q, mPQB(P, Q, 1))];
@@ -3354,7 +3362,7 @@ if (teststat == TESTSTAT_maximum) {
 @}
 
 @d Compute maxstat Variance / Covariance Directly
-@{
+@{@%
 /* does not work with blocks! */
 if (teststat == TESTSTAT_maximum) {
     C_VarianceLinearStatistic(1, Q, varinf, &sumleft, &sumleft,
@@ -3366,7 +3374,7 @@ if (teststat == TESTSTAT_maximum) {
 @}
 
 @d Compute maxstat Test Statistic
-@{
+@{@%
 if (teststat == TESTSTAT_maximum) {
     tmp = C_maxtype(Q, ls, mexpect, mvar, 1, tol,
                     ALTERNATIVE_twosided);
@@ -3376,7 +3384,7 @@ if (teststat == TESTSTAT_maximum) {
 @}
 
 @d Compute maxstat Permutation P-Value
-@{
+@{@%
 if (nresample > 0) {
     greater = 0;
     for (R_xlen_t np = 0; np < nresample; np++) {
@@ -3387,7 +3395,7 @@ if (nresample > 0) {
 @}
 
 @d C_unordered_Xfactor
-@{
+@{@%
 void C_unordered_Xfactor
 (
     @<maxstat Xfactor Variables@>
@@ -3443,11 +3451,11 @@ void C_unordered_Xfactor
     R_Free(mblinstat); R_Free(mvar); R_Free(mcovar); R_Free(mMPinv);
     if (nresample == 0) R_Free(blinstat);
 }
-@|C_unordered_Xfactor
+@| C_unordered_Xfactor
 @}
 
 @d Count Levels
-@{
+@{@%
 contrast = R_Calloc(P, int);
 Pnonzero = 0;
 for (int p = 0; p < P; p++) {
@@ -3472,7 +3480,7 @@ for (int p = 0; p < Pnonzero; p++) indl[p] = 0;
 @}
 
 @d Setup unordered maxstat Contrasts
-@{
+@{@%
 /* indl determines if level p is left or right */
 int jj = j;
 for (int l = 1; l < Pnonzero; l++) {
@@ -3491,7 +3499,7 @@ for (int p = 0; p < Pnonzero; p++) {
 @}
 
 @d Compute unordered maxstat Linear Statistic and Expectation
-@{
+@{@%
 for (int q = 0; q < Q; q++) {
     mlinstat[q] = 0.0;
     mexpect[q] = 0.0;
@@ -3508,7 +3516,7 @@ for (int q = 0; q < Q; q++) {
 @}
 
 @d Compute unordered maxstat Variance / Covariance from Total Covariance
-@{
+@{@%
 if (teststat == TESTSTAT_maximum) {
     for (int q = 0; q < Q; q++) {
         mvar[q] = 0.0;
@@ -3540,7 +3548,7 @@ if (teststat == TESTSTAT_maximum) {
 @}
 
 @d Compute unordered maxstat Variance / Covariance Directly
-@{
+@{@%
 if (teststat == TESTSTAT_maximum) {
     C_VarianceLinearStatistic(1, Q, varinf, &sumleft, &sumleft,
                               sumweights, 0, mvar);
@@ -3553,12 +3561,12 @@ if (teststat == TESTSTAT_maximum) {
 \section{Linear Statistics}
 
 @d LinearStatistics
-@{
+@{@%
 @<RC_LinearStatistic@>
 @}
 
 @d RC_LinearStatistic Prototype
-@{
+@{@%
 void RC_LinearStatistic
 (
     @<R x Input@>
@@ -3573,7 +3581,7 @@ void RC_LinearStatistic
 @}
 
 @d RC_LinearStatistic
-@{
+@{@%
 @<RC_LinearStatistic Prototype@>
 {
     double center;
@@ -3581,13 +3589,13 @@ void RC_LinearStatistic
     RC_KronSums(x, N, P, y, Q, !DoSymmetric, &center, &center, !DoCenter, weights,
                 subset, offset, Nsubset, PQ_ans);
 }
-@|RC_LinearStatistic
+@| RC_LinearStatistic
 @}
 
 \section{Expectation and Covariance}
 
 @d ExpectationCovariances
-@{
+@{@%
 @<RC_ExpectationInfluence@>
 @<R_ExpectationInfluence@>
 @<RC_CovarianceInfluence@>
@@ -3604,7 +3612,7 @@ void RC_LinearStatistic
 \subsection{Linear Statistic}
 
 @d C_ExpectationLinearStatistic
-@{
+@{@%
 void C_ExpectationLinearStatistic
 (
     @<C integer P Input@>,
@@ -3622,11 +3630,11 @@ void C_ExpectationLinearStatistic
             PQ_ans[q * P + p] += ExpX[p] * ExpInf[q];
     }
 }
-@|C_ExpectationLinearStatistic
+@| C_ExpectationLinearStatistic
 @}
 
 @d C_CovarianceLinearStatistic
-@{
+@{@%
 void C_CovarianceLinearStatistic
 (
     @<C integer P Input@>,
@@ -3661,11 +3669,11 @@ void C_CovarianceLinearStatistic
         R_Free(PP_sym_tmp);
     }
 }
-@|C_CovarianceLinearStatistic
+@| C_CovarianceLinearStatistic
 @}
 
 @d C_VarianceLinearStatistic
-@{
+@{@%
 void C_VarianceLinearStatistic
 (
     @<C integer P Input@>,
@@ -3693,7 +3701,7 @@ void C_VarianceLinearStatistic
         R_Free(P_tmp);
     }
 }
-@|C_VarianceLinearStatistic
+@| C_VarianceLinearStatistic
 @}
 
 \subsection{Influence}
@@ -3715,7 +3723,7 @@ stopifnot(isequal(a0, a1) && isequal(a0, a2) &&
 @@
 
 @d R_ExpectationInfluence Prototype
-@{
+@{@%
 SEXP R_ExpectationInfluence
 (
     @<R y Input@>
@@ -3725,7 +3733,7 @@ SEXP R_ExpectationInfluence
 @}
 
 @d R_ExpectationInfluence
-@{
+@{@%
 @<R_ExpectationInfluence Prototype@>
 {
     SEXP ans;
@@ -3745,11 +3753,11 @@ SEXP R_ExpectationInfluence
     UNPROTECT(1);
     return(ans);
 }
-@|R_ExpectationInfluence
+@| R_ExpectationInfluence
 @}
 
 @d RC_ExpectationInfluence Prototype
-@{
+@{@%
 void RC_ExpectationInfluence
 (
     @<C integer N Input@>,
@@ -3764,7 +3772,7 @@ void RC_ExpectationInfluence
 @}
 
 @d RC_ExpectationInfluence
-@{
+@{@%
 @<RC_ExpectationInfluence Prototype@>
 {
     double center;
@@ -3774,7 +3782,7 @@ void RC_ExpectationInfluence
     for (int q = 0; q < Q; q++)
         P_ans[q] = P_ans[q] / sumweights;
 }
-@|RC_ExpectationInfluence
+@| RC_ExpectationInfluence
 @}
 
 <<CovarianceInfluence>>=
@@ -3810,7 +3818,7 @@ stopifnot(isequal(a0, a1) && isequal(a0, a2) &&
 @@
 
 @d R_CovarianceInfluence Prototype
-@{
+@{@%
 SEXP R_CovarianceInfluence
 (
     @<R y Input@>
@@ -3821,7 +3829,7 @@ SEXP R_CovarianceInfluence
 @}
 
 @d R_CovarianceInfluence
-@{
+@{@%
 @<R_CovarianceInfluence Prototype@>
 {
     SEXP ans;
@@ -3849,11 +3857,11 @@ SEXP R_CovarianceInfluence
     UNPROTECT(2);
     return(ans);
 }
-@|R_CovarianceInfluence
+@| R_CovarianceInfluence
 @}
 
 @d RC_CovarianceInfluence Prototype
-@{
+@{@%
 void RC_CovarianceInfluence
 (
     @<C integer N Input@>,
@@ -3870,7 +3878,7 @@ void RC_CovarianceInfluence
 @}
 
 @d RC_CovarianceInfluence
-@{
+@{@%
 @<RC_CovarianceInfluence Prototype@>
 {
     if (VARONLY) {
@@ -3885,13 +3893,13 @@ void RC_CovarianceInfluence
             PQ_ans[q] = PQ_ans[q] / sumweights;
     }
 }
-@|RC_CovarianceInfluence
+@| RC_CovarianceInfluence
 @}
 
 \subsection{X}
 
 @d R_ExpectationX Prototype
-@{
+@{@%
 SEXP R_ExpectationX
 (
     @<R x Input@>
@@ -3902,7 +3910,7 @@ SEXP R_ExpectationX
 @}
 
 @d R_ExpectationX
-@{
+@{@%
 @<R_ExpectationX Prototype@>
 {
     SEXP ans;
@@ -3918,11 +3926,11 @@ SEXP R_ExpectationX
     UNPROTECT(1);
     return(ans);
 }
-@|R_ExpectationX
+@| R_ExpectationX
 @}
 
 @d RC_ExpectationX Prototype
-@{
+@{@%
 void RC_ExpectationX
 (
     @<R x Input@>
@@ -3936,7 +3944,7 @@ void RC_ExpectationX
 @}
 
 @d RC_ExpectationX
-@{
+@{@%
 @<RC_ExpectationX Prototype@>
 {
     double center;
@@ -3950,7 +3958,7 @@ void RC_ExpectationX
         RC_colSums(REAL(x), N, P, Power1, &center, !DoCenter, weights, subset, offset, Nsubset, P_ans);
     }
 }
-@|RC_ExpectationX
+@| RC_ExpectationX
 @}
 
 <<ExpectationCovarianceX>>=
@@ -4007,7 +4015,7 @@ stopifnot(isequal(a0, a1) && isequal(a0, a2) &&
 @@
 
 @d R_CovarianceX Prototype
-@{
+@{@%
 SEXP R_CovarianceX
 (
     @<R x Input@>
@@ -4019,7 +4027,7 @@ SEXP R_CovarianceX
 @}
 
 @d R_CovarianceX
-@{
+@{@%
 @<R_CovarianceX Prototype@>
 {
     SEXP ans;
@@ -4042,11 +4050,11 @@ SEXP R_CovarianceX
     UNPROTECT(2);
     return(ans);
 }
-@|R_CovarianceX
+@| R_CovarianceX
 @}
 
 @d RC_CovarianceX Prototype
-@{
+@{@%
 void RC_CovarianceX
 (
     @<R x Input@>
@@ -4062,7 +4070,7 @@ void RC_CovarianceX
 @}
 
 @d RC_CovarianceX
-@{
+@{@%
 @<RC_CovarianceX Prototype@>
 {
     double center;
@@ -4086,7 +4094,7 @@ void RC_CovarianceX
         }
     }
 }
-@|RC_CovarianceX
+@| RC_CovarianceX
 @}
 
 \section{Computing Sums}
@@ -4096,7 +4104,7 @@ various sums over observations, case weights, or blocks. We start with an
 initialisation of the loop over all observations
 
 @d init subset loop
-@{
+@{@%
 R_xlen_t diff = 0;
 s = subset + offset;
 w = weights;
@@ -4110,14 +4118,14 @@ over the subset of the subset given by \code{offset} and \code{Nsubset},
 allowing for number of observations larger than \code{INT_MAX}
 
 @d start subset loop
-@{
+@{@%
 for (R_xlen_t i = 0; i < (Nsubset == 0 ? N : Nsubset) - 1; i++)
 @}
 
-After computions in the loop, we compute the next element
+After computations in the loop, we compute the next element
 
 @d continue subset loop
-@{
+@{@%
 if (Nsubset > 0) {
     /* NB: diff also works with R style index */
     diff = (R_xlen_t) s[1] - s[0];
@@ -4132,7 +4140,7 @@ if (Nsubset > 0) {
 \subsection{Simple Sums}
 
 @d SimpleSums
-@{
+@{@%
 @<C_Sums_dweights_dsubset@>
 @<C_Sums_iweights_dsubset@>
 @<C_Sums_iweights_isubset@>
@@ -4153,7 +4161,7 @@ stopifnot(isequal(a0, a1) && isequal(a0, a2) &&
 @@
 
 @d R_Sums Prototype
-@{
+@{@%
 SEXP R_Sums
 (
     @<R N Input@>
@@ -4163,7 +4171,7 @@ SEXP R_Sums
 @}
 
 @d R_Sums
-@{
+@{@%
 @<R_Sums Prototype@>
 {
     SEXP ans;
@@ -4177,11 +4185,11 @@ SEXP R_Sums
 
     return(ans);
 }
-@|R_Sums
+@| R_Sums
 @}
 
 @d RC_Sums Prototype
-@{
+@{@%
 double RC_Sums
 (
     @<C integer N Input@>,
@@ -4192,7 +4200,7 @@ double RC_Sums
 @}
 
 @d RC_Sums
-@{
+@{@%
 @<RC_Sums Prototype@>
 {
     if (XLENGTH(weights) == 0) {
@@ -4220,11 +4228,11 @@ double RC_Sums
         }
     }
 }
-@|RC_Sums
+@| RC_Sums
 @}
 
 @d C_Sums_dweights_dsubset
-@{
+@{@%
 double C_Sums_dweights_dsubset
 (
     @<C integer N Input@>,
@@ -4234,11 +4242,11 @@ double C_Sums_dweights_dsubset
     double *s, *w;
     @<Sums Body@>
 }
-@|C_Sums_dweights_dsubset
+@| C_Sums_dweights_dsubset
 @}
 
 @d C_Sums_iweights_dsubset
-@{
+@{@%
 double C_Sums_iweights_dsubset
 (
     @<C integer N Input@>,
@@ -4249,11 +4257,11 @@ double C_Sums_iweights_dsubset
     int *w;
     @<Sums Body@>
 }
-@|C_Sums_iweights_dsubset
+@| C_Sums_iweights_dsubset
 @}
 
 @d C_Sums_iweights_isubset
-@{
+@{@%
 double C_Sums_iweights_isubset
 (
     @<C integer N Input@>,
@@ -4263,11 +4271,11 @@ double C_Sums_iweights_isubset
     int *s, *w;
     @<Sums Body@>
 }
-@|C_Sums_iweights_isubset
+@| C_Sums_iweights_isubset
 @}
 
 @d C_Sums_dweights_isubset
-@{
+@{@%
 double C_Sums_dweights_isubset
 (
     @<C integer N Input@>,
@@ -4278,11 +4286,11 @@ double C_Sums_dweights_isubset
     double *w;
     @<Sums Body@>
 }
-@|C_Sums_dweights_isubset
+@| C_Sums_dweights_isubset
 @}
 
 @d Sums Body
-@{
+@{@%
 double ans = 0.0;
 
 if (Nsubset > 0) {
@@ -4307,7 +4315,7 @@ return(ans);
 \subsection{Kronecker Sums}
 
 @d KronSums
-@{
+@{@%
 @<C_KronSums_dweights_dsubset@>
 @<C_KronSums_iweights_dsubset@>
 @<C_KronSums_iweights_isubset@>
@@ -4327,9 +4335,6 @@ return(ans);
 @}
 
 <<KronSums>>=
-r1 <- rep(1:ncol(x), ncol(y))
-r2 <- rep(1:ncol(y), each = ncol(x))
-
 a0 <- colSums(x[subset, r1] * y[subset, r2] * weights[subset])
 a1 <- .Call(libcoin:::R_KronSums, x, P, y, weights, subset, 0L)
 a2 <- .Call(libcoin:::R_KronSums, x, P, y, as.double(weights), as.double(subset), 0L)
@@ -4351,7 +4356,7 @@ stopifnot(isequal(a0, a1) && isequal(a0, a2) &&
 @@
 
 @d R_KronSums Prototype
-@{
+@{@%
 SEXP R_KronSums
 (
     @<R x Input@>
@@ -4364,7 +4369,7 @@ SEXP R_KronSums
 @}
 
 @d R_KronSums
-@{
+@{@%
 @<R_KronSums Prototype@>
 {
     SEXP ans;
@@ -4388,11 +4393,11 @@ SEXP R_KronSums
     UNPROTECT(1);
     return(ans);
 }
-@|R_KronSums
+@| R_KronSums
 @}
 
 @d RC_KronSums Prototype
-@{
+@{@%
 void RC_KronSums
 (
     @<RC KronSums Input@>
@@ -4404,7 +4409,7 @@ void RC_KronSums
 @}
 
 @d RC_KronSums
-@{
+@{@%
 @<RC_KronSums Prototype@>
 {
     if (TYPEOF(x) == INTSXP) {
@@ -4413,11 +4418,11 @@ void RC_KronSums
         @<KronSums Double x@>
     }
 }
-@|RC_KronSums
+@| RC_KronSums
 @}
 
 @d RC KronSums Input
-@{
+@{@%
 @<R x Input@>
 @<C integer N Input@>,
 @<C integer P Input@>,
@@ -4429,7 +4434,7 @@ const int CENTER,
 @}
 
 @d C KronSums Input
-@{
+@{@%
 @<C real x Input@>
 @<C real y Input@>
 const int SYMMETRIC,
@@ -4439,12 +4444,12 @@ const int CENTER,
 @}
 
 @d C KronSums Answer
-@{
+@{@%
 double *PQ_ans
 @}
 
 @d KronSums Integer x
-@{
+@{@%
 if (SYMMETRIC) error("not implemented");
 if (CENTER) error("not implemented");
 if (TYPEOF(weights) == INTSXP) {
@@ -4471,7 +4476,7 @@ if (TYPEOF(weights) == INTSXP) {
 @}
 
 @d KronSums Double x
-@{
+@{@%
 if (TYPEOF(weights) == INTSXP) {
     if (TYPEOF(subset) == INTSXP) {
         C_KronSums_iweights_isubset(REAL(x), N, P, y, Q, SYMMETRIC, centerx, centery, CENTER,
@@ -4496,7 +4501,7 @@ if (TYPEOF(weights) == INTSXP) {
 @}
 
 @d C_KronSums_dweights_dsubset
-@{
+@{@%
 void C_KronSums_dweights_dsubset
 (
     @<C KronSums Input@>
@@ -4507,11 +4512,11 @@ void C_KronSums_dweights_dsubset
     double *s, *w;
     @<KronSums Body@>
 }
-@|C_KronSums_dweights_dsubset
+@| C_KronSums_dweights_dsubset
 @}
 
 @d C_KronSums_iweights_dsubset
-@{
+@{@%
 void C_KronSums_iweights_dsubset
 (
     @<C KronSums Input@>
@@ -4523,11 +4528,11 @@ void C_KronSums_iweights_dsubset
     int *w;
     @<KronSums Body@>
 }
-@|C_KronSums_iweights_dsubset
+@| C_KronSums_iweights_dsubset
 @}
 
 @d C_KronSums_iweights_isubset
-@{
+@{@%
 void C_KronSums_iweights_isubset
 (
     @<C KronSums Input@>
@@ -4538,11 +4543,11 @@ void C_KronSums_iweights_isubset
     int *s, *w;
     @<KronSums Body@>
 }
-@|C_KronSums_iweights_isubset
+@| C_KronSums_iweights_isubset
 @}
 
 @d C_KronSums_dweights_isubset
-@{
+@{@%
 void C_KronSums_dweights_isubset
 (
     @<C KronSums Input@>
@@ -4554,11 +4559,11 @@ void C_KronSums_dweights_isubset
     double *w;
     @<KronSums Body@>
 }
-@|C_KronSums_dweights_isubset
+@| C_KronSums_dweights_isubset
 @}
 
 @d KronSums Body
-@{
+@{@%
     double *xx, *yy, cx = 0.0, cy = 0.0, *thisPQ_ans;
     int idx;
 
@@ -4616,13 +4621,13 @@ void C_KronSums_dweights_isubset
 \subsubsection{Xfactor Kronecker Sums}
 
 @d C XfactorKronSums Input
-@{
+@{@%
 @<C integer x Input@>
 @<C real y Input@>
 @}
 
 @d C_XfactorKronSums_dweights_dsubset
-@{
+@{@%
 void C_XfactorKronSums_dweights_dsubset
 (
     @<C XfactorKronSums Input@>
@@ -4633,11 +4638,11 @@ void C_XfactorKronSums_dweights_dsubset
     double *s, *w;
     @<XfactorKronSums Body@>
 }
-@|C_XfactorKronSums_dweights_dsubset
+@| C_XfactorKronSums_dweights_dsubset
 @}
 
 @d C_XfactorKronSums_iweights_dsubset
-@{
+@{@%
 void C_XfactorKronSums_iweights_dsubset
 (
     @<C XfactorKronSums Input@>
@@ -4649,11 +4654,11 @@ void C_XfactorKronSums_iweights_dsubset
     int *w;
     @<XfactorKronSums Body@>
 }
-@|C_XfactorKronSums_iweights_dsubset
+@| C_XfactorKronSums_iweights_dsubset
 @}
 
 @d C_XfactorKronSums_iweights_isubset
-@{
+@{@%
 void C_XfactorKronSums_iweights_isubset
 (
     @<C XfactorKronSums Input@>
@@ -4664,11 +4669,11 @@ void C_XfactorKronSums_iweights_isubset
     int *s, *w;
     @<XfactorKronSums Body@>
 }
-@|C_XfactorKronSums_iweights_isubset
+@| C_XfactorKronSums_iweights_isubset
 @}
 
 @d C_XfactorKronSums_dweights_isubset
-@{
+@{@%
 void C_XfactorKronSums_dweights_isubset
 (
     @<C XfactorKronSums Input@>
@@ -4680,11 +4685,11 @@ void C_XfactorKronSums_dweights_isubset
     double *w;
     @<XfactorKronSums Body@>
 }
-@|C_XfactorKronSums_dweights_isubset
+@| C_XfactorKronSums_dweights_isubset
 @}
 
 @d XfactorKronSums Body
-@{
+@{@%
 int *xx, ixi;
 double *yy;
 
@@ -4740,7 +4745,7 @@ stopifnot(isequal(a0, a1) && isequal(a0, a2))
 @@
 
 @d R_KronSums_Permutation Prototype
-@{
+@{@%
 SEXP R_KronSums_Permutation
 (
     @<R x Input@>
@@ -4752,7 +4757,7 @@ SEXP R_KronSums_Permutation
 @}
 
 @d R_KronSums_Permutation
-@{
+@{@%
 @<R_KronSums_Permutation Prototype@>
 {
     SEXP ans;
@@ -4770,11 +4775,11 @@ SEXP R_KronSums_Permutation
     UNPROTECT(1);
     return(ans);
 }
-@|R_KronSums_Permutation
+@| R_KronSums_Permutation
 @}
 
 @d RC_KronSums_Permutation Prototype
-@{
+@{@%
 void RC_KronSums_Permutation
 (
     @<R x Input@>
@@ -4789,7 +4794,7 @@ void RC_KronSums_Permutation
 @}
 
 @d RC_KronSums_Permutation
-@{
+@{@%
 @<RC_KronSums_Permutation Prototype@>
 {
     if (TYPEOF(x) == INTSXP) {
@@ -4814,11 +4819,11 @@ void RC_KronSums_Permutation
         }
     }
 }
-@|RC_KronSums_Permutation
+@| RC_KronSums_Permutation
 @}
 
 @d C_KronSums_Permutation_dsubset
-@{
+@{@%
 void C_KronSums_Permutation_dsubset
 (
     @<C real x Input@>
@@ -4829,11 +4834,11 @@ void C_KronSums_Permutation_dsubset
 ) {
     @<KronSums Permutation Body@>
 }
-@|C_KronSums_Permutation_dsubset
+@| C_KronSums_Permutation_dsubset
 @}
 
 @d C_KronSums_Permutation_isubset
-@{
+@{@%
 void C_KronSums_Permutation_isubset
 (
     @<C real x Input@>
@@ -4844,14 +4849,14 @@ void C_KronSums_Permutation_isubset
 ) {
     @<KronSums Permutation Body@>
 }
-@|C_KronSums_Permutation_isubset
+@| C_KronSums_Permutation_isubset
 @}
 
 Because \code{subset} might not be ordered (in the presence of blocks) we
 have to go through all elements explicitly here.
 
 @d KronSums Permutation Body
-@{
+@{@%
 R_xlen_t qP, qN, pN, qPp;
 
 for (int q = 0; q < Q; q++) {
@@ -4871,7 +4876,7 @@ for (int q = 0; q < Q; q++) {
 \subsubsection{Xfactor Permuted Kronecker Sums}
 
 @d C_XfactorKronSums_Permutation_dsubset
-@{
+@{@%
 void C_XfactorKronSums_Permutation_dsubset
 (
     @<C integer x Input@>
@@ -4882,11 +4887,11 @@ void C_XfactorKronSums_Permutation_dsubset
 ) {
     @<XfactorKronSums Permutation Body@>
 }
-@|C_XfactorKronSums_Permutation_dsubset
+@| C_XfactorKronSums_Permutation_dsubset
 @}
 
 @d C_XfactorKronSums_Permutation_isubset
-@{
+@{@%
 void C_XfactorKronSums_Permutation_isubset
 (
     @<C integer x Input@>
@@ -4897,11 +4902,11 @@ void C_XfactorKronSums_Permutation_isubset
 ) {
     @<XfactorKronSums Permutation Body@>
 }
-@|C_XfactorKronSums_Permutation_isubset
+@| C_XfactorKronSums_Permutation_isubset
 @}
 
 @d XfactorKronSums Permutation Body
-@{
+@{@%
 R_xlen_t qP, qN;
 
 for (int p = 0; p < mPQB(P, Q, 1); p++) PQ_ans[p] = 0.0;
@@ -4917,7 +4922,7 @@ for (int q = 0; q < Q; q++) {
 \subsection{Column Sums}
 
 @d colSums
-@{
+@{@%
 @<C_colSums_dweights_dsubset@>
 @<C_colSums_iweights_dsubset@>
 @<C_colSums_iweights_isubset@>
@@ -4938,7 +4943,7 @@ stopifnot(isequal(a0, a1) && isequal(a0, a2) &&
 @@
 
 @d R_colSums Prototype
-@{
+@{@%
 SEXP R_colSums
 (
     @<R x Input@>
@@ -4948,7 +4953,7 @@ SEXP R_colSums
 @}
 
 @d R_colSums
-@{
+@{@%
 @<R_colSums Prototype@>
 {
     SEXP ans;
@@ -4967,11 +4972,11 @@ SEXP R_colSums
     UNPROTECT(1);
     return(ans);
 }
-@|R_colSums
+@| R_colSums
 @}
 
 @d RC_colSums Prototype
-@{
+@{@%
 void RC_colSums
 (
     @<C colSums Input@>
@@ -4983,7 +4988,7 @@ void RC_colSums
 @}
 
 @d RC_colSums
-@{
+@{@%
 @<RC_colSums Prototype@>
 {
     if (TYPEOF(weights) == INTSXP) {
@@ -5008,11 +5013,11 @@ void RC_colSums
         }
     }
 }
-@|RC_colSums
+@| RC_colSums
 @}
 
 @d C colSums Input
-@{
+@{@%
 @<C real x Input@>
 const int power,
 double *centerx,
@@ -5020,12 +5025,12 @@ const int CENTER,
 @}
 
 @d C colSums Answer
-@{
+@{@%
 double *P_ans
 @}
 
 @d C_colSums_dweights_dsubset
-@{
+@{@%
 void C_colSums_dweights_dsubset
 (
     @<C colSums Input@>
@@ -5036,11 +5041,11 @@ void C_colSums_dweights_dsubset
     double *s, *w;
     @<colSums Body@>
 }
-@|C_colSums_dweights_dsubset
+@| C_colSums_dweights_dsubset
 @}
 
 @d C_colSums_iweights_dsubset
-@{
+@{@%
 void C_colSums_iweights_dsubset
 (
     @<C colSums Input@>
@@ -5052,11 +5057,11 @@ void C_colSums_iweights_dsubset
     int *w;
     @<colSums Body@>
 }
-@|C_colSums_iweights_dsubset
+@| C_colSums_iweights_dsubset
 @}
 
 @d C_colSums_iweights_isubset
-@{
+@{@%
 void C_colSums_iweights_isubset
 (
     @<C colSums Input@>
@@ -5067,11 +5072,11 @@ void C_colSums_iweights_isubset
     int *s, *w;
     @<colSums Body@>
 }
-@|C_colSums_iweights_isubset
+@| C_colSums_iweights_isubset
 @}
 
 @d C_colSums_dweights_isubset
-@{
+@{@%
 void C_colSums_dweights_isubset
 (
     @<C colSums Input@>
@@ -5083,11 +5088,11 @@ void C_colSums_dweights_isubset
     double *w;
     @<colSums Body@>
 }
-@|C_colSums_dweights_isubset
+@| C_colSums_dweights_isubset
 @}
 
 @d colSums Body
-@{
+@{@%
 double *xx, cx = 0.0;
 
 for (int p = 0; p < P; p++) {
@@ -5124,7 +5129,7 @@ for (int p = 0; p < P; p++) {
 \subsubsection{OneTable Sums}
 
 @d Tables
-@{
+@{@%
 @<C_OneTableSums_dweights_dsubset@>
 @<C_OneTableSums_iweights_dsubset@>
 @<C_OneTableSums_iweights_isubset@>
@@ -5157,7 +5162,7 @@ stopifnot(isequal(a0, a1) && isequal(a0, a2) &&
 @@
 
 @d R_OneTableSums Prototype
-@{
+@{@%
 SEXP R_OneTableSums
 (
     @<R x Input@>
@@ -5167,7 +5172,7 @@ SEXP R_OneTableSums
 @}
 
 @d R_OneTableSums
-@{
+@{@%
 @<R_OneTableSums Prototype@>
 {
     SEXP ans;
@@ -5185,11 +5190,11 @@ SEXP R_OneTableSums
     UNPROTECT(1);
     return(ans);
 }
-@|R_OneTableSums
+@| R_OneTableSums
 @}
 
 @d RC_OneTableSums Prototype
-@{
+@{@%
 void RC_OneTableSums
 (
     @<C OneTableSums Input@>
@@ -5201,7 +5206,7 @@ void RC_OneTableSums
 @}
 
 @d RC_OneTableSums
-@{
+@{@%
 @<RC_OneTableSums Prototype@>
 {
     if (TYPEOF(weights) == INTSXP) {
@@ -5226,21 +5231,21 @@ void RC_OneTableSums
         }
     }
 }
-@|RC_OneTableSums
+@| RC_OneTableSums
 @}
 
 @d C OneTableSums Input
-@{
+@{@%
 @<C integer x Input@>
 @}
 
 @d C OneTableSums Answer
-@{
+@{@%
 double *P_ans
 @}
 
 @d C_OneTableSums_dweights_dsubset
-@{
+@{@%
 void C_OneTableSums_dweights_dsubset
 (
     @<C OneTableSums Input@>
@@ -5251,11 +5256,11 @@ void C_OneTableSums_dweights_dsubset
     double *s, *w;
     @<OneTableSums Body@>
 }
-@|C_OneTableSums_dweights_dsubset
+@| C_OneTableSums_dweights_dsubset
 @}
 
 @d C_OneTableSums_iweights_dsubset
-@{
+@{@%
 void C_OneTableSums_iweights_dsubset
 (
     @<C OneTableSums Input@>
@@ -5267,11 +5272,11 @@ void C_OneTableSums_iweights_dsubset
     int *w;
     @<OneTableSums Body@>
 }
-@|C_OneTableSums_iweights_dsubset
+@| C_OneTableSums_iweights_dsubset
 @}
 
 @d C_OneTableSums_iweights_isubset
-@{
+@{@%
 void C_OneTableSums_iweights_isubset
 (
     @<C OneTableSums Input@>
@@ -5282,11 +5287,11 @@ void C_OneTableSums_iweights_isubset
     int *s, *w;
     @<OneTableSums Body@>
 }
-@|C_OneTableSums_iweights_isubset
+@| C_OneTableSums_iweights_isubset
 @}
 
 @d C_OneTableSums_dweights_isubset
-@{
+@{@%
 void C_OneTableSums_dweights_isubset
 (
     @<C OneTableSums Input@>
@@ -5298,11 +5303,11 @@ void C_OneTableSums_dweights_isubset
     double *w;
     @<OneTableSums Body@>
 }
-@|C_OneTableSums_dweights_isubset
+@| C_OneTableSums_dweights_isubset
 @}
 
 @d OneTableSums Body
-@{
+@{@%
 int *xx;
 
 for (int p = 0; p < P; p++) P_ans[p] = 0.0;
@@ -5347,7 +5352,7 @@ stopifnot(isequal(a0, a1) && isequal(a0, a2) &&
 @@
 
 @d R_TwoTableSums Prototype
-@{
+@{@%
 SEXP R_TwoTableSums
 (
     @<R x Input@>
@@ -5358,7 +5363,7 @@ SEXP R_TwoTableSums
 @}
 
 @d R_TwoTableSums
-@{
+@{@%
 @<R_TwoTableSums Prototype@>
 {
     SEXP ans, dim;
@@ -5381,12 +5386,12 @@ SEXP R_TwoTableSums
     UNPROTECT(2);
     return(ans);
 }
-@|R_TwoTableSums
+@| R_TwoTableSums
 @}
 
 
 @d RC_TwoTableSums Prototype
-@{
+@{@%
 void RC_TwoTableSums
 (
     @<C TwoTableSums Input@>
@@ -5398,7 +5403,7 @@ void RC_TwoTableSums
 @}
 
 @d RC_TwoTableSums
-@{
+@{@%
 @<RC_TwoTableSums Prototype@>
 {
     if (TYPEOF(weights) == INTSXP) {
@@ -5423,22 +5428,22 @@ void RC_TwoTableSums
         }
     }
 }
-@|RC_TwoTableSums
+@| RC_TwoTableSums
 @}
 
 @d C TwoTableSums Input
-@{
+@{@%
 @<C integer x Input@>
 @<C integer y Input@>
 @}
 
 @d C TwoTableSums Answer
-@{
+@{@%
 double *PQ_ans
 @}
 
 @d C_TwoTableSums_dweights_dsubset
-@{
+@{@%
 void C_TwoTableSums_dweights_dsubset
 (
     @<C TwoTableSums Input@>
@@ -5449,11 +5454,11 @@ void C_TwoTableSums_dweights_dsubset
     double *s, *w;
     @<TwoTableSums Body@>
 }
-@|C_TwoTableSums_dweights_dsubset
+@| C_TwoTableSums_dweights_dsubset
 @}
 
 @d C_TwoTableSums_iweights_dsubset
-@{
+@{@%
 void C_TwoTableSums_iweights_dsubset
 (
     @<C TwoTableSums Input@>
@@ -5465,11 +5470,11 @@ void C_TwoTableSums_iweights_dsubset
     int *w;
     @<TwoTableSums Body@>
 }
-@|C_TwoTableSums_iweights_dsubset
+@| C_TwoTableSums_iweights_dsubset
 @}
 
 @d C_TwoTableSums_iweights_isubset
-@{
+@{@%
 void C_TwoTableSums_iweights_isubset
 (
     @<C TwoTableSums Input@>
@@ -5480,11 +5485,11 @@ void C_TwoTableSums_iweights_isubset
     int *s, *w;
     @<TwoTableSums Body@>
 }
-@|C_TwoTableSums_iweights_isubset
+@| C_TwoTableSums_iweights_isubset
 @}
 
 @d C_TwoTableSums_dweights_isubset
-@{
+@{@%
 void C_TwoTableSums_dweights_isubset
 (
     @<C TwoTableSums Input@>
@@ -5496,11 +5501,11 @@ void C_TwoTableSums_dweights_isubset
     double *w;
     @<TwoTableSums Body@>
 }
-@|C_TwoTableSums_dweights_isubset
+@| C_TwoTableSums_dweights_isubset
 @}
 
 @d TwoTableSums Body
-@{
+@{@%
 int *xx, *yy;
 
 for (int p = 0; p < Q * P; p++) PQ_ans[p] = 0.0;
@@ -5547,7 +5552,7 @@ stopifnot(isequal(a0, a1) && isequal(a0, a2) &&
 @@
 
 @d R_ThreeTableSums Prototype
-@{
+@{@%
 SEXP R_ThreeTableSums
 (
     @<R x Input@>
@@ -5559,7 +5564,7 @@ SEXP R_ThreeTableSums
 @}
 
 @d R_ThreeTableSums
-@{
+@{@%
 @<R_ThreeTableSums Prototype@>
 {
     SEXP ans, dim;
@@ -5585,11 +5590,11 @@ SEXP R_ThreeTableSums
     UNPROTECT(2);
     return(ans);
 }
-@|R_ThreeTableSums
+@| R_ThreeTableSums
 @}
 
 @d RC_ThreeTableSums Prototype
-@{
+@{@%
 void RC_ThreeTableSums
 (
     @<C ThreeTableSums Input@>
@@ -5601,7 +5606,7 @@ void RC_ThreeTableSums
 @}
 
 @d RC_ThreeTableSums
-@{
+@{@%
 @<RC_ThreeTableSums Prototype@>
 {
     if (TYPEOF(weights) == INTSXP) {
@@ -5626,23 +5631,23 @@ void RC_ThreeTableSums
         }
     }
 }
-@|RC_ThreeTableSums
+@| RC_ThreeTableSums
 @}
 
 @d C ThreeTableSums Input
-@{
+@{@%
 @<C integer x Input@>
 @<C integer y Input@>
 @<C integer block Input@>
 @}
 
 @d C ThreeTableSums Answer
-@{
+@{@%
 double *PQL_ans
 @}
 
 @d C_ThreeTableSums_dweights_dsubset
-@{
+@{@%
 void C_ThreeTableSums_dweights_dsubset
 (
     @<C ThreeTableSums Input@>
@@ -5653,11 +5658,11 @@ void C_ThreeTableSums_dweights_dsubset
     double *s, *w;
     @<ThreeTableSums Body@>
 }
-@|C_ThreeTableSums_dweights_dsubset
+@| C_ThreeTableSums_dweights_dsubset
 @}
 
 @d C_ThreeTableSums_iweights_dsubset
-@{
+@{@%
 void C_ThreeTableSums_iweights_dsubset
 (
     @<C ThreeTableSums Input@>
@@ -5669,11 +5674,11 @@ void C_ThreeTableSums_iweights_dsubset
     int *w;
     @<ThreeTableSums Body@>
 }
-@|C_ThreeTableSums_iweights_dsubset
+@| C_ThreeTableSums_iweights_dsubset
 @}
 
 @d C_ThreeTableSums_iweights_isubset
-@{
+@{@%
 void C_ThreeTableSums_iweights_isubset
 (
     @<C ThreeTableSums Input@>
@@ -5684,11 +5689,11 @@ void C_ThreeTableSums_iweights_isubset
     int *s, *w;
     @<ThreeTableSums Body@>
 }
-@|C_ThreeTableSums_iweights_isubset
+@| C_ThreeTableSums_iweights_isubset
 @}
 
 @d C_ThreeTableSums_dweights_isubset
-@{
+@{@%
 void C_ThreeTableSums_dweights_isubset
 (
     @<C ThreeTableSums Input@>
@@ -5700,11 +5705,11 @@ void C_ThreeTableSums_dweights_isubset
     double *w;
     @<ThreeTableSums Body@>
 }
-@|C_ThreeTableSums_dweights_isubset
+@| C_ThreeTableSums_dweights_isubset
 @}
 
 @d ThreeTableSums Body
-@{
+@{@%
 int *xx, *yy, *bb, PQ = mPQB(P, Q, 1);
 
 for (int p = 0; p < PQ * B; p++) PQL_ans[p] = 0.0;
@@ -5751,7 +5756,7 @@ stopifnot(isequal(ns1, ns2))
 @@
 
 @d Utils
-@{
+@{@%
 @<C_setup_subset@>
 @<C_setup_subset_block@>
 @<C_order_subset_wrt_block@>
@@ -5760,7 +5765,7 @@ stopifnot(isequal(ns1, ns2))
 @}
 
 @d R_order_subset_wrt_block Prototype
-@{
+@{@%
 SEXP R_order_subset_wrt_block
 (
     @<R y Input@>
@@ -5771,7 +5776,7 @@ SEXP R_order_subset_wrt_block
 @}
 
 @d R_order_subset_wrt_block
-@{
+@{@%
 @<R_order_subset_wrt_block Prototype@>
 {
     @<C integer N Input@>;
@@ -5795,11 +5800,11 @@ SEXP R_order_subset_wrt_block
     UNPROTECT(2);
     return(ans);
 }
-@|R_order_subset_wrt_block
+@| R_order_subset_wrt_block
 @}
 
 @d RC_order_subset_wrt_block Prototype
-@{
+@{@%
 SEXP RC_order_subset_wrt_block
 (
     @<C integer N Input@>,
@@ -5810,7 +5815,7 @@ SEXP RC_order_subset_wrt_block
 @}
 
 @d RC_order_subset_wrt_block
-@{
+@{@%
 @<RC_order_subset_wrt_block Prototype@>
 {
     SEXP ans;
@@ -5836,11 +5841,11 @@ SEXP RC_order_subset_wrt_block
         return(ans);
     }
 }
-@|RC_order_subset_wrt_block
+@| RC_order_subset_wrt_block
 @}
 
 @d C_setup_subset
-@{
+@{@%
 void C_setup_subset
 (
     @<C integer N Input@>,
@@ -5855,11 +5860,11 @@ void C_setup_subset
         }
     }
 }
-@|C_setup_subset
+@| C_setup_subset
 @}
 
 @d C_setup_subset_block
-@{
+@{@%
 void C_setup_subset_block
 (
     @<C integer N Input@>,
@@ -5873,7 +5878,7 @@ void C_setup_subset_block
     cumtable = R_Calloc(Nlevels, double);
     for (int k = 0; k < Nlevels; k++) cumtable[k] = 0.0;
 
-    /* table[0] are missings, ie block == 0 ! */
+    /* table[0] are missings, i.e. block == 0 ! */
     for (int k = 1; k < Nlevels; k++)
         cumtable[k] = cumtable[k - 1] + REAL(blockTable)[k - 1];
 
@@ -5888,11 +5893,11 @@ void C_setup_subset_block
 
     R_Free(cumtable);
 }
-@|C_setup_subset_block
+@| C_setup_subset_block
 @}
 
 @d C_order_subset_wrt_block
-@{
+@{@%
 void C_order_subset_wrt_block
 (
     @<R subset Input@>,
@@ -5921,11 +5926,11 @@ void C_order_subset_wrt_block
 
     R_Free(cumtable);
 }
-@|C_order_subset_wrt_block
+@| C_order_subset_wrt_block
 @}
 
 @d RC_setup_subset Prototype
-@{
+@{@%
 SEXP RC_setup_subset
 (
     @<C integer N Input@>,
@@ -5939,7 +5944,7 @@ be a little bit more generous with memory here. The return value is always
 \code{REALSXP}.
 
 @d RC_setup_subset
-@{
+@{@%
 @<RC_setup_subset Prototype@>
 {
     SEXP ans, mysubset;
@@ -5973,13 +5978,13 @@ be a little bit more generous with memory here. The return value is always
     UNPROTECT(2);
     return(ans);
 }
-@|RC_setup_subset
+@| RC_setup_subset
 @}
 
 \subsection{Permutation Helpers}
 
 @d Permutations
-@{
+@{@%
 @<RC_setup_subset@>
 @<C_Permute@>
 @<C_doPermute@>
@@ -5988,7 +5993,7 @@ be a little bit more generous with memory here. The return value is always
 @}
 
 @d C_Permute
-@{
+@{@%
 void C_Permute
 (
     double *subset,
@@ -6003,11 +6008,11 @@ void C_Permute
         subset[j] = subset[--n];
     }
 }
-@|C_Permute
+@| C_Permute
 @}
 
 @d C_doPermute
-@{
+@{@%
 void C_doPermute
 (
     double *subset,
@@ -6018,11 +6023,11 @@ void C_doPermute
     Memcpy(Nsubset_tmp, subset, Nsubset);
     C_Permute(Nsubset_tmp, Nsubset, perm);
 }
-@|C_doPermute
+@| C_doPermute
 @}
 
 @d C_PermuteBlock
-@{
+@{@%
 void C_PermuteBlock
 (
     double *subset,
@@ -6043,11 +6048,11 @@ void C_PermuteBlock
         }
     }
 }
-@|C_PermuteBlock
+@| C_PermuteBlock
 @}
 
 @d C_doPermuteBlock
-@{
+@{@%
 void C_doPermuteBlock
 (
     double *subset,
@@ -6060,13 +6065,13 @@ void C_doPermuteBlock
     Memcpy(Nsubset_tmp, subset, Nsubset);
     C_PermuteBlock(Nsubset_tmp, table, Nlevels, perm);
 }
-@|C_doPermuteBlock
+@| C_doPermuteBlock
 @}
 
 \subsection{Other Utils}
 
 @d MoreUtils
-@{
+@{@%
 @<NROW@>
 @<NCOL@>
 @<NLEVELS@>
@@ -6081,39 +6086,59 @@ void C_doPermuteBlock
 @}
 
 @d NROW
-@{
-int NROW
+@{@%
+R_xlen_t NROW
 (
     SEXP x
 ) {
     SEXP a;
-    a = getAttrib(x, R_DimSymbol);
-    if (a == R_NilValue) return(XLENGTH(x));
-    if (TYPEOF(a) == REALSXP)
-        return(REAL(a)[0]);
-    return(INTEGER(a)[0]);
+    R_xlen_t ret;
+
+    PROTECT(a = getAttrib(x, R_DimSymbol)); // rchk warning
+    if (a == R_NilValue) {
+        UNPROTECT(1);
+        return(XLENGTH(x));
+    }
+    if (TYPEOF(a) == REALSXP) {
+        ret = (R_xlen_t) REAL(a)[0];
+        UNPROTECT(1);
+        return(ret);
+    }
+    ret = (R_xlen_t) INTEGER(a)[0];
+    UNPROTECT(1);
+    return(ret);
 }
-@|NROW
+@| NROW
 @}
 
 @d NCOL
-@{
+@{@%
 int NCOL
 (
     SEXP x
 ) {
     SEXP a;
-    a = getAttrib(x, R_DimSymbol);
-    if (a == R_NilValue) return(1);
-    if (TYPEOF(a) == REALSXP)
-        return(REAL(a)[1]);
-    return(INTEGER(a)[1]);
+    int ret;
+
+    PROTECT(a = getAttrib(x, R_DimSymbol));  // rchk warning
+    if (a == R_NilValue) {
+        UNPROTECT(1);
+        return(1);
+    }
+    if (TYPEOF(a) == REALSXP) {
+        ret = (int) REAL(a)[1];
+        UNPROTECT(1);
+        return(ret);
+    }
+    ret = INTEGER(a)[1];
+    UNPROTECT(1);
+    return(ret);
 }
-@|NCOL
+@| NCOL
 @}
 
 @d NLEVELS
-@{
+@{@%
 int NLEVELS
 (
     SEXP x
@@ -6121,7 +6146,7 @@ int NLEVELS
     SEXP a;
     int maxlev = 0;
 
-    a = getAttrib(x, R_LevelsSymbol);
+    PROTECT(a = getAttrib(x, R_LevelsSymbol));
     if (a == R_NilValue) {
         if (TYPEOF(x) != INTSXP)
             error("cannot determine number of levels");
@@ -6129,17 +6154,20 @@ int NLEVELS
             if (INTEGER(x)[i] > maxlev)
                 maxlev = INTEGER(x)[i];
         }
+        UNPROTECT(1);
         return(maxlev);
     }
-    return(NROW(a));
+    maxlev = NROW(a);
+    UNPROTECT(1);
+    return(maxlev);
 }
-@|NLEVELS
+@| NLEVELS
 @}
 
 Check for integer overflow when computing $P (P + 1) / 2$ and $P Q$.
 
 @d PP12
-@{
+@{@%
 int PP12
 (
     int P
@@ -6154,11 +6182,11 @@ int PP12
 
     return((int) ans);
 }
-@|PP12
+@| PP12
 @}
 
 @d mPQB
-@{
+@{@%
 int mPQB
 (
     int P,
@@ -6172,7 +6200,7 @@ int mPQB
 
     return((int) ans);
 }
-@|mPQB
+@| mPQB
 @}
 
 <<kronecker>>=
@@ -6186,7 +6214,7 @@ stopifnot(isequal(K1, K2))
 @@
 
 @d R_kronecker Prototype
-@{
+@{@%
 SEXP R_kronecker
 (
     SEXP A,
@@ -6196,8 +6224,8 @@ SEXP R_kronecker
 
 This function can be called from other packages.
 
-@o libcoinAPI.h -cc
-@{
+@o src/libcoinAPI.h -cc
+@{@%
 extern SEXP libcoin_R_kronecker(
     SEXP A, SEXP B
 ) {
@@ -6210,7 +6238,7 @@ extern SEXP libcoin_R_kronecker(
 @}
 
 @d R_kronecker
-@{
+@{@%
 @<R_kronecker Prototype@>
 {
     int m, n, r, s;
@@ -6232,7 +6260,7 @@ extern SEXP libcoin_R_kronecker(
 @}
 
 @d C_kronecker
-@{
+@{@%
 void C_kronecker
 (
     const double *A,
@@ -6264,11 +6292,11 @@ void C_kronecker
         }
     }
 }
-@|C_kronecker
+@| C_kronecker
 @}
 
 @d C_kronecker_sym
-@{
+@{@%
 void C_kronecker_sym
 (
     const double *A,
@@ -6301,11 +6329,11 @@ void C_kronecker_sym
         }
     }
 }
-@|C_kronecker_sym
+@| C_kronecker_sym
 @}
 
 @d C_KronSums_sym
-@{
+@{@%
 /* sum_i (t(x[i,]) %*% x[i,]) */
 void C_KronSums_sym_
 (
@@ -6325,7 +6353,7 @@ void C_KronSums_sym_
         }
     }
 }
-@|C_KronSums_sym
+@| C_KronSums_sym
 @}
 
 <<MPinv>>=
@@ -6343,7 +6371,7 @@ stopifnot(isequal(MP1$MPinv[lt], MP2$MPinv) &&
 @@
 
 @d R_MPinv_sym Prototype
-@{
+@{@%
 SEXP R_MPinv_sym
 (
     SEXP x,
@@ -6354,8 +6382,8 @@ SEXP R_MPinv_sym
 
 This function can be called from other packages.
 
-@o libcoinAPI.h -cc
-@{
+@o src/libcoinAPI.h -cc
+@{@%
 extern SEXP libcoin_R_MPinv_sym(
     SEXP x, SEXP n, SEXP tol
 ) {
@@ -6368,7 +6396,7 @@ extern SEXP libcoin_R_MPinv_sym(
 @}
 
 @d R_MPinv_sym
-@{
+@{@%
 @<R_MPinv_sym Prototype@>
 {
     int m;
@@ -6391,11 +6419,11 @@ extern SEXP libcoin_R_MPinv_sym(
     UNPROTECT(2);
     return(ans);
 }
-@|R_MPinv_sym
+@| R_MPinv_sym
 @}
 
 @d C_MPinv_sym
-@{
+@{@%
 void C_MPinv_sym
 (
     const double *x,
@@ -6462,7 +6490,7 @@ stopifnot(isequal(m, u1) && isequal(diag(m), u2))
 @@
 
 @d R_unpack_sym Prototype
-@{
+@{@%
 SEXP R_unpack_sym
 (
     SEXP x,
@@ -6473,8 +6501,8 @@ SEXP R_unpack_sym
 
 This function can be called from other packages.
 
-@o libcoinAPI.h -cc
-@{
+@o src/libcoinAPI.h -cc
+@{@%
 extern SEXP libcoin_R_unpack_sym(
     SEXP x, SEXP names, SEXP diagonly
 ) {
@@ -6487,7 +6515,7 @@ extern SEXP libcoin_R_unpack_sym(
 @}
 
 @d R_unpack_sym
-@{
+@{@%
 @<R_unpack_sym Prototype@>
 {
     R_xlen_t n, k = 0;
@@ -6532,7 +6560,7 @@ extern SEXP libcoin_R_unpack_sym(
     UNPROTECT(1);
     return ans;
 }
-@|R_unpack_sym
+@| R_unpack_sym
 @}
 
 <<pack>>=
@@ -6549,7 +6577,7 @@ stopifnot(isequal(s, p))
 @@
 
 @d R_pack_sym Prototype
-@{
+@{@%
 SEXP R_pack_sym
 (
     SEXP x
@@ -6558,8 +6586,8 @@ SEXP R_pack_sym
 
 This function can be called from other packages.
 
-@o libcoinAPI.h -cc
-@{
+@o src/libcoinAPI.h -cc
+@{@%
 extern SEXP libcoin_R_pack_sym(
     SEXP x
 ) {
@@ -6572,7 +6600,7 @@ extern SEXP libcoin_R_pack_sym(
 @}
 
 @d R_pack_sym
-@{
+@{@%
 @<R_pack_sym Prototype@>
 {
     R_xlen_t n, k = 0;
@@ -6594,13 +6622,13 @@ extern SEXP libcoin_R_pack_sym(
     UNPROTECT(1);
     return ans;
 }
-@|R_pack_sym
+@| R_pack_sym
 @}
 
 \section{Memory}
 
 @d Memory
-@{
+@{@%
 @<C_get_P@>
 @<C_get_Q@>
 @<PP12@>
@@ -6628,79 +6656,79 @@ extern SEXP libcoin_R_pack_sym(
 @}
 
 @d R LECV Input
-@{
+@{@%
 SEXP LECV
-@|LECV
+@| LECV
 @}
 
 @d C_get_P
-@{
+@{@%
 int C_get_P
 (
     @<R LECV Input@>
 ) {
     return(INTEGER(VECTOR_ELT(LECV, dim_SLOT))[0]);
 }
-@|C_get_P
+@| C_get_P
 @}
 
 @d C_get_Q
-@{
+@{@%
 int C_get_Q
 (
     @<R LECV Input@>
 ) {
     return(INTEGER(VECTOR_ELT(LECV, dim_SLOT))[1]);
 }
-@|C_get_Q
+@| C_get_Q
 @}
 
 @d C_get_varonly
-@{
+@{@%
 int C_get_varonly
 (
     @<R LECV Input@>
 ) {
     return(INTEGER(VECTOR_ELT(LECV, varonly_SLOT))[0]);
 }
-@|C_get_varonly
+@| C_get_varonly
 @}
 
 @d C_get_Xfactor
-@{
+@{@%
 int C_get_Xfactor
 (
     @<R LECV Input@>
 ) {
     return(INTEGER(VECTOR_ELT(LECV, Xfactor_SLOT))[0]);
 }
-@|C_get_Xfactor
+@| C_get_Xfactor
 @}
 
 @d C_get_LinearStatistic
-@{
+@{@%
 double* C_get_LinearStatistic
 (
     @<R LECV Input@>
 ) {
     return(REAL(VECTOR_ELT(LECV, LinearStatistic_SLOT)));
 }
-@|C_get_LinearStatistic
+@| C_get_LinearStatistic
 @}
 
 @d C_get_Expectation
-@{
+@{@%
 double* C_get_Expectation
 (
     @<R LECV Input@>
 ) {
     return(REAL(VECTOR_ELT(LECV, Expectation_SLOT)));
 }
-@|C_get_Expectation
+@| C_get_Expectation
 @}
 
 @d C_get_Variance
-@{
+@{@%
 double* C_get_Variance
 (
     @<R LECV Input@>
@@ -6720,11 +6748,11 @@ double* C_get_Variance
     }
     return(REAL(VECTOR_ELT(LECV, Variance_SLOT)));
 }
-@|C_get_Variance
+@| C_get_Variance
 @}
 
 @d C_get_Covariance
-@{
+@{@%
 double* C_get_Covariance
 (
     @<R LECV Input@>
@@ -6736,55 +6764,55 @@ double* C_get_Covariance
         return(C_get_Variance(LECV));
     return(REAL(VECTOR_ELT(LECV, Covariance_SLOT)));
 }
-@|C_get_Covariance
+@| C_get_Covariance
 @}
 
 @d C_get_ExpectationX
-@{
+@{@%
 double* C_get_ExpectationX
 (
     @<R LECV Input@>
 ) {
     return(REAL(VECTOR_ELT(LECV, ExpectationX_SLOT)));
 }
-@|C_get_ExpectationX
+@| C_get_ExpectationX
 @}
 
 @d C_get_ExpectationInfluence
-@{
+@{@%
 double* C_get_ExpectationInfluence
 (
     @<R LECV Input@>
 ) {
     return(REAL(VECTOR_ELT(LECV, ExpectationInfluence_SLOT)));
 }
-@|C_get_ExpectationInfluence
+@| C_get_ExpectationInfluence
 @}
 
 @d C_get_CovarianceInfluence
-@{
+@{@%
 double* C_get_CovarianceInfluence
 (
     @<R LECV Input@>
 ) {
     return(REAL(VECTOR_ELT(LECV, CovarianceInfluence_SLOT)));
 }
-@|C_get_CovarianceInfluence
+@| C_get_CovarianceInfluence
 @}
 
 @d C_get_VarianceInfluence
-@{
+@{@%
 double* C_get_VarianceInfluence
 (
     @<R LECV Input@>
 ) {
     return(REAL(VECTOR_ELT(LECV, VarianceInfluence_SLOT)));
 }
-@|C_get_VarianceInfluence
+@| C_get_VarianceInfluence
 @}
 
 @d C_get_TableBlock
-@{
+@{@%
 double* C_get_TableBlock
 (
     @<R LECV Input@>
@@ -6793,11 +6821,11 @@ double* C_get_TableBlock
         error("object does not contain table block slot");
     return(REAL(VECTOR_ELT(LECV, TableBlock_SLOT)));
 }
-@|C_get_TableBlock
+@| C_get_TableBlock
 @}
 
 @d C_get_Sumweights
-@{
+@{@%
 double* C_get_Sumweights
 (
     @<R LECV Input@>
@@ -6806,11 +6834,11 @@ double* C_get_Sumweights
         error("object does not contain sumweights slot");
     return(REAL(VECTOR_ELT(LECV, Sumweights_SLOT)));
 }
-@|C_get_Sumweights
+@| C_get_Sumweights
 @}
 
 @d C_get_Table
-@{
+@{@%
 double* C_get_Table
 (
     @<R LECV Input@>
@@ -6819,11 +6847,11 @@ double* C_get_Table
         error("Cannot extract table from object");
     return(REAL(VECTOR_ELT(LECV, Table_SLOT)));
 }
-@|C_get_Table
+@| C_get_Table
 @}
 
 @d C_get_dimTable
-@{
+@{@%
 int* C_get_dimTable
 (
     @<R LECV Input@>
@@ -6833,11 +6861,11 @@ int* C_get_dimTable
     return(INTEGER(getAttrib(VECTOR_ELT(LECV, Table_SLOT),
                              R_DimSymbol)));
 }
-@|C_get_dimTable
+@| C_get_dimTable
 @}
 
 @d C_get_B
-@{
+@{@%
 int C_get_B
 (
     @<R LECV Input@>
@@ -6846,11 +6874,11 @@ int C_get_B
         return(LENGTH(VECTOR_ELT(LECV, Sumweights_SLOT)));
     return(C_get_dimTable(LECV)[2]);
 }
-@|C_get_B
+@| C_get_B
 @}
 
 @d C_get_nresample
-@{
+@{@%
 R_xlen_t C_get_nresample
 (
     @<R LECV Input@>
@@ -6858,33 +6886,33 @@ R_xlen_t C_get_nresample
     int PQ = C_get_P(LECV) * C_get_Q(LECV);
     return(XLENGTH(VECTOR_ELT(LECV, PermutedLinearStatistic_SLOT)) / PQ);
 }
-@|C_get_nresample
+@| C_get_nresample
 @}
 
 @d C_get_PermutedLinearStatistic
-@{
+@{@%
 double* C_get_PermutedLinearStatistic
 (
     @<R LECV Input@>
 ) {
     return(REAL(VECTOR_ELT(LECV, PermutedLinearStatistic_SLOT)));
 }
-@|C_get_PermutedLinearStatistic
+@| C_get_PermutedLinearStatistic
 @}
 
 @d C_get_tol
-@{
+@{@%
 double C_get_tol
 (
     @<R LECV Input@>
 ) {
     return(REAL(VECTOR_ELT(LECV, tol_SLOT))[0]);
 }
-@|C_get_tol
+@| C_get_tol
 @}
 
 @d Memory Input Checks
-@{
+@{@%
 if (P <= 0)
     error("P is not positive");
 
@@ -6905,7 +6933,7 @@ if (tol <= DBL_MIN)
 @}
 
 @d Memory Names
-@{
+@{@%
 PROTECT(names = allocVector(STRSXP, Table_SLOT + 1));
 SET_STRING_ELT(names, LinearStatistic_SLOT, mkChar("LinearStatistic"));
 SET_STRING_ELT(names, Expectation_SLOT, mkChar("Expectation"));
@@ -6932,7 +6960,7 @@ SET_STRING_ELT(names, Table_SLOT, mkChar("Table"));
 @}
 
 @d R_init_LECV
-@{
+@{@%
 SEXP vo, d, names, tolerance, tmp;
 int PQ;
 
@@ -6988,8 +7016,8 @@ namesgets(ans, names);
 @}
 
 @d Initialise Zero
-@{
-/* set inital zeros */
+@{@%
+/* set initial zeros */
 for (int p = 0; p < PQ; p++) {
     C_get_LinearStatistic(ans)[p] = 0.0;
     C_get_Expectation(ans)[p] = 0.0;
@@ -7009,7 +7037,7 @@ for (int q = 0; q < Q * (Q + 1) / 2; q++)
 @}
 
 @d RC_init_LECV_1d
-@{
+@{@%
 SEXP RC_init_LECV_1d
 (
     @<C integer P Input@>,
@@ -7032,11 +7060,11 @@ SEXP RC_init_LECV_1d
     UNPROTECT(2);
     return(ans);
 }
-@|RC_init_LECV_1d
+@| RC_init_LECV_1d
 @}
 
 @d RC_init_LECV_2d
-@{
+@{@%
 SEXP RC_init_LECV_2d
 (
     @<C integer P Input@>,
@@ -7072,13 +7100,13 @@ SEXP RC_init_LECV_2d
     UNPROTECT(3);
     return(ans);
 }
-@|RC_init_LECV_2d
+@| RC_init_LECV_2d
 @}
 
 \chapter{Package Infrastructure}
 
-@o AAA.R -cp
-@{
+@o R/AAA.R -cp
+@{@%
 @<R Header@>
 .onUnload <-
 function(libpath)
@@ -7086,27 +7114,33 @@ function(libpath)
 @}
 
 @o DESCRIPTION -cp
-@{
+@{@%
+@<R Header@>
 Package: libcoin
 Title: Linear Test Statistics for Permutation Inference
-Date: 2023-09-26
-Version: 1.0-10
-Authors@@R: person("Torsten", "Hothorn", role = c("aut", "cre"),
-                  email = "Torsten.Hothorn@@R-project.org")
+Date: 2026-06-03
+Version: 1.0-13
+Authors@@R: c(person("Torsten", "Hothorn", role = c("aut", "cre"),
+                    email = "Torsten.Hothorn@@R-project.org",
+                    comment = c(ORCID = "0000-0001-8301-0471")),
+             person("Henric", "Winell", role = "aut",
+                    comment = c(ORCID = "0000-0001-7995-3047")))
 Description: Basic infrastructure for linear test statistics and permutation
   inference in the framework of Strasser and Weber (1999) <https://epub.wu.ac.at/102/>.
   This package must not be used by end-users. CRAN package 'coin' implements all
   user interfaces and is ready to be used by anyone.
 Depends: R (>= 3.4.0)
-Suggests: coin
+Suggests: coin, bibtex
 Imports: stats, mvtnorm
 LinkingTo: mvtnorm
 NeedsCompilation: yes
 License: GPL-2
+URL: https://codeberg.org/thothorn/coin/
 @}
 
 @o NAMESPACE -cp
-@{
+@{@%
+@<R Header@>
 useDynLib(libcoin, .registration = TRUE)
 
 importFrom("stats", complete.cases, vcov)
@@ -7119,14 +7153,16 @@ S3method(vcov, LinStatExpCov)
 
 Add flag \code{-g} to \code{PKG_CFLAGS} for \code{operf} profiling (this is
 not portable).
-@o Makevars -cc
-@{
+@o src/Makevars -cp
+@{@%
+@<R Header@>
 PKG_CFLAGS=$(C_VISIBILITY)
 PKG_LIBS = $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)
 @}
 
-@o libcoin-win.def -cc
-@{
+@o src/libcoin-win.def
+@{@%
+@<def Header@>
 LIBRARY libcoin.dll
 EXPORTS
   R_init_libcoin
@@ -7135,8 +7171,8 @@ EXPORTS
 Other packages can link against \pkg{libcoin}. A small example package
 is contained in \texttt{libcoin/inst/C_API_example}.
 
-@o libcoin-init.c -cc
-@{
+@o src/libcoin-init.c -cc
+@{@%
 @<C Header@>
 #include "libcoin.h"
 #include <R_ext/Rdynload.h>
@@ -7175,8 +7211,8 @@ static const R_CallMethodDef callMethods[] = {
 };
 @}
 
-@o libcoin-init.c -cc
-@{
+@o src/libcoin-init.c -cc
+@{@%
 void attribute_visible R_init_libcoin
 (
     DllInfo *dll
@@ -7213,8 +7249,8 @@ void attribute_visible R_init_libcoin
 @}
 
 @d R Header
-@{
-###    Copyright (C) 2017-2023 Torsten Hothorn
+@{@%
+###    Copyright (C) 2016-2026 Torsten Hothorn
 ###
 ###    This file is part of the 'libcoin' R add-on package.
 ###
@@ -7236,10 +7272,34 @@ void attribute_visible R_init_libcoin
 ###    Edit 'libcoin.w' and run 'nuweb -r libcoin.w'
 @}
 
+@d Rd Header
+@{@%
+%%%    Copyright (C) 2016-2026 Torsten Hothorn
+%%%
+%%%    This file is part of the 'libcoin' R add-on package.
+%%%
+%%%    'libcoin' is free software: you can redistribute it and/or modify
+%%%    it under the terms of the GNU General Public License as published by
+%%%    the Free Software Foundation, version 2.
+%%%
+%%%    'libcoin' is distributed in the hope that it will be useful,
+%%%    but WITHOUT ANY WARRANTY; without even the implied warranty of
+%%%    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+%%%    GNU General Public License for more details.
+%%%
+%%%    You should have received a copy of the GNU General Public License
+%%%    along with 'libcoin'.  If not, see <http://www.gnu.org/licenses/>.
+%%%
+%%%
+%%%    DO NOT EDIT THIS FILE
+%%%
+%%%    Edit 'libcoin.w' and run 'nuweb -r libcoin.w'
+@}
+
 @d C Header
-@{
+@{@%
 /*
-    Copyright (C) 2017-2023 Torsten Hothorn
+    Copyright (C) 2016-2026 Torsten Hothorn
 
     This file is part of the 'libcoin' R add-on package.
 
@@ -7262,6 +7322,433 @@ void attribute_visible R_init_libcoin
 */
 @}
 
+@d def Header
+@{@%
+;;;    Copyright (C) 2016-2026 Torsten Hothorn
+;;;
+;;;    This file is part of the 'libcoin' R add-on package.
+;;;
+;;;    'libcoin' is free software: you can redistribute it and/or modify
+;;;    it under the terms of the GNU General Public License as published by
+;;;    the Free Software Foundation, version 2.
+;;;
+;;;    'libcoin' is distributed in the hope that it will be useful,
+;;;    but WITHOUT ANY WARRANTY; without even the implied warranty of
+;;;    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;;;    GNU General Public License for more details.
+;;;
+;;;    You should have received a copy of the GNU General Public License
+;;;    along with 'libcoin'.  If not, see <http://www.gnu.org/licenses/>.
+;;;
+;;;
+;;;    DO NOT EDIT THIS FILE
+;;;
+;;;    Edit 'libcoin.w' and run 'nuweb -r libcoin.w'
+@}
+
+@d BibTeX Header
+@{@%
+@<Rd Header@>
+@}
+
+@o inst/NEWS.Rd
+@{@%
+@<Rd Header@>
+\newcommand{\C}{\ifelse{latex}{\out{\textsf{C}}}{C}}
+\newcommand{\nuweb}{\ifelse{latex}{\out{\textsf{nuweb}}}{nuweb}}
+
+\name{NEWS}
+\title{NEWS file for the \pkg{libcoin} package}
+@}
+
+@o inst/NEWS.Rd
+@{@%
+\section{Changes in Version 1.0-13 (2026-06-03)}{
+  \itemize{
+    \item \file{NEWS.Rd} is now generated by \file{libcoin.w}.
+    \item Remove the no longer needed \code{STRICT_R_HEADERS}.
+    \item Documentation updates.
+    \item Makefile improvements.
+  }
+}
+@}
+
+@o inst/NEWS.Rd
+@{@%
+\section{Changes in Version 1.0-12 (2026-03-16)}{
+  \itemize{
+    \item \code{PROTECT} calls to \code{getAttrib} as adviced by \code{rchk}.
+  }
+}
+@}
+
+@o inst/NEWS.Rd
+@{@%
+\section{Changes in Version 1.0-11 (2026-03-06)}{
+  \itemize{
+    \item Use \file{REFERENCES.bib}.
+  }
+}
+@}
+
+@o inst/NEWS.Rd
+@{@%
+\section{Changes in Version 1.0-10 (2023-09-26)}{
+  \itemize{
+    \item Add Henric Winell as author.
+    \item Enable \code{STRICT_R_HEADERS}.
+    \item The \nuweb source code is now included (see \file{../inst/nuweb/}).
+    \item Documentation updates.
+  }
+}
+@}
+
+@o inst/NEWS.Rd
+@{@%
+\section{Changes in Version 1.0-9 (2021-09-27)}{
+  \itemize{
+    \item \code{R_MPinv_sym} can now determine the full dimension of the packed
+          input \code{x} by setting \code{n} to \code{0L}.
+    \item Add \code{#define USE_FC_LEN_T} to header as requested by CRAN
+          2021-09-25.
+  }
+}
+@}
+
+@o inst/NEWS.Rd
+@{@%
+\section{Changes in Version 1.0-8 (2021-02-08)}{
+  \itemize{
+    \item Fix \LaTeX problem.
+  }
+}
+@}
+
+@o inst/NEWS.Rd
+@{@%
+\section{Changes in Version 1.0-7 (2021-01-15)}{
+  \itemize{
+    \item Correct spelling in error message.
+    \item Regression tests updated for \pkg{coin} 1.4-0.
+  }
+}
+@}
+
+@o inst/NEWS.Rd
+@{@%
+\section{Changes in Version 1.0-6 (2020-08-13)}{
+  \itemize{
+    \item Interface to \code{S_rcont2} changed in \pkg{stats}, thanks
+          to Martin Maechler for a fix.
+    \item New \C function \code{R_pack_sym} for transforming a symmetric matrix
+          to lower-packed storage mode.
+  }
+}
+@}
+
+@o inst/NEWS.Rd
+@{@%
+\section{Changes in Version 1.0-5 (2019-08-22)}{
+  \itemize{
+    \item New \C function \code{R_unpack_sym} for unpacking a symmetric matrix
+          stored in lower-packed storage mode.
+    \item New \C functions \code{R_quadform} and \code{R_MPinv_sym} providing
+          interfaces to the internal functions \code{C_quadform} and
+          \code{C_MPinv_sym}.
+    \item Function \code{libcoin_StandardisePermutedLinearStatistic} was renamed
+          to \code{libcoin_R_StandardisePermutedLinearStatistic}.
+    \item Documentation updates.
+  }
+}
+@}
+
+@o inst/NEWS.Rd
+@{@%
+\section{Changes in Version 1.0-4 (2019-02-28)}{
+  \itemize{
+    \item Bugfix in regression tests.
+  }
+}
+@}
+
+@o inst/NEWS.Rd
+@{@%
+\section{Changes in Version 1.0-3 (2019-02-18)}{
+  \itemize{
+    \item Parts of the covariance matrix were not set to zero initially.
+  }
+}
+@}
+
+@o inst/NEWS.Rd
+@{@%
+\section{Changes in Version 1.0-2 (2018-12-13)}{
+  \itemize{
+    \item Maximally selected statistics failed for large sample sizes because of
+          unnecessary memory allocation.  Report and fix by Joanidis
+          Kristoforos.
+    \item Some additional checks for integer overflow.
+  }
+}
+@}
+
+@o inst/NEWS.Rd
+@{@%
+\section{Changes in Version 1.0-1 (2017-12-13)}{
+  \itemize{
+    \item Make valgrind happy.
+  }
+}
+@}
+
+@o inst/NEWS.Rd
+@{@%
+\section{Changes in Version 1.0-0 (2017-12-12)}{
+  \itemize{
+    \item Make the package truly literate; there is one single \nuweb file
+          called \file{libcoin.w} which generates the complete package.
+    \item The package can now deal with long vectors.
+  }
+}
+@}
+
+@o inst/NEWS.Rd
+@{@%
+\section{Changes in Version 0.9-3 (2017-07-02)}{
+  \itemize{
+    \item Remove copy of \code{rcont2} from the \pkg{stats} package as it is
+          exported now.
+  }
+}
+@}
+
+@o inst/NEWS.Rd
+@{@%
+\section{Changes in Version 0.9-2 (2017-04-04)}{
+  \itemize{
+    \item Fix protect problem in \code{R_MaximumTest} reported by Tomas
+          Kalibera.
+  }
+}
+@}
+
+@o inst/NEWS.Rd
+@{@%
+\section{Changes in Version 0.9-1 (2017-02-06)}{
+  \itemize{
+    \item Calling \pkg{libcoin}'s \C routines (using \code{.Call()}) now
+          requires the entry points to be specified as \R objects, i.e., the use
+          of character strings is no longer allowed.
+    \item Stop when all observations are missing.
+    \item 2d case with missings in at least one variable used incorrect sample
+          sizes and thus produced wrong results.
+  }
+}
+@}
+
+@o inst/NEWS.Rd
+@{@%
+\section{Changes in Version 0.9-0 (2016-12-09)}{
+  \itemize{
+    \item \pkg{libcoin} published on CRAN.
+  }
+}
+@}
+
+@o inst/REFERENCES.bib
+@{@%
+@<BibTeX Header@>
+@}
+
+@o inst/REFERENCES.bib
+@{@%
+@@article{Hothorn+Hornik+vandeWiel+Zeileis:2006,
+  author  = {Torsten Hothorn and Kurt Hornik and Mark A van de Wiel and Achim
+             Zeileis},
+  title   = {A {L}ego System for Conditional Inference},
+  journal = {The American Statistician},
+  year    = {2006},
+  volume  = {60},
+  number  = {3},
+  pages   = {257--263},
+  doi     = {10.1198/000313006X118430},
+}
+@}
+
+@o inst/REFERENCES.bib
+@{@%
+@@article{Hothorn+Hornik+vandeWiel+Zeileis:2008,
+  author  = {Torsten Hothorn and Kurt Hornik and Mark A van de Wiel and Achim
+             Zeileis},
+  title   = {Implementing a Class of Permutation Tests: The coin Package},
+  journal = {Journal of Statistical Software},
+  year    = {2008},
+  volume  = {28},
+  number  = {8},
+  pages   = {1--23},
+  doi     = {10.18637/jss.v028.i08},
+}
+@}
+
+@o inst/REFERENCES.bib
+@{@%
+@@article{Strasser+Weber:1999,
+  author  = {Helmut Strasser and Christian Weber},
+  title   = {The Asymptotic Theory of Permutation Statistics},
+  journal = {Mathematical Methods of Statistics},
+  year    = {1999},
+  volume  = {8},
+  number  = {2},
+  pages   = {220--250},
+  note    = {Preprint available from \url{https://epub.wu.ac.at/102}}
+}
+@}
+
+@o inst/C_API_example/DESCRIPTION
+@{@%
+@<R Header@>
+Package: libcoinEx
+Title: A 'libcoin' C API Usage Example
+Version: 1.0-0
+Authors@@R: c(person("Torsten", "Hothorn", role = c("aut", "cre"),
+                    email = "Torsten.Hothorn@@R-project.org",
+                    comment = c(ORCID = "0000-0001-8301-0471")),
+             person("Henric", "Winell", role = "aut",
+                    comment = c(ORCID = "0000-0001-7995-3047")))
+Description: Example use of the 'libcoin' C API.
+Depends: R (>= 3.4.0)
+Imports: libcoin
+LinkingTo: libcoin
+NeedsCompilation: yes
+License: GPL-2
+@}
+
+@o inst/C_API_example/NAMESPACE
+@{@%
+@<R Header@>
+useDynLib(libcoinEx, .registration = TRUE)
+
+import("libcoin")
+export(ExpectationCovarianceStatistic)
+@}
+
+@o inst/C_API_example/man/ExpectationCovarianceStatistic.Rd
+@{@%
+@<Rd Header@>
+\name{ExpectationCovarianceStatistic}
+\alias{ExpectationCovarianceStatistic}
+\title{
+  \pkg{libcoin} C API Example
+}
+\description{
+  A working example of calling compiled code from the \pkg{libcoin} package.
+}
+\usage{
+ExpectationCovarianceStatistic(x, y)
+}
+\arguments{
+  \item{x}{A numeric matrix.}
+  \item{y}{A numeric matrix.}
+}
+\details{
+  This function calls the C function  \code{R_ExpectationCovarianceStatistic}, a
+  simple wrapper for the C function
+  \code{libcoin_R_ExpectationCovarianceStatistic} defined in the \pkg{libcoin}
+  package.
+
+  For more information on this approach, consult section 5.4.2 of the Writing R
+  Extensions manual.
+}
+\value{
+  A list.
+}
+\examples{
+n <- 100
+p <- 4
+q <- 2
+X <- matrix(runif(p * n), nc = p)
+Y <- matrix(runif(q * n), nc = q)
+ExpectationCovarianceStatistic(X, Y)
+}
+@}
+
+@o inst/C_API_example/R/ExpectationCovarianceStatistic.R
+@{@%
+@<R Header@>
+ExpectationCovarianceStatistic <- function(x, y) {
+    .Call(R_ExpectationCovarianceStatistic,
+          x, y, integer(0), integer(0), integer(0), 0L,
+          sqrt(.Machine$double.eps))
+}
+@}
+
+@o inst/C_API_example/src/Makevars -cp
+@{@%
+@<R Header@>
+PKG_CFLAGS=$(C_VISIBILITY)
+PKG_LIBS = $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)
+@}
+
+@o inst/C_API_example/src/libcoinEx-win.def
+@{@%
+@<def Header@>
+LIBRARY libcoinEx.dll
+EXPORTS
+  R_init_libcoinEx
+@}
+
+@o inst/C_API_example/src/libcoinEx.h
+@{@%
+@<C Header@>
+#include <Rinternals.h>
+
+extern SEXP R_ExpectationCovarianceStatistic
+(
+    const SEXP x,
+    const SEXP y,
+    const SEXP weights,
+    const SEXP subset,
+    const SEXP block,
+    const SEXP varonly,
+    const SEXP tol
+);
+@}
+
+@o inst/C_API_example/src/libcoinEx-init.c
+@{@%
+@<C Header@>
+#include "libcoinEx.h"
+#include <R_ext/Rdynload.h>
+#include <R_ext/Visibility.h>
+
+#define CALLDEF(name, n) {#name, (DL_FUNC) &name, n}
+
+static const R_CallMethodDef callMethods[] = {
+    CALLDEF(R_ExpectationCovarianceStatistic, 7),
+    {NULL, NULL, 0}
+};
+
+void attribute_visible R_init_libcoinEx(DllInfo *dll) {
+    R_registerRoutines(dll, NULL, callMethods, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
+    R_forceSymbols(dll, TRUE);
+}
+@}
+
+@o inst/C_API_example/src/R_ExpectationCovarianceStatistic.c
+@{@%
+@<C Header@>
+#include <R_ext/Rdynload.h>  /* required by R */
+#include <libcoinAPI.h>
+
+SEXP R_ExpectationCovarianceStatistic(SEXP x, SEXP y, SEXP weights, SEXP subset,
+                                      SEXP block, SEXP varonly, SEXP tol)
+{
+    return(libcoin_R_ExpectationCovarianceStatistic(x, y, weights, subset,
+                                                    block, varonly, tol));
+}
+@}
+
 \chapter*{Index}
 
 \section*{Files}
@@ -7277,6 +7764,19 @@ void attribute_visible R_init_libcoin
 @u
 
 \bibliographystyle{plainnat}
-\bibliography{libcoin}
+
+<<bib, echo = FALSE>>=
+thisdir <- getwd()
+bibfile <- system.file("REFERENCES.bib", package = "libcoin")
+### bibfile may contain spaces LaTeX is unable to deal with on MacOS it seems
+if (file.copy(bibfile, to = thisdir, overwrite = TRUE)) {
+    bibfile <- "REFERENCES.bib"
+} else {
+    ### hope for the best
+    bibfile <- file.path("..", "inst", "REFERENCES.bib")
+}
+@@
+\bibliography{\Sexpr{bibfile}}
+
 
 \end{document}

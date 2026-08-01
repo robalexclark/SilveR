@@ -12,7 +12,7 @@
 <div style="text-align: center;">
 <a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]"></a>
 <a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]"></a>
-</div><h2>Documentation for package &lsquo;forecast&rsquo; version 8.24.0</h2>
+</div><h2>Documentation for package &lsquo;forecast&rsquo; version 9.0.2</h2>
 
 <ul><li><a href="../DESCRIPTION" type="text/plain; charset=utf-8">DESCRIPTION file</a>.</li>
 <li><a href="../doc/index.html">User guides, package vignettes and other documentation.</a></li>
@@ -23,7 +23,6 @@
 
 
 <p style="text-align: center;">
-<a href="# "> </a>
 <a href="#A">A</a>
 <a href="#B">B</a>
 <a href="#C">C</a>
@@ -44,15 +43,23 @@
 <a href="#misc">misc</a>
 </p>
 
-<table style="width: 100%;">
-<tr><td style="width: 25%;"><a href="forecast-package.html">forecast-package</a></td>
-<td>forecast: Forecasting Functions for Time Series and Linear Models</td></tr>
-</table>
 
 <h2><a id="A">-- A --</a></h2>
 
 <table style="width: 100%;">
-<tr><td style="width: 25%;"><a href="accuracy.default.html">accuracy.default</a></td>
+<tr><td style="width: 25%;"><a href="accuracy.forecast.html">accuracy.Arima</a></td>
+<td>Accuracy measures for a forecast model</td></tr>
+<tr><td style="width: 25%;"><a href="accuracy.forecast.html">accuracy.fc_model</a></td>
+<td>Accuracy measures for a forecast model</td></tr>
+<tr><td style="width: 25%;"><a href="accuracy.forecast.html">accuracy.forecast</a></td>
+<td>Accuracy measures for a forecast model</td></tr>
+<tr><td style="width: 25%;"><a href="accuracy.forecast.html">accuracy.lm</a></td>
+<td>Accuracy measures for a forecast model</td></tr>
+<tr><td style="width: 25%;"><a href="accuracy.forecast.html">accuracy.mforecast</a></td>
+<td>Accuracy measures for a forecast model</td></tr>
+<tr><td style="width: 25%;"><a href="accuracy.forecast.html">accuracy.numeric</a></td>
+<td>Accuracy measures for a forecast model</td></tr>
+<tr><td style="width: 25%;"><a href="accuracy.forecast.html">accuracy.ts</a></td>
 <td>Accuracy measures for a forecast model</td></tr>
 <tr><td style="width: 25%;"><a href="Acf.html">Acf</a></td>
 <td>(Partial) Autocorrelation and Cross-Correlation Function Estimation</td></tr>
@@ -80,8 +87,6 @@
 <td>Forecasting time series</td></tr>
 <tr><td style="width: 25%;"><a href="auto.arima.html">auto.arima</a></td>
 <td>Fit best ARIMA model to univariate time series</td></tr>
-<tr><td style="width: 25%;"><a href="autolayer.html">autolayer</a></td>
-<td>Create a ggplot layer appropriate to a particular data type</td></tr>
 <tr><td style="width: 25%;"><a href="plot.forecast.html">autolayer.forecast</a></td>
 <td>Forecast plot</td></tr>
 <tr><td style="width: 25%;"><a href="plot.mforecast.html">autolayer.mforecast</a></td>
@@ -158,8 +163,10 @@
 <td>Check that residuals from a time series model look like white noise</td></tr>
 <tr><td style="width: 25%;"><a href="ets.html">coef.ets</a></td>
 <td>Exponential smoothing state space model</td></tr>
-<tr><td style="width: 25%;"><a href="croston.html">croston</a></td>
+<tr><td style="width: 25%;"><a href="forecast.croston_model.html">croston</a></td>
 <td>Forecasts for intermittent demand using Croston's method</td></tr>
+<tr><td style="width: 25%;"><a href="croston_model.html">croston_model</a></td>
+<td>Croston forecast model</td></tr>
 <tr><td style="width: 25%;"><a href="CV.html">CV</a></td>
 <td>Cross-validation statistic</td></tr>
 <tr><td style="width: 25%;"><a href="CVar.html">CVar</a></td>
@@ -215,6 +222,8 @@
 <td>Forecasting using a bagged model</td></tr>
 <tr><td style="width: 25%;"><a href="forecast.bats.html">forecast.bats</a></td>
 <td>Forecasting using BATS and TBATS models</td></tr>
+<tr><td style="width: 25%;"><a href="forecast.croston_model.html">forecast.croston_model</a></td>
+<td>Forecasts for intermittent demand using Croston's method</td></tr>
 <tr><td style="width: 25%;"><a href="forecast.ts.html">forecast.default</a></td>
 <td>Forecasting time series</td></tr>
 <tr><td style="width: 25%;"><a href="forecast.ets.html">forecast.ets</a></td>
@@ -227,6 +236,8 @@
 <td>Forecasting using Holt-Winters objects</td></tr>
 <tr><td style="width: 25%;"><a href="forecast.lm.html">forecast.lm</a></td>
 <td>Forecast a linear model with possible time series components</td></tr>
+<tr><td style="width: 25%;"><a href="forecast.mean_model.html">forecast.mean_model</a></td>
+<td>Mean Forecast</td></tr>
 <tr><td style="width: 25%;"><a href="forecast.mlm.html">forecast.mlm</a></td>
 <td>Forecast a multiple linear model with possible time series components</td></tr>
 <tr><td style="width: 25%;"><a href="forecast.modelAR.html">forecast.modelAR</a></td>
@@ -235,6 +246,10 @@
 <td>Forecasting time series</td></tr>
 <tr><td style="width: 25%;"><a href="forecast.nnetar.html">forecast.nnetar</a></td>
 <td>Forecasting using neural network models</td></tr>
+<tr><td style="width: 25%;"><a href="forecast.rw_model.html">forecast.rw_model</a></td>
+<td>Naive and Random Walk Forecasts</td></tr>
+<tr><td style="width: 25%;"><a href="forecast.spline_model.html">forecast.spline_model</a></td>
+<td>Returns local linear forecasts and prediction intervals using cubic smoothing splines estimated with 'spline_model()'.</td></tr>
 <tr><td style="width: 25%;"><a href="forecast.stl.html">forecast.stl</a></td>
 <td>Forecasting using stl objects</td></tr>
 <tr><td style="width: 25%;"><a href="forecast.stl.html">forecast.stlm</a></td>
@@ -243,6 +258,8 @@
 <td>Forecasting using Structural Time Series models</td></tr>
 <tr><td style="width: 25%;"><a href="forecast.bats.html">forecast.tbats</a></td>
 <td>Forecasting using BATS and TBATS models</td></tr>
+<tr><td style="width: 25%;"><a href="forecast.theta_model.html">forecast.theta_model</a></td>
+<td>Theta method forecasts.</td></tr>
 <tr><td style="width: 25%;"><a href="forecast.ts.html">forecast.ts</a></td>
 <td>Forecasting time series</td></tr>
 <tr><td style="width: 25%;"><a href="autoplot.ts.html">fortify.ts</a></td>
@@ -357,8 +374,10 @@
 <table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="ma.html">ma</a></td>
 <td>Moving-average smoothing</td></tr>
-<tr><td style="width: 25%;"><a href="meanf.html">meanf</a></td>
+<tr><td style="width: 25%;"><a href="forecast.mean_model.html">meanf</a></td>
 <td>Mean Forecast</td></tr>
+<tr><td style="width: 25%;"><a href="mean_model.html">mean_model</a></td>
+<td>Mean Forecast Model</td></tr>
 <tr><td style="width: 25%;"><a href="forecast.mts.html">mforecast</a></td>
 <td>Forecasting time series</td></tr>
 <tr><td style="width: 25%;"><a href="modelAR.html">modelAR</a></td>
@@ -378,7 +397,7 @@
 <table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="na.interp.html">na.interp</a></td>
 <td>Interpolate missing values in a time series</td></tr>
-<tr><td style="width: 25%;"><a href="naive.html">naive</a></td>
+<tr><td style="width: 25%;"><a href="forecast.rw_model.html">naive</a></td>
 <td>Naive and Random Walk Forecasts</td></tr>
 <tr><td style="width: 25%;"><a href="ndiffs.html">ndiffs</a></td>
 <td>Number of differences required for a stationary series</td></tr>
@@ -434,8 +453,6 @@
 <td>Time Series Forecasts with a user-defined model</td></tr>
 <tr><td style="width: 25%;"><a href="msts.html">print.msts</a></td>
 <td>Multi-Seasonal Time Series</td></tr>
-<tr><td style="width: 25%;"><a href="naive.html">print.naive</a></td>
-<td>Naive and Random Walk Forecasts</td></tr>
 <tr><td style="width: 25%;"><a href="nnetar.html">print.nnetar</a></td>
 <td>Neural Network Time Series Forecasts</td></tr>
 <tr><td style="width: 25%;"><a href="nnetar.html">print.nnetarmodels</a></td>
@@ -473,8 +490,10 @@
 <td>Residuals for various time series models</td></tr>
 <tr><td style="width: 25%;"><a href="residuals.forecast.html">residuals.tslm</a></td>
 <td>Residuals for various time series models</td></tr>
-<tr><td style="width: 25%;"><a href="naive.html">rwf</a></td>
+<tr><td style="width: 25%;"><a href="forecast.rw_model.html">rwf</a></td>
 <td>Naive and Random Walk Forecasts</td></tr>
+<tr><td style="width: 25%;"><a href="rw_model.html">rw_model</a></td>
+<td>Random walk model</td></tr>
 </table>
 
 <h2><a id="S">-- S --</a></h2>
@@ -510,26 +529,30 @@
 <td>Simulation from a time series model</td></tr>
 <tr><td style="width: 25%;"><a href="simulate.ets.html">simulate.fracdiff</a></td>
 <td>Simulation from a time series model</td></tr>
-<tr><td style="width: 25%;"><a href="simulate.ets.html">simulate.lagwalk</a></td>
-<td>Simulation from a time series model</td></tr>
 <tr><td style="width: 25%;"><a href="simulate.ets.html">simulate.modelAR</a></td>
 <td>Simulation from a time series model</td></tr>
 <tr><td style="width: 25%;"><a href="simulate.ets.html">simulate.nnetar</a></td>
+<td>Simulation from a time series model</td></tr>
+<tr><td style="width: 25%;"><a href="simulate.ets.html">simulate.rw_model</a></td>
+<td>Simulation from a time series model</td></tr>
+<tr><td style="width: 25%;"><a href="simulate.ets.html">simulate.spline_model</a></td>
 <td>Simulation from a time series model</td></tr>
 <tr><td style="width: 25%;"><a href="simulate.ets.html">simulate.tbats</a></td>
 <td>Simulation from a time series model</td></tr>
 <tr><td style="width: 25%;"><a href="sindexf.html">sindexf</a></td>
 <td>Forecast seasonal index</td></tr>
-<tr><td style="width: 25%;"><a href="naive.html">snaive</a></td>
+<tr><td style="width: 25%;"><a href="forecast.rw_model.html">snaive</a></td>
 <td>Naive and Random Walk Forecasts</td></tr>
-<tr><td style="width: 25%;"><a href="splinef.html">splinef</a></td>
-<td>Cubic Spline Forecast</td></tr>
+<tr><td style="width: 25%;"><a href="forecast.spline_model.html">splinef</a></td>
+<td>Returns local linear forecasts and prediction intervals using cubic smoothing splines estimated with 'spline_model()'.</td></tr>
+<tr><td style="width: 25%;"><a href="spline_model.html">spline_model</a></td>
+<td>Cubic spline stochastic model</td></tr>
 <tr><td style="width: 25%;"><a href="geom_forecast.html">StatForecast</a></td>
 <td>Forecast plot</td></tr>
 <tr><td style="width: 25%;"><a href="forecast.stl.html">stlf</a></td>
 <td>Forecasting using stl objects</td></tr>
-<tr><td style="width: 25%;"><a href="forecast.stl.html">stlm</a></td>
-<td>Forecasting using stl objects</td></tr>
+<tr><td style="width: 25%;"><a href="stlm.html">stlm</a></td>
+<td>Forecasting model using STL with a generative time series model</td></tr>
 <tr><td style="width: 25%;"><a href="subset.ts.html">subset.msts</a></td>
 <td>Subsetting a time series</td></tr>
 <tr><td style="width: 25%;"><a href="subset.ts.html">subset.ts</a></td>
@@ -557,8 +580,10 @@
 <td>TBATS model (Exponential smoothing state space model with Box-Cox transformation, ARMA errors, Trend and Seasonal components)</td></tr>
 <tr><td style="width: 25%;"><a href="tbats.components.html">tbats.components</a></td>
 <td>Extract components of a TBATS model</td></tr>
-<tr><td style="width: 25%;"><a href="thetaf.html">thetaf</a></td>
-<td>Theta method forecast</td></tr>
+<tr><td style="width: 25%;"><a href="forecast.theta_model.html">thetaf</a></td>
+<td>Theta method forecasts.</td></tr>
+<tr><td style="width: 25%;"><a href="theta_model.html">theta_model</a></td>
+<td>Theta model</td></tr>
 <tr><td style="width: 25%;"><a href="seasonal.html">trendcycle</a></td>
 <td>Extract components from a time series decomposition</td></tr>
 <tr><td style="width: 25%;"><a href="tsclean.html">tsclean</a></td>

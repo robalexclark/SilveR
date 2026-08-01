@@ -12,7 +12,8 @@ Nelder_Mead             Nelder-Mead Optimization of Parameters,
                         Possibly (Box) Constrained
 Pastes                  Paste strength by batch and cask
 Penicillin              Variation in penicillin testing
-VarCorr                 Extract Variance and Correlation Components
+VarCorr                 Extract Variance and Correlation Components of
+                        Covariance
 VerbAgg                 Verbal Aggression item responses
 allFit                  Refit a fitted model with all available
                         optimizers to check convergence
@@ -20,8 +21,6 @@ bootMer                 Model-based (Semi-)Parametric Bootstrap for
                         Mixed Models
 cake                    Breakage Angle of Chocolate Cakes
 cbpp                    Contagious bovine pleuropneumonia
-cbpp2                   Contagious bovine pleuropneumonia (extended
-                        version)
 checkConv               Extended Convergence Checking
 confint.merMod          Compute Confidence Intervals for Parameters of
                         a [ng]lmer Fit
@@ -33,6 +32,7 @@ culcitalvolume          Coral-eating seastar Culcita novaeguineae data
 devcomp                 Extract the deviance component list
 devfun2                 Deviance Function in Terms of Standard
                         Deviations/Correlations
+deviance                Deviance of Fitted Mixed-Effect Models
 drop1.merMod            Drop all possible single fixed-effect terms
                         from a mixed effect model
 dummy                   Dummy variables (experimental)
@@ -40,8 +40,11 @@ factorize               Attempt to convert grouping variables to
                         factors
 fixef                   Extract fixed-effects estimates
 fortify                 add information to data based on a fitted model
+getDoublevertDefault    Retrieve default double-vertical-bar-expansion
+                        method
 getME                   Extract or Get Generalized Components from a
                         Fitted Mixed Effects Model
+getReCovs               Extract Fitted Covariance Structures
 glmFamily               Generator object for the 'glmFamily' class
 glmFamily-class         Class '"glmFamily"' - a reference class for
                         'family'
@@ -55,6 +58,8 @@ grouseticks             Data on red grouse ticks from Elston et al.
                         2001
 hatvalues.merMod        Diagonal elements of the hat matrix
 influence.merMod        Influence Diagnostics for Mixed-Effects Models
+isNewMerMod             Test if a 'merMod' Object Has Current
+                        Representation
 isREML                  Check characteristics of models
 isSingular              Test Fitted Model for (Near) Singularity
 lmList                  Fit List of lm or glm Objects with a Common
@@ -78,8 +83,8 @@ mkNewReTrms             Make new random effect terms for prediction
 mkParsTemplate          Make templates suitable for guiding mixed model
                         simulations
 mkRespMod               Create an lmerResp, glmResp or nlsResp instance
-mkVarCorr               Make Variance and Correlation Matrices from
-                        'theta'
+mkVarCorr               Make Variance and Correlation Components of
+                        Covariance
 modular                 Modular Functions for Mixed Model Fits
 namedList               Self-naming list function
 ngrps                   Number of Levels of a Factor or a "merMod"

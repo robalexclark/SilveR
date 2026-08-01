@@ -1,7 +1,7 @@
 Package: S7
 Title: An Object Oriented System Meant to Become a Successor to S3 and
         S4
-Version: 0.2.1
+Version: 0.2.2
 Authors@R: c(
     person("Object-Oriented Programming Working Group", role = "cph"),
     person("Davis", "Vaughan", role = "aut"),
@@ -40,7 +40,7 @@ Config/testthat/start-first: external-generic
 Encoding: UTF-8
 RoxygenNote: 7.3.3
 NeedsCompilation: yes
-Packaged: 2025-11-14 13:45:25 UTC; hadleywickham
+Packaged: 2026-04-20 21:37:20 UTC; hadleywickham
 Author: Object-Oriented Programming Working Group [cph],
   Davis Vaughan [aut],
   Jim Hester [aut] (ORCID: <https://orcid.org/0000-0002-2739-7082>),
@@ -53,6 +53,6 @@ Author: Object-Oriented Programming Working Group [cph],
     <https://orcid.org/0000-0003-4757-117X>)
 Maintainer: Hadley Wickham <hadley@posit.co>
 Repository: CRAN
-Date/Publication: 2025-11-14 19:50:02 UTC
-Built: R 4.5.2; x86_64-w64-mingw32; 2025-12-03 03:14:41 UTC; windows
+Date/Publication: 2026-04-22 11:00:10 UTC
+Built: R 4.5.3; x86_64-w64-mingw32; 2026-07-28 13:37:16 UTC; windows
 Archs: x64

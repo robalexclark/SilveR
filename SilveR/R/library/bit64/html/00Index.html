@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head><title>R: A S3 Class for Vectors of 64bit Integers</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-<link rel="stylesheet" type="text/css" href="R.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<link rel="stylesheet" type="text/css" href="R.css">
 </head><body><div class="container">
 <h1> A S3 Class for Vectors of 64bit Integers
-<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]" />
+<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]">
 </h1>
-<hr/>
+<hr>
 <div style="text-align: center;">
-<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
-<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
-</div><h2>Documentation for package &lsquo;bit64&rsquo; version 4.6.0-1</h2>
+<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]"></a>
+<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]"></a>
+</div><h2>Documentation for package &lsquo;bit64&rsquo; version 4.8.2</h2>
 
-<ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
-<li><a href="../doc/index.html">User guides, package vignettes and other documentation.</a></li>
-<li><a href="../NEWS">Package NEWS</a>.</li>
+<ul><li><a href="../DESCRIPTION" type="text/plain; charset=utf-8">DESCRIPTION file</a>.</li>
+<li><a href="../NEWS.md">Package NEWS</a>.</li>
 </ul>
 
 <h2>Help Pages</h2>
@@ -44,7 +43,6 @@
 <a href="#S">S</a>
 <a href="#T">T</a>
 <a href="#U">U</a>
-<a href="#X">X</a>
 <a href="#misc">misc</a>
 </p>
 
@@ -62,15 +60,25 @@
 <td>Summary functions for integer64 vectors</td></tr>
 <tr><td style="width: 25%;"><a href="matrix64.html">aperm.integer64</a></td>
 <td>Working with integer64 arrays and matrices</td></tr>
+<tr><td style="width: 25%;"><a href="matrix64.html">array</a></td>
+<td>Working with integer64 arrays and matrices</td></tr>
+<tr><td style="width: 25%;"><a href="matrix64.html">array.integer64</a></td>
+<td>Working with integer64 arrays and matrices</td></tr>
 <tr><td style="width: 25%;"><a href="as.character.integer64.html">as.bitstring</a></td>
 <td>Coerce from integer64</td></tr>
 <tr><td style="width: 25%;"><a href="as.character.integer64.html">as.bitstring.integer64</a></td>
 <td>Coerce from integer64</td></tr>
 <tr><td style="width: 25%;"><a href="as.character.integer64.html">as.character.integer64</a></td>
 <td>Coerce from integer64</td></tr>
+<tr><td style="width: 25%;"><a href="as.character.integer64.html">as.complex.integer64</a></td>
+<td>Coerce from integer64</td></tr>
 <tr><td style="width: 25%;"><a href="as.data.frame.integer64.html">as.data.frame.integer64</a></td>
 <td>integer64: Coercing to data.frame column</td></tr>
+<tr><td style="width: 25%;"><a href="as.character.integer64.html">as.Date.integer64</a></td>
+<td>Coerce from integer64</td></tr>
 <tr><td style="width: 25%;"><a href="as.character.integer64.html">as.double.integer64</a></td>
+<td>Coerce from integer64</td></tr>
+<tr><td style="width: 25%;"><a href="as.character.integer64.html">as.factor</a></td>
 <td>Coerce from integer64</td></tr>
 <tr><td style="width: 25%;"><a href="as.character.integer64.html">as.integer.integer64</a></td>
 <td>Coerce from integer64</td></tr>
@@ -79,6 +87,12 @@
 <tr><td style="width: 25%;"><a href="as.integer64.character.html">as.integer64.bitstring</a></td>
 <td>Coerce to integer64</td></tr>
 <tr><td style="width: 25%;"><a href="as.integer64.character.html">as.integer64.character</a></td>
+<td>Coerce to integer64</td></tr>
+<tr><td style="width: 25%;"><a href="as.integer64.character.html">as.integer64.complex</a></td>
+<td>Coerce to integer64</td></tr>
+<tr><td style="width: 25%;"><a href="as.integer64.character.html">as.integer64.Date</a></td>
+<td>Coerce to integer64</td></tr>
+<tr><td style="width: 25%;"><a href="as.integer64.character.html">as.integer64.difftime</a></td>
 <td>Coerce to integer64</td></tr>
 <tr><td style="width: 25%;"><a href="as.integer64.character.html">as.integer64.double</a></td>
 <td>Coerce to integer64</td></tr>
@@ -92,9 +106,25 @@
 <td>Coerce to integer64</td></tr>
 <tr><td style="width: 25%;"><a href="as.integer64.character.html">as.integer64.NULL</a></td>
 <td>Coerce to integer64</td></tr>
+<tr><td style="width: 25%;"><a href="as.integer64.character.html">as.integer64.POSIXct</a></td>
+<td>Coerce to integer64</td></tr>
+<tr><td style="width: 25%;"><a href="as.integer64.character.html">as.integer64.POSIXlt</a></td>
+<td>Coerce to integer64</td></tr>
+<tr><td style="width: 25%;"><a href="as.integer64.character.html">as.integer64.raw</a></td>
+<td>Coerce to integer64</td></tr>
 <tr><td style="width: 25%;"><a href="as.character.integer64.html">as.list.integer64</a></td>
 <td>Coerce from integer64</td></tr>
 <tr><td style="width: 25%;"><a href="as.character.integer64.html">as.logical.integer64</a></td>
+<td>Coerce from integer64</td></tr>
+<tr><td style="width: 25%;"><a href="as.character.integer64.html">as.numeric.integer64</a></td>
+<td>Coerce from integer64</td></tr>
+<tr><td style="width: 25%;"><a href="as.character.integer64.html">as.ordered</a></td>
+<td>Coerce from integer64</td></tr>
+<tr><td style="width: 25%;"><a href="as.character.integer64.html">as.POSIXct.integer64</a></td>
+<td>Coerce from integer64</td></tr>
+<tr><td style="width: 25%;"><a href="as.character.integer64.html">as.POSIXlt.integer64</a></td>
+<td>Coerce from integer64</td></tr>
+<tr><td style="width: 25%;"><a href="as.character.integer64.html">as.raw.integer64</a></td>
 <td>Coerce from integer64</td></tr>
 </table>
 
@@ -105,7 +135,7 @@
 <td>Function for measuring algorithmic performance of high-level and low-level integer64 functions</td></tr>
 <tr><td style="width: 25%;"><a href="benchmark64.data.html">benchmark64.data</a></td>
 <td>Results of performance measurement on a Core i7 Lenovo T410 8 GB RAM under Windows 7 64bit</td></tr>
-<tr><td style="width: 25%;"><a href="xor.integer64.html">binattr</a></td>
+<tr><td style="width: 25%;"><a href="ops64.html">binattr</a></td>
 <td>Binary operators for integer64 vectors</td></tr>
 <tr><td style="width: 25%;"><a href="bit64S3.html">bit64S3</a></td>
 <td>Turning base R functions into S3 generics for bit64</td></tr>
@@ -157,6 +187,8 @@
 <h2><a id="F">-- F --</a></h2>
 
 <table style="width: 100%;">
+<tr><td style="width: 25%;"><a href="factor.html">factor</a></td>
+<td>Factors</td></tr>
 <tr><td style="width: 25%;"><a href="format.integer64.html">floor.integer64</a></td>
 <td>Unary operators and functions for integer64 vectors</td></tr>
 <tr><td style="width: 25%;"><a href="format.integer64.html">format.integer64</a></td>
@@ -234,12 +266,16 @@
 <table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="identical.integer64.html">identical.integer64</a></td>
 <td>Identity function for class 'integer64'</td></tr>
+<tr><td style="width: 25%;"><a href="sets.html">intersect</a></td>
+<td>Set Operations</td></tr>
 <tr><td style="width: 25%;"><a href="bit64S3.html">is.double</a></td>
 <td>Turning base R functions into S3 generics for bit64</td></tr>
 <tr><td style="width: 25%;"><a href="bit64S3.html">is.double.default</a></td>
 <td>Turning base R functions into S3 generics for bit64</td></tr>
 <tr><td style="width: 25%;"><a href="bit64S3.html">is.double.integer64</a></td>
 <td>Turning base R functions into S3 generics for bit64</td></tr>
+<tr><td style="width: 25%;"><a href="sets.html">is.element</a></td>
+<td>Set Operations</td></tr>
 <tr><td style="width: 25%;"><a href="format.integer64.html">is.finite.integer64</a></td>
 <td>Unary operators and functions for integer64 vectors</td></tr>
 <tr><td style="width: 25%;"><a href="format.integer64.html">is.infinite.integer64</a></td>
@@ -290,6 +326,10 @@
 <td>Turning base R functions into S3 generics for bit64</td></tr>
 <tr><td style="width: 25%;"><a href="match.integer64.html">match.integer64</a></td>
 <td>64-bit integer matching</td></tr>
+<tr><td style="width: 25%;"><a href="matrix64.html">matrix</a></td>
+<td>Working with integer64 arrays and matrices</td></tr>
+<tr><td style="width: 25%;"><a href="matrix64.html">matrix.integer64</a></td>
+<td>Working with integer64 arrays and matrices</td></tr>
 <tr><td style="width: 25%;"><a href="matrix64.html">matrix64</a></td>
 <td>Working with integer64 arrays and matrices</td></tr>
 <tr><td style="width: 25%;"><a href="sum.integer64.html">max.integer64</a></td>
@@ -330,6 +370,8 @@
 <h2><a id="O">-- O --</a></h2>
 
 <table style="width: 100%;">
+<tr><td style="width: 25%;"><a href="ops64.html">ops64</a></td>
+<td>Binary operators for integer64 vectors</td></tr>
 <tr><td style="width: 25%;"><a href="benchmark64.html">optimizer64</a></td>
 <td>Function for measuring algorithmic performance of high-level and low-level integer64 functions</td></tr>
 <tr><td style="width: 25%;"><a href="optimizer64.data.html">optimizer64.data</a></td>
@@ -346,6 +388,8 @@
 <td>Searching and other uses of sorting for 64bit integers</td></tr>
 <tr><td style="width: 25%;"><a href="sortnut.html">orderdup.integer64</a></td>
 <td>Searching and other uses of sorting for 64bit integers</td></tr>
+<tr><td style="width: 25%;"><a href="factor.html">ordered</a></td>
+<td>Factors</td></tr>
 <tr><td style="width: 25%;"><a href="sortnut.html">orderfin</a></td>
 <td>Searching and other uses of sorting for 64bit integers</td></tr>
 <tr><td style="width: 25%;"><a href="sortnut.html">orderfin.integer64</a></td>
@@ -395,8 +439,6 @@
 <td>(P)ercent (Rank)s</td></tr>
 <tr><td style="width: 25%;"><a href="prank.html">prank.integer64</a></td>
 <td>(P)ercent (Rank)s</td></tr>
-<tr><td style="width: 25%;"><a href="as.character.integer64.html">print.bitstring</a></td>
-<td>Coerce from integer64</td></tr>
 <tr><td style="width: 25%;"><a href="cache.html">print.cache</a></td>
 <td>Atomic Caching</td></tr>
 <tr><td style="width: 25%;"><a href="sum.integer64.html">prod.integer64</a></td>
@@ -467,9 +509,13 @@
 <tr><td style="width: 25%;"><a href="format.integer64.html">scale.integer64</a></td>
 <td>Unary operators and functions for integer64 vectors</td></tr>
 <tr><td style="width: 25%;"><a href="seq.integer64.html">seq.integer64</a></td>
-<td>integer64: Sequence Generation</td></tr>
+<td>Generating sequence of integer64 values</td></tr>
 <tr><td style="width: 25%;"><a href="cache.html">setcache</a></td>
 <td>Atomic Caching</td></tr>
+<tr><td style="width: 25%;"><a href="sets.html">setdiff</a></td>
+<td>Set Operations</td></tr>
+<tr><td style="width: 25%;"><a href="sets.html">setequal</a></td>
+<td>Set Operations</td></tr>
 <tr><td style="width: 25%;"><a href="ramsort.integer64.html">shellorder.integer64</a></td>
 <td>Low-level intger64 methods for in-RAM sorting and ordering</td></tr>
 <tr><td style="width: 25%;"><a href="ramsort.integer64.html">shellsort.integer64</a></td>
@@ -549,7 +595,9 @@
 <h2><a id="T">-- T --</a></h2>
 
 <table style="width: 100%;">
-<tr><td style="width: 25%;"><a href="table.integer64.html">table.integer64</a></td>
+<tr><td style="width: 25%;"><a href="table.html">table</a></td>
+<td>Cross Tabulation and Table Creation for integer64</td></tr>
+<tr><td style="width: 25%;"><a href="table.html">table.integer64</a></td>
 <td>Cross Tabulation and Table Creation for integer64</td></tr>
 <tr><td style="width: 25%;"><a href="tiepos.html">tiepos</a></td>
 <td>Extract Positions of Tied Elements</td></tr>
@@ -562,6 +610,8 @@
 <h2><a id="U">-- U --</a></h2>
 
 <table style="width: 100%;">
+<tr><td style="width: 25%;"><a href="sets.html">union</a></td>
+<td>Set Operations</td></tr>
 <tr><td style="width: 25%;"><a href="unipos.html">unipos</a></td>
 <td>Extract Positions of Unique Elements</td></tr>
 <tr><td style="width: 25%;"><a href="unipos.html">unipos.integer64</a></td>
@@ -570,23 +620,16 @@
 <td>Extract Unique Elements from integer64</td></tr>
 </table>
 
-<h2><a id="X">-- X --</a></h2>
-
-<table style="width: 100%;">
-<tr><td style="width: 25%;"><a href="xor.integer64.html">xor.integer64</a></td>
-<td>Binary operators for integer64 vectors</td></tr>
-</table>
-
 <h2><a id="misc">-- misc --</a></h2>
 
 <table style="width: 100%;">
-<tr><td style="width: 25%;"><a href="format.integer64.html">!.integer64</a></td>
-<td>Unary operators and functions for integer64 vectors</td></tr>
-<tr><td style="width: 25%;"><a href="xor.integer64.html">!=.integer64</a></td>
+<tr><td style="width: 25%;"><a href="ops64.html">!.integer64</a></td>
 <td>Binary operators for integer64 vectors</td></tr>
-<tr><td style="width: 25%;"><a href="xor.integer64.html">%%.integer64</a></td>
+<tr><td style="width: 25%;"><a href="ops64.html">!=.integer64</a></td>
 <td>Binary operators for integer64 vectors</td></tr>
-<tr><td style="width: 25%;"><a href="xor.integer64.html">%/%.integer64</a></td>
+<tr><td style="width: 25%;"><a href="ops64.html">%%.integer64</a></td>
+<td>Binary operators for integer64 vectors</td></tr>
+<tr><td style="width: 25%;"><a href="ops64.html">%/%.integer64</a></td>
 <td>Binary operators for integer64 vectors</td></tr>
 <tr><td style="width: 25%;"><a href="bit64S3.html">%in%</a></td>
 <td>Turning base R functions into S3 generics for bit64</td></tr>
@@ -594,15 +637,15 @@
 <td>Turning base R functions into S3 generics for bit64</td></tr>
 <tr><td style="width: 25%;"><a href="match.integer64.html">%in%.integer64</a></td>
 <td>64-bit integer matching</td></tr>
-<tr><td style="width: 25%;"><a href="xor.integer64.html">&amp;.integer64</a></td>
+<tr><td style="width: 25%;"><a href="ops64.html">&amp;.integer64</a></td>
 <td>Binary operators for integer64 vectors</td></tr>
-<tr><td style="width: 25%;"><a href="xor.integer64.html">*.integer64</a></td>
+<tr><td style="width: 25%;"><a href="ops64.html">*.integer64</a></td>
 <td>Binary operators for integer64 vectors</td></tr>
-<tr><td style="width: 25%;"><a href="xor.integer64.html">+.integer64</a></td>
+<tr><td style="width: 25%;"><a href="ops64.html">+.integer64</a></td>
 <td>Binary operators for integer64 vectors</td></tr>
-<tr><td style="width: 25%;"><a href="xor.integer64.html">-.integer64</a></td>
+<tr><td style="width: 25%;"><a href="ops64.html">-.integer64</a></td>
 <td>Binary operators for integer64 vectors</td></tr>
-<tr><td style="width: 25%;"><a href="xor.integer64.html">/.integer64</a></td>
+<tr><td style="width: 25%;"><a href="ops64.html">/.integer64</a></td>
 <td>Binary operators for integer64 vectors</td></tr>
 <tr><td style="width: 25%;"><a href="bit64S3.html">:</a></td>
 <td>Turning base R functions into S3 generics for bit64</td></tr>
@@ -610,15 +653,15 @@
 <td>Turning base R functions into S3 generics for bit64</td></tr>
 <tr><td style="width: 25%;"><a href="bit64S3.html">:.integer64</a></td>
 <td>Turning base R functions into S3 generics for bit64</td></tr>
-<tr><td style="width: 25%;"><a href="xor.integer64.html">&lt;.integer64</a></td>
+<tr><td style="width: 25%;"><a href="ops64.html">&lt;.integer64</a></td>
 <td>Binary operators for integer64 vectors</td></tr>
-<tr><td style="width: 25%;"><a href="xor.integer64.html">&lt;=.integer64</a></td>
+<tr><td style="width: 25%;"><a href="ops64.html">&lt;=.integer64</a></td>
 <td>Binary operators for integer64 vectors</td></tr>
-<tr><td style="width: 25%;"><a href="xor.integer64.html">==.integer64</a></td>
+<tr><td style="width: 25%;"><a href="ops64.html">==.integer64</a></td>
 <td>Binary operators for integer64 vectors</td></tr>
-<tr><td style="width: 25%;"><a href="xor.integer64.html">&gt;.integer64</a></td>
+<tr><td style="width: 25%;"><a href="ops64.html">&gt;.integer64</a></td>
 <td>Binary operators for integer64 vectors</td></tr>
-<tr><td style="width: 25%;"><a href="xor.integer64.html">&gt;=.integer64</a></td>
+<tr><td style="width: 25%;"><a href="ops64.html">&gt;=.integer64</a></td>
 <td>Binary operators for integer64 vectors</td></tr>
 <tr><td style="width: 25%;"><a href="extract.replace.integer64.html">[.integer64</a></td>
 <td>Extract or Replace Parts of an integer64 vector</td></tr>
@@ -628,9 +671,9 @@
 <td>Extract or Replace Parts of an integer64 vector</td></tr>
 <tr><td style="width: 25%;"><a href="extract.replace.integer64.html">[[&lt;-.integer64</a></td>
 <td>Extract or Replace Parts of an integer64 vector</td></tr>
-<tr><td style="width: 25%;"><a href="xor.integer64.html">^.integer64</a></td>
+<tr><td style="width: 25%;"><a href="ops64.html">^.integer64</a></td>
 <td>Binary operators for integer64 vectors</td></tr>
-<tr><td style="width: 25%;"><a href="xor.integer64.html">|.integer64</a></td>
+<tr><td style="width: 25%;"><a href="ops64.html">|.integer64</a></td>
 <td>Binary operators for integer64 vectors</td></tr>
 </table>
 </div></body></html>

@@ -1,5 +1,5 @@
 Package: lpSolveAPI
-Version: 5.5.2.0-17.14
+Version: 5.5.2.0-17.15
 Title: R Interface to 'lp_solve' Version 5.5.2.0
 Authors@R: c(person(family = "lp_solve",
                     role = "aut",
@@ -18,16 +18,18 @@ Description: The lpSolveAPI package provides an R interface to 'lp_solve',
     a Mixed Integer Linear Programming (MILP) solver with support for pure
     linear, (mixed) integer/binary, semi-continuous and special ordered sets
     (SOS) models.
+URL: https://github.com/FlorianSchwendinger/lpSolveAPI
+BugReports: https://github.com/FlorianSchwendinger/lpSolveAPI/issues
 License: LGPL-2
 RoxygenNote: 7.2.0
 NeedsCompilation: yes
-Packaged: 2025-04-14 07:42:48 UTC; f
+Packaged: 2026-02-12 16:32:26 UTC; f
 Author: lp_solve [aut],
   Kjell Konis [aut],
   Florian Schwendinger [aut, cre],
   Kurt Hornik [ctb]
 Maintainer: Florian Schwendinger <FlorianSchwendinger@gmx.at>
 Repository: CRAN
-Date/Publication: 2025-04-14 08:10:02 UTC
-Built: R 4.5.0; x86_64-w64-mingw32; 2025-04-15 23:50:55 UTC; windows
+Date/Publication: 2026-02-13 11:20:02 UTC
+Built: R 4.5.2; x86_64-w64-mingw32; 2026-02-15 00:50:54 UTC; windows
 Archs: x64

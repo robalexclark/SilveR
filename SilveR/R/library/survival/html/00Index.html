@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head><title>R: Survival Analysis</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-<link rel="stylesheet" type="text/css" href="R.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<link rel="stylesheet" type="text/css" href="R.css">
 </head><body><div class="container">
 <h1> Survival Analysis
-<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]" />
+<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]">
 </h1>
-<hr/>
+<hr>
 <div style="text-align: center;">
-<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
-<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
-</div><h2>Documentation for package &lsquo;survival&rsquo; version 3.8-3</h2>
+<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]"></a>
+<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]"></a>
+</div><h2>Documentation for package &lsquo;survival&rsquo; version 3.8-9</h2>
 
 <ul><li><a href="../DESCRIPTION" type="text/plain">DESCRIPTION file</a>.</li>
 <li><a href="../doc/index.html">User guides, package vignettes and other documentation.</a></li>
@@ -160,12 +160,8 @@
 <td>Details of a Cox Model Fit</td></tr>
 <tr><td style="width: 25%;"><a href="agreg.fit.html">coxph.fit</a></td>
 <td>Cox model fitting functions</td></tr>
-<tr><td style="width: 25%;"><a href="coxph.html">coxph.getdata</a></td>
-<td>Fit Proportional Hazards Regression Model</td></tr>
 <tr><td style="width: 25%;"><a href="coxph.object.html">coxph.object</a></td>
 <td>Proportional Hazards Regression Object</td></tr>
-<tr><td style="width: 25%;"><a href="coxph.html">coxph.penalty</a></td>
-<td>Fit Proportional Hazards Regression Model</td></tr>
 <tr><td style="width: 25%;"><a href="coxph.wtest.html">coxph.wtest</a></td>
 <td>Compute a quadratic form</td></tr>
 <tr><td style="width: 25%;"><a href="coxphms.object.html">coxphms.object</a></td>
@@ -211,8 +207,8 @@
 <td>Random effects terms</td></tr>
 <tr><td style="width: 25%;"><a href="frailty.html">frailty.t</a></td>
 <td>Random effects terms</td></tr>
-<tr><td style="width: 25%;"><a href="timeline.html">fromtimeline</a></td>
-<td>Convert to/from a timeline data set format</td></tr>
+<tr><td style="width: 25%;"><a href="fromtimeline.html">fromtimeline</a></td>
+<td>Create counting process data from timeline data</td></tr>
 </table>
 
 <h2><a id="G">-- G --</a></h2>
@@ -291,6 +287,8 @@
 <td>logLik method for a Cox model</td></tr>
 <tr><td style="width: 25%;"><a href="lung.html">lung</a></td>
 <td>NCCTG Lung Cancer Data</td></tr>
+<tr><td style="width: 25%;"><a href="lvcf.html">lvcf</a></td>
+<td>Last Value Carried Forward</td></tr>
 </table>
 
 <h2><a id="M">-- M --</a></h2>
@@ -341,6 +339,8 @@
 <td>Methods for Surv objects</td></tr>
 <tr><td style="width: 25%;"><a href="neardate.html">neardate</a></td>
 <td>Find the index of the closest value in data set 2, for each entry in data set one.</td></tr>
+<tr><td style="width: 25%;"><a href="nostutter.html">nostutter</a></td>
+<td>Remove repeated events</td></tr>
 <tr><td style="width: 25%;"><a href="nsk.html">nsk</a></td>
 <td>Natural splines with knot heights as the basis.</td></tr>
 <tr><td style="width: 25%;"><a href="nwtco.html">nwtco</a></td>
@@ -391,11 +391,9 @@
 <td>Test the Proportional Hazards Assumption of a Cox Regression</td></tr>
 <tr><td style="width: 25%;"><a href="coxph.object.html">print.coxph</a></td>
 <td>Proportional Hazards Regression Object</td></tr>
-<tr><td style="width: 25%;"><a href="coxph.html">print.coxph.null</a></td>
-<td>Fit Proportional Hazards Regression Model</td></tr>
-<tr><td style="width: 25%;"><a href="coxph.html">print.coxph.penal</a></td>
-<td>Fit Proportional Hazards Regression Model</td></tr>
 <tr><td style="width: 25%;"><a href="print.summary.coxph.html">print.summary.coxph</a></td>
+<td>Print method for summary.coxph objects</td></tr>
+<tr><td style="width: 25%;"><a href="print.summary.coxph.html">print.summary.coxph.penal</a></td>
 <td>Print method for summary.coxph objects</td></tr>
 <tr><td style="width: 25%;"><a href="print.summary.survexp.html">print.summary.survexp</a></td>
 <td>Print Survexp Summary</td></tr>
@@ -506,8 +504,6 @@
 <td>Summarize an aareg fit</td></tr>
 <tr><td style="width: 25%;"><a href="summary.coxph.html">summary.coxph</a></td>
 <td>Summary method for Cox models</td></tr>
-<tr><td style="width: 25%;"><a href="coxph.html">summary.coxph.penal</a></td>
-<td>Fit Proportional Hazards Regression Model</td></tr>
 <tr><td style="width: 25%;"><a href="summary.pyears.html">summary.pyears</a></td>
 <td>Summary function for pyears objecs</td></tr>
 <tr><td style="width: 25%;"><a href="Survmethods.html">Summary.Surv</a></td>
@@ -524,8 +520,6 @@
 <td>Create a Survival Object</td></tr>
 <tr><td style="width: 25%;"><a href="Surv2.html">Surv2</a></td>
 <td>Create a survival object</td></tr>
-<tr><td style="width: 25%;"><a href="Surv2data.html">Surv2data</a></td>
-<td>Convert data from timecourse to (time1,time2) style</td></tr>
 <tr><td style="width: 25%;"><a href="survcheck.html">survcheck</a></td>
 <td>Checks of a survival data set</td></tr>
 <tr><td style="width: 25%;"><a href="survival-deprecated.html">survConcordance</a></td>
@@ -566,6 +560,8 @@
 <td>A direct interface to the 'computational engine' of survfit.coxph</td></tr>
 <tr><td style="width: 25%;"><a href="survfit.object.html">survfitms.object</a></td>
 <td>Survival Curve Object</td></tr>
+<tr><td style="width: 25%;"><a href="survfit_confint.html">survfit_confint</a></td>
+<td>Confidence intervals for survival curves</td></tr>
 <tr><td style="width: 25%;"><a href="survival-deprecated.html">survival-deprecated</a></td>
 <td>Deprecated functions in package 'survival'</td></tr>
 <tr><td style="width: 25%;"><a href="survobrien.html">survobrien</a></td>
@@ -595,14 +591,10 @@
 <td>Methods for Surv objects</td></tr>
 <tr><td style="width: 25%;"><a href="tcut.html">tcut</a></td>
 <td>Factors for person-year calculations</td></tr>
-<tr><td style="width: 25%;"><a href="timeline.html">timeline</a></td>
-<td>Convert to/from a timeline data set format</td></tr>
 <tr><td style="width: 25%;"><a href="tmerge.html">tmerge</a></td>
 <td>Time based merge for survival data</td></tr>
 <tr><td style="width: 25%;"><a href="tobin.html">tobin</a></td>
 <td>Tobin's Tobit data</td></tr>
-<tr><td style="width: 25%;"><a href="timeline.html">totimeline</a></td>
-<td>Convert to/from a timeline data set format</td></tr>
 <tr><td style="width: 25%;"><a href="transplant.html">transplant</a></td>
 <td>Liver transplant waiting list</td></tr>
 <tr><td style="width: 25%;"><a href="reliability.html">turbine</a></td>
@@ -632,6 +624,8 @@
 <tr><td style="width: 25%;"><a href="reliability.html">valveSeat</a></td>
 <td>Reliability data sets</td></tr>
 <tr><td style="width: 25%;"><a href="vcov.coxph.html">vcov.coxph</a></td>
+<td>Variance-covariance matrix</td></tr>
+<tr><td style="width: 25%;"><a href="vcov.coxph.html">vcov.coxphms</a></td>
 <td>Variance-covariance matrix</td></tr>
 <tr><td style="width: 25%;"><a href="vcov.coxph.html">vcov.survreg</a></td>
 <td>Variance-covariance matrix</td></tr>

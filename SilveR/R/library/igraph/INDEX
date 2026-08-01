@@ -116,6 +116,7 @@ count_automorphisms     Number of automorphisms
 count_isomorphisms      Count the number of isomorphic mappings between
                         two graphs
 count_motifs            Graph motifs
+count_reachable         Count reachable vertices
 count_subgraph_isomorphisms
                         Count the isomorphic mappings between a graph
                         and the subgraphs of another graph
@@ -231,6 +232,7 @@ intersection.igraph.es
                         Intersection of edge sequences
 intersection.igraph.vs
                         Intersection of vertex sequences
+invalidate_cache        Invalidate the cache of a graph
 is_acyclic              Acyclic graphs
 is_biconnected          Check biconnectedness
 is_bipartite            Checks whether the graph has a vertex attribute
@@ -268,6 +270,7 @@ layout_as_star          Generate coordinates to place the vertices of a
                         graph in a star-shape
 layout_as_tree          The Reingold-Tilford graph layout algorithm
 layout_in_circle        Graph layout with vertices on a circle.
+layout_modifier         Create a layout modifier
 layout_nicely           Choose an appropriate graph layout algorithm
                         automatically
 layout_on_grid          Simple grid layout
@@ -288,6 +291,7 @@ local_scan              Compute local scan statistics on graphs
 make_                   Make a new graph
 make_bipartite_graph    Create a bipartite graph
 make_chordal_ring       Create an extended chordal ring graph
+make_circulant          Create a circulant graph
 make_clusters           Creates a communities object.
 make_de_bruijn_graph    De Bruijn graphs
 make_empty_graph        A graph with no edges
@@ -298,6 +302,8 @@ make_full_bipartite_graph
 make_full_citation_graph
                         Create a complete (full) citation graph
 make_full_graph         Create a full graph
+make_full_multipartite
+                        Create a full multipartite graph
 make_graph              Create an igraph graph from a list of edges, or
                         a notable graph
 make_kautz_graph        Kautz graphs
@@ -307,6 +313,8 @@ make_ring               Create a ring graph
 make_star               Create a star graph, a tree with n vertices and
                         n - 1 leaves
 make_tree               Create tree graphs
+make_turan              Create a Turán graph
+make_wheel              Create a wheel graph
 match_vertices          Match Graphs given a seeding of vertex
                         correspondences
 max_cardinality         Maximum cardinality search
@@ -445,6 +453,7 @@ time_bins               SIR model on graphs
 tkplot                  Interactive plotting of graphs
 to_prufer               Convert a tree graph to its Prüfer sequence
 topo_sort               Topological sorting of vertices in a graph
+transitive_closure      Transitive closure of a graph
 transitivity            Transitivity of a graph
 triad_census            Triad census, subgraphs with three vertices
 triangles               Find triangles in graphs

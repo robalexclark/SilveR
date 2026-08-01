@@ -12,7 +12,7 @@
 <div style="text-align: center;">
 <a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]"></a>
 <a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]"></a>
-</div><h2>Documentation for package &lsquo;xfun&rsquo; version 0.54</h2>
+</div><h2>Documentation for package &lsquo;xfun&rsquo; version 0.60</h2>
 
 <ul><li><a href="../DESCRIPTION" type="text/plain; charset=utf-8">DESCRIPTION file</a>.</li>
 <li><a href="../doc/index.html">User guides, package vignettes and other documentation.</a></li>
@@ -60,8 +60,6 @@
 <td>Read / write files encoded in UTF-8</td></tr>
 <tr><td style="width: 25%;"><a href="strict_list.html">as_strict_list</a></td>
 <td>Strict lists</td></tr>
-<tr><td style="width: 25%;"><a href="attr2.html">attr</a></td>
-<td>Obtain an attribute of an object without partial matching</td></tr>
 <tr><td style="width: 25%;"><a href="attr2.html">attr2</a></td>
 <td>Obtain an attribute of an object without partial matching</td></tr>
 </table>
@@ -81,6 +79,10 @@
 <td>Start a background process</td></tr>
 <tr><td style="width: 25%;"><a href="broken_packages.html">broken_packages</a></td>
 <td>Find out broken packages and reinstall them</td></tr>
+<tr><td style="width: 25%;"><a href="browser_dom.html">browser_dom</a></td>
+<td>Execute JavaScript on an HTML page via a headless browser and dump the DOM</td></tr>
+<tr><td style="width: 25%;"><a href="browser_print.html">browser_print</a></td>
+<td>Print a web page to PDF/PNG/JPEG</td></tr>
 <tr><td style="width: 25%;"><a href="bump_version.html">bump_version</a></td>
 <td>Bump version numbers</td></tr>
 </table>
@@ -235,6 +237,8 @@
 <table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="join_words.html">join_words</a></td>
 <td>Join multiple words into a single string</td></tr>
+<tr><td style="width: 25%;"><a href="tojson.html">js</a></td>
+<td>A simple JSON serializer</td></tr>
 <tr><td style="width: 25%;"><a href="tojson.html">json_vector</a></td>
 <td>A simple JSON serializer</td></tr>
 </table>
@@ -279,7 +283,7 @@
 <tr><td style="width: 25%;"><a href="news2md.html">news2md</a></td>
 <td>Convert package news to the Markdown format</td></tr>
 <tr><td style="width: 25%;"><a href="new_app.html">new_app</a></td>
-<td>Create a local web application</td></tr>
+<td>Create or stop a local web application</td></tr>
 <tr><td style="width: 25%;"><a href="record_print.html">new_record</a></td>
 <td>Print methods for 'record()'</td></tr>
 <tr><td style="width: 25%;"><a href="normalize_path.html">normalize_path</a></td>
@@ -312,6 +316,8 @@
 <td>Attach or load packages, and automatically install missing packages if requested</td></tr>
 <tr><td style="width: 25%;"><a href="pkg_attach.html">pkg_load2</a></td>
 <td>Attach or load packages, and automatically install missing packages if requested</td></tr>
+<tr><td style="width: 25%;"><a href="post_release.html">post_release</a></td>
+<td>Perform post-CRAN-release routine tasks</td></tr>
 <tr><td style="width: 25%;"><a href="raw_string.html">print.xfun_raw_string</a></td>
 <td>Print a character vector in its raw form</td></tr>
 <tr><td style="width: 25%;"><a href="record.html">print.xfun_record_results</a></td>
@@ -333,6 +339,8 @@
 <h2><a id="R">-- R --</a></h2>
 
 <table style="width: 100%;">
+<tr><td style="width: 25%;"><a href="random_port.html">random_port</a></td>
+<td>Find a random available TCP port</td></tr>
 <tr><td style="width: 25%;"><a href="rand_unit.html">rand_unit</a></td>
 <td>Pseudo-random numbers on [0, 1) based on a linear congruential generator</td></tr>
 <tr><td style="width: 25%;"><a href="raw_string.html">raw_string</a></td>
@@ -382,6 +390,8 @@
 <td>Test if two paths are the same after they are normalized</td></tr>
 <tr><td style="width: 25%;"><a href="file_ext.html">sans_ext</a></td>
 <td>Manipulate filename extensions</td></tr>
+<tr><td style="width: 25%;"><a href="serve_dir.html">serve_dir</a></td>
+<td>Serve a static directory</td></tr>
 <tr><td style="width: 25%;"><a href="session_info.html">session_info</a></td>
 <td>An alternative to sessionInfo() to print session information</td></tr>
 <tr><td style="width: 25%;"><a href="set_envvar.html">set_envvar</a></td>
@@ -394,6 +404,8 @@
 <td>Split a character vector by line breaks</td></tr>
 <tr><td style="width: 25%;"><a href="split_source.html">split_source</a></td>
 <td>Split source lines into complete expressions</td></tr>
+<tr><td style="width: 25%;"><a href="new_app.html">stop_app</a></td>
+<td>Create or stop a local web application</td></tr>
 <tr><td style="width: 25%;"><a href="strict_list.html">strict_list</a></td>
 <td>Strict lists</td></tr>
 <tr><td style="width: 25%;"><a href="strip_html.html">strip_html</a></td>
@@ -403,13 +415,15 @@
 <tr><td style="width: 25%;"><a href="submit_cran.html">submit_cran</a></td>
 <td>Submit a source package to CRAN</td></tr>
 <tr><td style="width: 25%;"><a href="system3.html">system3</a></td>
-<td>Run 'system2()' and mark its character output as UTF-8 if appropriate</td></tr>
+<td>A customized wrapper for 'system2()'</td></tr>
 </table>
 
 <h2><a id="T">-- T --</a></h2>
 
 <table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="tabset.html">tabset</a></td>
+<td>Represent a (recursive) list with (nested) tabsets</td></tr>
+<tr><td style="width: 25%;"><a href="tabset.html">tab_content</a></td>
 <td>Represent a (recursive) list with (nested) tabsets</td></tr>
 <tr><td style="width: 25%;"><a href="taml_load.html">taml_file</a></td>
 <td>A simple YAML reader and writer</td></tr>

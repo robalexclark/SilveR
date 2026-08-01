@@ -10,12 +10,6 @@ edition_get             Retrieve the currently active edition
 format_delim            Convert a data frame to a delimited string
 guess_encoding          Guess encoding of file
 locale                  Create locales
-melt_delim              Return melted data for each token in a
-                        delimited file (including csv & tsv)
-melt_fwf                Return melted data for each token in a fixed
-                        width file
-melt_table              Return melted data for each token in a
-                        whitespace-separated file
 parse_datetime          Parse date/times
 parse_factor            Parse factors
 parse_guess             Parse using the "best" type
@@ -26,7 +20,7 @@ read_builtin            Read built-in object from package
 read_delim              Read a delimited file (including CSV and TSV)
                         into a tibble
 read_file               Read/write a complete file
-read_fwf                Read a fixed width file into a tibble
+read_fwf                Read a fixed-width file into a tibble
 read_lines              Read/write lines to/from a file
 read_log                Read common/combined log file into a tibble
 read_rds                Read/write RDS files.

@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head><title>R: Custom 'Bootstrap' 'Sass' Themes for 'shiny' and 'rmarkdown'</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-<link rel="stylesheet" type="text/css" href="R.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<link rel="stylesheet" type="text/css" href="R.css">
 </head><body><div class="container">
 <h1> Custom 'Bootstrap' 'Sass' Themes for 'shiny' and 'rmarkdown'
-<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]" />
+<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]">
 </h1>
-<hr/>
+<hr>
 <div style="text-align: center;">
-<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
-<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
-</div><h2>Documentation for package &lsquo;bslib&rsquo; version 0.9.0</h2>
+<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]"></a>
+<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]"></a>
+</div><h2>Documentation for package &lsquo;bslib&rsquo; version 0.11.0</h2>
 
 <ul><li><a href="../DESCRIPTION" type="text/plain; charset=utf-8">DESCRIPTION file</a>.</li>
 <li><a href="../NEWS.md">Package NEWS</a>.</li>
@@ -26,6 +26,7 @@
 <a href="#B">B</a>
 <a href="#C">C</a>
 <a href="#F">F</a>
+<a href="#H">H</a>
 <a href="#I">I</a>
 <a href="#L">L</a>
 <a href="#N">N</a>
@@ -164,11 +165,22 @@
 <td>Helpers for importing web fonts</td></tr>
 </table>
 
+<h2><a id="H">-- H --</a></h2>
+
+<table style="width: 100%;">
+<tr><td style="width: 25%;"><a href="show_toast.html">hide_toast</a></td>
+<td>Show or hide a toast notification</td></tr>
+</table>
+
 <h2><a id="I">-- I --</a></h2>
 
 <table style="width: 100%;">
+<tr><td style="width: 25%;"><a href="input_code_editor.html">input_code_editor</a></td>
+<td>Code editor input</td></tr>
 <tr><td style="width: 25%;"><a href="input_dark_mode.html">input_dark_mode</a></td>
 <td>Dark mode input control</td></tr>
+<tr><td style="width: 25%;"><a href="input_submit_textarea.html">input_submit_textarea</a></td>
+<td>Create a textarea input control with explicit submission</td></tr>
 <tr><td style="width: 25%;"><a href="input_switch.html">input_switch</a></td>
 <td>Switch input control</td></tr>
 <tr><td style="width: 25%;"><a href="input_task_button.html">input_task_button</a></td>
@@ -282,9 +294,9 @@
 <td>Value box</td></tr>
 <tr><td style="width: 25%;"><a href="value_box.html">showcase_top_right</a></td>
 <td>Value box</td></tr>
+<tr><td style="width: 25%;"><a href="show_toast.html">show_toast</a></td>
+<td>Show or hide a toast notification</td></tr>
 <tr><td style="width: 25%;"><a href="sidebar.html">sidebar</a></td>
-<td>Sidebar layouts</td></tr>
-<tr><td style="width: 25%;"><a href="sidebar.html">sidebar_toggle</a></td>
 <td>Sidebar layouts</td></tr>
 </table>
 
@@ -295,6 +307,10 @@
 <td>Obtain a theme's Bootswatch theme name</td></tr>
 <tr><td style="width: 25%;"><a href="theme_version.html">theme_version</a></td>
 <td>Obtain a theme's Bootstrap version</td></tr>
+<tr><td style="width: 25%;"><a href="toast.html">toast</a></td>
+<td>Toast notifications</td></tr>
+<tr><td style="width: 25%;"><a href="toast.html">toast_header</a></td>
+<td>Toast notifications</td></tr>
 <tr><td style="width: 25%;"><a href="input_dark_mode.html">toggle_dark_mode</a></td>
 <td>Dark mode input control</td></tr>
 <tr><td style="width: 25%;"><a href="popover.html">toggle_popover</a></td>
@@ -305,6 +321,16 @@
 <td>Switch input control</td></tr>
 <tr><td style="width: 25%;"><a href="tooltip.html">toggle_tooltip</a></td>
 <td>Add a tooltip to a UI element</td></tr>
+<tr><td style="width: 25%;"><a href="toolbar.html">toolbar</a></td>
+<td>Toolbar component</td></tr>
+<tr><td style="width: 25%;"><a href="toolbar_divider.html">toolbar_divider</a></td>
+<td>Toolbar: Add a divider or spacer to a toolbar</td></tr>
+<tr><td style="width: 25%;"><a href="toolbar_input_button.html">toolbar_input_button</a></td>
+<td>Add a toolbar input button</td></tr>
+<tr><td style="width: 25%;"><a href="toolbar_input_select.html">toolbar_input_select</a></td>
+<td>Toolbar Input Select</td></tr>
+<tr><td style="width: 25%;"><a href="toolbar_divider.html">toolbar_spacer</a></td>
+<td>Toolbar: Add a divider or spacer to a toolbar</td></tr>
 <tr><td style="width: 25%;"><a href="tooltip.html">tooltip</a></td>
 <td>Add a tooltip to a UI element</td></tr>
 </table>
@@ -312,12 +338,20 @@
 <h2><a id="U">-- U --</a></h2>
 
 <table style="width: 100%;">
+<tr><td style="width: 25%;"><a href="input_code_editor.html">update_code_editor</a></td>
+<td>Code editor input</td></tr>
 <tr><td style="width: 25%;"><a href="popover.html">update_popover</a></td>
 <td>Add a popover to a UI element</td></tr>
+<tr><td style="width: 25%;"><a href="input_submit_textarea.html">update_submit_textarea</a></td>
+<td>Create a textarea input control with explicit submission</td></tr>
 <tr><td style="width: 25%;"><a href="input_switch.html">update_switch</a></td>
 <td>Switch input control</td></tr>
 <tr><td style="width: 25%;"><a href="input_task_button.html">update_task_button</a></td>
 <td>Button for launching longer-running operations</td></tr>
+<tr><td style="width: 25%;"><a href="toolbar_input_button.html">update_toolbar_input_button</a></td>
+<td>Add a toolbar input button</td></tr>
+<tr><td style="width: 25%;"><a href="toolbar_input_select.html">update_toolbar_input_select</a></td>
+<td>Toolbar Input Select</td></tr>
 <tr><td style="width: 25%;"><a href="tooltip.html">update_tooltip</a></td>
 <td>Add a tooltip to a UI element</td></tr>
 </table>

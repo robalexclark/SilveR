@@ -1,16 +1,16 @@
 Package: forecast
-Version: 8.24.0
+Version: 9.0.2
 Title: Forecasting Functions for Time Series and Linear Models
 Description: Methods and tools for displaying and analysing
              univariate time series forecasts including exponential smoothing
              via state space models and automatic ARIMA modelling.
-Depends: R (>= 3.5.0),
-Imports: colorspace, fracdiff, generics (>= 0.1.2), ggplot2 (>= 2.2.1),
-        graphics, lmtest, magrittr, nnet, parallel, Rcpp (>= 0.11.0),
-        stats, timeDate, tseries, urca, withr, zoo
+Depends: R (>= 4.1.0)
+Imports: colorspace, fracdiff, generics (>= 0.1.2), ggplot2 (>= 3.4.0),
+        graphics, lmtest, magrittr, nnet, parallel, Rcpp (>= 0.12.4),
+        stats, timeDate, urca, withr, zoo
 Suggests: forecTheta, knitr, methods, rmarkdown, rticles, scales,
-        seasonal, testthat (>= 3.0.0), uroot
-LinkingTo: Rcpp (>= 0.11.0), RcppArmadillo (>= 0.2.35)
+        seasonal, testthat (>= 3.3.0), uroot
+LinkingTo: Rcpp (>= 0.12.4), RcppArmadillo (>= 0.2.35)
 LazyData: yes
 ByteCompile: TRUE
 Authors@R: c(
@@ -20,6 +20,7 @@ Authors@R: c(
   person("Gabriel", "Caceres", role = "aut", comment = c(ORCID = "0000-0002-2947-2023")),
   person("Leanne", "Chhay", role = "aut"),
   person("Kirill", "Kuroptev", role = "aut"),
+  person("Maximilian", "Mücke", role = "aut", comment = c(ORCID = "0009-0000-9432-9795")),
   person("Mitchell", "O'Hara-Wild", role = "aut", comment = c(ORCID = "0000-0001-6729-7695")),
   person("Fotios", "Petropoulos", role = "aut", comment = c(ORCID = "0000-0003-3039-4955")),
   person("Slava", "Razbash", role = "aut"),
@@ -40,33 +41,39 @@ License: GPL-3
 URL: https://pkg.robjhyndman.com/forecast/,
         https://github.com/robjhyndman/forecast
 VignetteBuilder: knitr
+RoxygenNote: 7.3.3
 Encoding: UTF-8
-RoxygenNote: 7.3.2
 Config/testthat/edition: 3
 NeedsCompilation: yes
-Packaged: 2025-04-08 05:47:31 UTC; hyndman
-Author: Rob Hyndman [aut, cre, cph] (<https://orcid.org/0000-0002-2140-5352>),
-  George Athanasopoulos [aut] (<https://orcid.org/0000-0002-5389-2802>),
-  Christoph Bergmeir [aut] (<https://orcid.org/0000-0002-3665-9021>),
-  Gabriel Caceres [aut] (<https://orcid.org/0000-0002-2947-2023>),
+Packaged: 2026-03-17 20:42:42 UTC; hyndman
+Author: Rob Hyndman [aut, cre, cph] (ORCID:
+    <https://orcid.org/0000-0002-2140-5352>),
+  George Athanasopoulos [aut] (ORCID:
+    <https://orcid.org/0000-0002-5389-2802>),
+  Christoph Bergmeir [aut] (ORCID:
+    <https://orcid.org/0000-0002-3665-9021>),
+  Gabriel Caceres [aut] (ORCID: <https://orcid.org/0000-0002-2947-2023>),
   Leanne Chhay [aut],
   Kirill Kuroptev [aut],
-  Mitchell O'Hara-Wild [aut] (<https://orcid.org/0000-0001-6729-7695>),
-  Fotios Petropoulos [aut] (<https://orcid.org/0000-0003-3039-4955>),
+  Maximilian Mücke [aut] (ORCID: <https://orcid.org/0009-0000-9432-9795>),
+  Mitchell O'Hara-Wild [aut] (ORCID:
+    <https://orcid.org/0000-0001-6729-7695>),
+  Fotios Petropoulos [aut] (ORCID:
+    <https://orcid.org/0000-0003-3039-4955>),
   Slava Razbash [aut],
-  Earo Wang [aut] (<https://orcid.org/0000-0001-6448-5260>),
-  Farah Yasmeen [aut] (<https://orcid.org/0000-0002-1479-5401>),
+  Earo Wang [aut] (ORCID: <https://orcid.org/0000-0001-6448-5260>),
+  Farah Yasmeen [aut] (ORCID: <https://orcid.org/0000-0002-1479-5401>),
   Federico Garza [ctb],
   Daniele Girolimetto [ctb],
   Ross Ihaka [ctb, cph],
   R Core Team [ctb, cph],
   Daniel Reid [ctb],
   David Shaub [ctb],
-  Yuan Tang [ctb] (<https://orcid.org/0000-0001-5243-233X>),
+  Yuan Tang [ctb] (ORCID: <https://orcid.org/0000-0001-5243-233X>),
   Xiaoqian Wang [ctb],
   Zhenyu Zhou [ctb]
 Maintainer: Rob Hyndman <Rob.Hyndman@monash.edu>
 Repository: CRAN
-Date/Publication: 2025-04-08 06:50:02 UTC
-Built: R 4.5.2; x86_64-w64-mingw32; 2025-12-03 05:24:12 UTC; windows
+Date/Publication: 2026-03-18 06:13:07 UTC
+Built: R 4.5.3; x86_64-w64-mingw32; 2026-07-28 15:51:47 UTC; windows
 Archs: x64

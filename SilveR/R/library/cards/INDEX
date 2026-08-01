@@ -15,6 +15,7 @@ ard_stack_hierarchical
 ard_strata              Stratified ARD
 ard_summary             Univariate ARD Statistics
 ard_tabulate            Tabulate ARD
+ard_tabulate_rows       Row Tabulate ARD
 ard_tabulate_value      Tabulate Value ARD
 ard_total_n             ARD Total N
 as_card                 Data Frame as ARD
@@ -23,6 +24,7 @@ as_nested_list          ARD as Nested List
 bind_ard                Bind ARDs
 cards.options           Options in {cards}
 check_ard_structure     Check ARD Structure
+compare_ard             Compare ARDs
 default_stat_labels     Defaults for Statistical Arguments
 deprecated              Deprecated functions
 eval_capture_conditions

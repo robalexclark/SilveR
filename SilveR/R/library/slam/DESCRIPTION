@@ -1,5 +1,5 @@
 Package: slam
-Version: 0.1-55
+Version: 0.1-56
 Title: Sparse Lightweight Arrays and Matrices
 Authors@R: c(person("Kurt", "Hornik", role = c("aut", "cre"),
                      email = "Kurt.Hornik@R-project.org",
@@ -15,12 +15,12 @@ Imports: stats
 Enhances: Matrix, SparseM, spam
 License: GPL-2
 NeedsCompilation: yes
-Packaged: 2024-11-12 16:45:23 UTC; hornik
-Author: Kurt Hornik [aut, cre] (<https://orcid.org/0000-0003-4198-9911>),
-  David Meyer [aut] (<https://orcid.org/0000-0002-5196-3048>),
+Packaged: 2026-07-13 09:23:45 UTC; hornik
+Author: Kurt Hornik [aut, cre] (ORCID: <https://orcid.org/0000-0003-4198-9911>),
+  David Meyer [aut] (ORCID: <https://orcid.org/0000-0002-5196-3048>),
   Christian Buchta [aut]
 Maintainer: Kurt Hornik <Kurt.Hornik@R-project.org>
 Repository: CRAN
-Date/Publication: 2024-11-13 07:13:31 UTC
-Built: R 4.5.0; x86_64-w64-mingw32; 2025-04-08 00:42:38 UTC; windows
+Date/Publication: 2026-07-13 09:45:48 UTC
+Built: R 4.5.3; x86_64-w64-mingw32; 2026-07-14 08:21:27 UTC; windows
 Archs: x64

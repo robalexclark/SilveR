@@ -11,10 +11,10 @@ is.regular              Check Regularity of a Series
 lag.zoo                 Lags and Differences of zoo Objects
 make.par.list           Make a List from a Parameter Specification
 merge.zoo               Merge Two or More zoo Objects
-na.StructTS             Fill NA or specified positions.
+na.StructTS             Replace NA by Kalman Filter
 na.aggregate            Replace NA by Aggregation
 na.approx               Replace NA by Interpolation
-na.fill                 Fill NA or specified positions.
+na.fill                 Fill NA or Specified Positions
 na.locf                 Last Observation Carried Forward
 na.trim                 Trim Leading/Trailing Missing Observations
 plot.zoo                Plotting zoo Objects

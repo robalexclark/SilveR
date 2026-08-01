@@ -214,31 +214,33 @@ test.subset <-
 
 # ------------------------------------------------------------------------------
 
-
-test.cut <-
-    function()
-{
-    # Holidays:
-    setRmetricsOptions(myFinCenter = "GMT")
-    tS = timeSequence(from = Easter(2006)-7*24*3600, length.out = 8)
-
-    # cut -
-    GF = GoodFriday(2006)
-    print(GF)
-    EM = EasterMonday(2006)
-    print(EM)
-    target = cut(tS, from = GF, to = EM)
-    print(target)
-    charvec = paste("2006-04-1", 4:6, sep = "")
-    current = timeDate(charvec)
-    print(current)
-    checkIdentical(
-        target,
-        current)
-
-    # Return Value:
-    return()
-}
+## GNB: 2025-10-20
+##     removing the deprecated timeDate method for cut
+##
+## test.cut <-
+##     function()
+## {
+##     # Holidays:
+##     setRmetricsOptions(myFinCenter = "GMT")
+##     tS = timeSequence(from = Easter(2006)-7*24*3600, length.out = 8)
+##
+##     # cut -
+##     GF = GoodFriday(2006)
+##     print(GF)
+##     EM = EasterMonday(2006)
+##     print(EM)
+##     target = cut(tS, from = GF, to = EM)
+##     print(target)
+##     charvec = paste("2006-04-1", 4:6, sep = "")
+##     current = timeDate(charvec)
+##     print(current)
+##     checkIdentical(
+##         target,
+##         current)
+##
+##     # Return Value:
+##     return()
+## }
 
 
 # ------------------------------------------------------------------------------

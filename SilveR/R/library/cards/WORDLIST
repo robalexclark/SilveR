@@ -22,10 +22,12 @@ SAS's
 SDTM
 Unlist
 Xanomeline
+args
 ata
 cardx
 cli
 de
+dplyr
 env
 esult
 ets
@@ -40,6 +42,7 @@ pre
 quosures
 reusability
 sd
+subclassed
 tfrmt
 tibble
 tibbles

@@ -2,7 +2,8 @@
 //
 // sugar.h: Rcpp R/C++ interface class library -- main file for Rcpp::sugar
 //
-// Copyright (C) 2010 - 2012 Dirk Eddelbuettel and Romain Francois
+// Copyright (C) 2010 - 2025 Dirk Eddelbuettel and Romain Francois
+// Copyright (C) 2026        Dirk Eddelbuettel, Romain Francois and Iñaki Ucar
 //
 // This file is part of Rcpp.
 //
@@ -23,6 +24,7 @@
 #define RCPP_SUGAR_H
 
 #include <Rcpp/sugar/tools/iterator.h>
+#include <Rcpp/sugar/tools/safe_math.h>
 #include <Rcpp/sugar/block/block.h>
 
 #include <Rcpp/hash/hash.h>

@@ -1,4 +1,45 @@
 ------------------------------------------------------------------------
+TMB 1.9.22 (2026-07-21)
+------------------------------------------------------------------------
+
+o Fix clang-14 -std=c++20 RTMB build.
+
+o Add partial Eigen 5.0.0 compatibility.
+
+o Add Conway-Maxwell-Binomial distribution (thanks to Julius Bogomolovas).
+
+o runSymbolicAnalysis() now supports an 'incomplete' Cholesky factorization.
+
+------------------------------------------------------------------------
+TMB 1.9.21 (2026-03-22)
+------------------------------------------------------------------------
+
+o Package restructure:
+  - Github version == CRAN version [no more patching for CRAN]
+  - 'Eigen' + 'unsupported' removed [we now completely rely on RcppEigen]
+  - All examples wrapped in 'dontrun' [we no longer ship the 'simple' build]
+
+------------------------------------------------------------------------
+TMB 1.9.20 (2026-03-17)
+------------------------------------------------------------------------
+
+o Avoid non-API 'Rf_findVar'.
+
+------------------------------------------------------------------------
+TMB 1.9.19 (2025-12-15)
+------------------------------------------------------------------------
+
+o This release adds changes related to the 'TMBad' autodiff component:
+
+- Sparse plus low-rank Hessian now has an 'LDL' option to handle cases
+  where the sparse contribution is not positive definite.
+- Tape optimizer can now recognize identical checkpoint operators as
+  well as identical references to outer contexts.
+- Adaptive dynamically retaping checkpoint operators can now safely
+  share their derivative table.
+- A bug in the 'expm1' operator has been fixed.
+
+------------------------------------------------------------------------
 TMB 1.9.18 (2025-10-13)
 ------------------------------------------------------------------------
 
