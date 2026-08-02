@@ -59,7 +59,8 @@
   {
     "outputFileName": "wwwroot/js/stats/hasseDiagramGenerator.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/hasseDiagramGenerator.js"
+      "wwwroot/js/stats/hasseDiagramGenerator.js",
+      "wwwroot/js/openLinks.js"
     ]
   },
   {
