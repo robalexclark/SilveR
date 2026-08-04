@@ -1,41 +1,31 @@
-install.packages("R2HTML", dependencies = TRUE, ask = FALSE)
-install.packages("https://cran.r-project.org/src/contrib/Archive/Matrix/Matrix_1.6-0.tar.gz", repos = NULL, type = "source", dependencies = TRUE, ask = FALSE)
-install.packages("https://cran.r-project.org/src/contrib/Archive/MASS/MASS_7.3-59.tar.gz", repos = NULL, type = "source", dependencies = TRUE, ask = FALSE)
-install.packages("ggplot2", dependencies = TRUE, ask = FALSE) 
-install.packages("ggrepel", dependencies = TRUE, ask = FALSE)
-install.packages("plyr", dependencies = TRUE, ask = FALSE)
-install.packages("reshape", dependencies = TRUE, ask = FALSE)
-install.packages("GGally", dependencies = TRUE, ask = FALSE)
-install.packages("proto", dependencies = TRUE, ask = FALSE)
-install.packages("ROCR", dependencies = TRUE, ask = FALSE)
-install.packages("coin", dependencies = TRUE, ask = FALSE)
-install.packages("Exact", dependencies = TRUE, ask = FALSE)
-install.packages("dplyr", dependencies = TRUE, ask = FALSE)
-install.packages("multcompView", dependencies = TRUE, ask = FALSE)
-install.packages("car", dependencies = TRUE, ask = FALSE)
-install.packages("emmeans", dependencies = TRUE, ask = FALSE)
-install.packages("detectseparation", dependencies = TRUE, ask = FALSE)
-install.packages("ggdendro", dependencies = TRUE, ask = FALSE)
-install.packages("BiocManager", dependencies = TRUE, ask = FALSE)
-install.packages("Hmisc", dependencies = TRUE, ask = FALSE)
-install.packages("polspline", dependencies = TRUE, ask = FALSE)
-install.packages("kableExtra", dependencies = TRUE, ask = FALSE)
-install.packages("https://cran.r-project.org/src/contrib/Archive/rms/rms_6.6-0.tar.gz", repos = NULL, type = "source", dependencies = TRUE, ask = FALSE)
-install.packages("contrast", dependencies = TRUE, ask = FALSE)
-install.packages("PowerTOST", dependencies = TRUE, ask = FALSE)
-install.packages("mmrm", dependencies = TRUE, ask = FALSE)
-install.packages("hassediagrams", dependencies = TRUE, ask = FALSE)
+sourceLibrary <- "/opt/R/site-library"
+dir.create(sourceLibrary, recursive = TRUE, showWarnings = FALSE)
+.libPaths(c(sourceLibrary, .Library))
 
-BiocManager::install("mixOmics", dependencies = TRUE, ask = FALSE)
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+requiredDependencies <- c("Depends", "Imports", "LinkingTo")
 
-
-# List of packages to check
 packages <- c(
   "R2HTML", "Matrix", "MASS", "ggplot2", "ggrepel", "plyr", "reshape", 
   "GGally", "proto", "coin", "ROCR", "Exact", "dplyr", "multcompView", 
   "car", "emmeans", "detectseparation", "ggdendro", "BiocManager", 
   "Hmisc", "polspline", "kableExtra", "rms", "contrast", "PowerTOST", "mmrm",
   "hassediagrams"
+)
+
+install.packages(
+  packages,
+  lib = sourceLibrary,
+  dependencies = requiredDependencies,
+  ask = FALSE
+)
+
+BiocManager::install(
+  "mixOmics",
+  lib = sourceLibrary,
+  dependencies = requiredDependencies,
+  ask = FALSE,
+  update = FALSE
 )
 
 # Function to check installation
@@ -48,4 +38,9 @@ check_install <- function(pkg) {
 }
 
 # Check each package
+missing_packages <- packages[!vapply(packages, requireNamespace, logical(1), quietly = TRUE)]
+if (length(missing_packages) > 0) {
+  stop(paste("Required R packages are missing:", paste(missing_packages, collapse = ", ")))
+}
+
 lapply(packages, check_install)
