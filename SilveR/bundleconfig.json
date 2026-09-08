@@ -52,211 +52,181 @@
   {
     "outputFileName": "wwwroot/js/stats/graphicalAnalysis.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/graphicalAnalysis.js",
-      "wwwroot/js/openLinks.js"
+      "wwwroot/js/stats/graphicalAnalysis.js"
     ]
   },
   {
     "outputFileName": "wwwroot/js/stats/hasseDiagramGenerator.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/hasseDiagramGenerator.js",
-      "wwwroot/js/openLinks.js"
+      "wwwroot/js/stats/hasseDiagramGenerator.js"
     ]
   },
   {
     "outputFileName": "wwwroot/js/stats/nonParametricAnalysis.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/nonParametricAnalysis.js",
-      "wwwroot/js/openLinks.js"
+      "wwwroot/js/stats/nonParametricAnalysis.js"
     ]
   },
   {
     "outputFileName": "wwwroot/js/stats/pairedTTestAnalysis.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/pairedTTestAnalysis.js",
-      "wwwroot/js/openLinks.js"
+      "wwwroot/js/stats/pairedTTestAnalysis.js"
     ]
   },
   {
     "outputFileName": "wwwroot/js/stats/unpairedTTestAnalysis.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/unpairedTTestAnalysis.js",
-      "wwwroot/js/openLinks.js"
+      "wwwroot/js/stats/unpairedTTestAnalysis.js"
     ]
   },
   {
     "outputFileName": "wwwroot/js/stats/correlationAnalysis.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/correlationAnalysis.js",
-      "wwwroot/js/openLinks.js"
+      "wwwroot/js/stats/correlationAnalysis.js"
     ]
   },
   {
     "outputFileName": "wwwroot/js/stats/linearRegressionAnalysis.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/linearRegressionAnalysis.js",
-      "wwwroot/js/openLinks.js"
+      "wwwroot/js/stats/linearRegressionAnalysis.js"
     ]
   },
   {
     "outputFileName": "wwwroot/js/stats/logisticRegressionAnalysis.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/logisticRegressionAnalysis.js",
-      "wwwroot/js/openLinks.js"
+      "wwwroot/js/stats/logisticRegressionAnalysis.js"
     ]
   },
   {
     "outputFileName": "wwwroot/js/stats/comparisonOfMeansPowerAnalysisDatasetBasedInputs.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/comparisonOfMeansPowerAnalysisDatasetBasedInputs.js",
-      "wwwroot/js/openLinks.js"
+      "wwwroot/js/stats/comparisonOfMeansPowerAnalysisDatasetBasedInputs.js"
     ]
   },
   {
     "outputFileName": "wwwroot/js/stats/comparisonOfMeansPowerAnalysisUserBasedInputs.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/comparisonOfMeansPowerAnalysisUserBasedInputs.js",
-      "wwwroot/js/openLinks.js"
+      "wwwroot/js/stats/comparisonOfMeansPowerAnalysisUserBasedInputs.js"
     ]
   },
   {
     "outputFileName": "wwwroot/js/stats/oneWayANOVAPowerAnalysisDatasetBasedInputs.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/oneWayANOVAPowerAnalysisDatasetBasedInputs.js",
-      "wwwroot/js/openLinks.js"
+      "wwwroot/js/stats/oneWayANOVAPowerAnalysisDatasetBasedInputs.js"
     ]
   },
   {
     "outputFileName": "wwwroot/js/stats/oneWayANOVAPowerAnalysisUserBasedInputs.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/oneWayANOVAPowerAnalysisUserBasedInputs.js",
-      "wwwroot/js/openLinks.js"
+      "wwwroot/js/stats/oneWayANOVAPowerAnalysisUserBasedInputs.js"
     ]
   },
   {
     "outputFileName": "wwwroot/js/stats/pValueAdjustmentUserBasedInputs.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/pValueAdjustmentUserBasedInputs.js",
-      "wwwroot/js/openLinks.js"
+      "wwwroot/js/stats/pValueAdjustmentUserBasedInputs.js"
     ]
   },
   {
     "outputFileName": "wwwroot/js/stats/pValueAdjustmentDatasetBasedInputs.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/pValueAdjustmentDatasetBasedInputs.js",
-      "wwwroot/js/openLinks.js"
+      "wwwroot/js/stats/pValueAdjustmentDatasetBasedInputs.js"
     ]
   },
   {
     "outputFileName": "wwwroot/js/stats/chiSquaredAndFishersExactTest.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/chiSquaredAndFishersExactTest.js",
-      "wwwroot/js/openLinks.js"
+      "wwwroot/js/stats/chiSquaredAndFishersExactTest.js"
     ]
   },
   {
     "outputFileName": "wwwroot/js/stats/survivalAnalysis.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/survivalAnalysis.js",
-      "wwwroot/js/openLinks.js"
+      "wwwroot/js/stats/survivalAnalysis.js"
     ]
   },
   {
     "outputFileName": "wwwroot/js/stats/repeatedMeasuresParametricAnalysis.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/repeatedMeasuresParametricAnalysis.js",
-      "wwwroot/js/openLinks.js"
+      "wwwroot/js/stats/repeatedMeasuresParametricAnalysis.js"
     ]
   },
   {
     "outputFileName": "wwwroot/js/stats/singleMeasuresParametricAnalysis.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/singleMeasuresParametricAnalysis.js",
-      "wwwroot/js/openLinks.js"
+      "wwwroot/js/stats/singleMeasuresParametricAnalysis.js"
     ]
   },
   {
     "outputFileName": "wwwroot/js/stats/summaryStatistics.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/summaryStatistics.js",
-      "wwwroot/js/openLinks.js"
+      "wwwroot/js/stats/summaryStatistics.js"
     ]
   },
   {
     "outputFileName": "wwwroot/js/stats/singleMeasuresToRepeatedMeasuresDataTransformation.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/singleMeasuresToRepeatedMeasuresDataTransformation.js",
-      "wwwroot/js/openLinks.js"
+      "wwwroot/js/stats/singleMeasuresToRepeatedMeasuresDataTransformation.js"
     ]
   },
   {
     "outputFileName": "wwwroot/js/stats/areaUnderCurveDataTransformation.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/areaUnderCurveDataTransformation.js",
-      "wwwroot/js/openLinks.js"
+      "wwwroot/js/stats/areaUnderCurveDataTransformation.js"
     ]
   },
   {
     "outputFileName": "wwwroot/js/stats/oneSampleTTestAnalysis.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/oneSampleTTestAnalysis.js",
-      "wwwroot/js/openLinks.js"
+      "wwwroot/js/stats/oneSampleTTestAnalysis.js"
     ]
   },
   {
     "outputFileName": "wwwroot/js/stats/incompleteFactorialParametricAnalysis.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/incompleteFactorialParametricAnalysis.js",
-      "wwwroot/js/openLinks.js"
+      "wwwroot/js/stats/incompleteFactorialParametricAnalysis.js"
     ]
   },
   {
     "outputFileName": "wwwroot/js/stats/nestedDesignAnalysis.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/nestedDesignAnalysis.js",
-      "wwwroot/js/openLinks.js"
+      "wwwroot/js/stats/nestedDesignAnalysis.js"
     ]
   },
   {
     "outputFileName": "wwwroot/js/stats/doseResponseAndNonLinearRegressionAnalysis.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/doseResponseAndNonLinearRegressionAnalysis.js",
-      "wwwroot/js/openLinks.js"
+      "wwwroot/js/stats/doseResponseAndNonLinearRegressionAnalysis.js"
     ]
   },
   {
     "outputFileName": "wwwroot/js/stats/multivariateAnalysis.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/multivariateAnalysis.js",
-      "wwwroot/js/openLinks.js"
+      "wwwroot/js/stats/multivariateAnalysis.js"
     ]
   },
   {
     "outputFileName": "wwwroot/js/stats/equivalenceTOSTTest.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/equivalenceTOSTTest.js",
-      "wwwroot/js/openLinks.js"
+      "wwwroot/js/stats/equivalenceTOSTTest.js"
     ]
   },
   {
     "outputFileName": "wwwroot/js/stats/equivalenceOfMeansPowerAnalysisDatasetBasedInputs.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/equivalenceOfMeansPowerAnalysisDatasetBasedInputs.js",
-      "wwwroot/js/openLinks.js"
+      "wwwroot/js/stats/equivalenceOfMeansPowerAnalysisDatasetBasedInputs.js"
     ]
   },
   {
     "outputFileName": "wwwroot/js/stats/equivalenceOfMeansPowerAnalysisUserBasedInputs.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/equivalenceOfMeansPowerAnalysisUserBasedInputs.js",
-      "wwwroot/js/openLinks.js"
+      "wwwroot/js/stats/equivalenceOfMeansPowerAnalysisUserBasedInputs.js"
     ]
   },
   {
     "outputFileName": "wwwroot/js/stats/rrunner.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/rrunner.js",
-      "wwwroot/js/openLinks.js"
+      "wwwroot/js/stats/rrunner.js"
     ]
   },
   {

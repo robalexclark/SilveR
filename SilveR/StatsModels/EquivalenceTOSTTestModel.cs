@@ -1,5 +1,4 @@
-﻿using Combinatorics.Collections;
-using SilveR.Helpers;
+﻿using SilveR.Helpers;
 using SilveR.Models;
 using SilveR.Validators;
 using System;
@@ -372,51 +371,6 @@ namespace SilveR.StatsModels
         }
 
         public static List<string> DetermineInteractions(List<string> listToCreateInteractionsFrom)
-        {
-            List<string> interactions = new List<string>();
-
-            //for each factor, determine the combinations
-            for (int i = 2; i <= listToCreateInteractionsFrom.Count; i++)
-            {
-                Combinations<string> combinations = new Combinations<string>(listToCreateInteractionsFrom, i, GenerateOption.WithoutRepetition);
-
-                //for each set of combinations we need to assemble the string, with each factor separated by a *
-                foreach (IList<string> combination in combinations)
-                {
-                    string interaction = String.Join(" * ", combination);
-
-                    //add the interaction to the list
-                    interactions.Add(interaction);
-                }
-            }
-
-            return interactions;
-        }
-
-        //public static List<string> DetermineSelectedEffectsList(List<string> selectedTreatments)
-        //{
-        //    //assemble a complete list of main and interaction effects
-        //    List<string> effects = new List<string>();
-        //    effects.AddRange(selectedTreatments);
-
-        //    List<string> interactions = DetermineInteractions(selectedTreatments);
-
-        //    effects.AddRange(interactions);
-
-        //    //if the number of interaction effects is 4 or greater,
-        //    //then only the main effects and highest order effect are to be available
-        //    if (selectedTreatments.Count >= 4)
-        //    {
-        //        //remove any effect that is an interaction effect
-        //        for (int i = effects.Count - 1; i >= 0; i = i - 1)
-        //        {
-        //            if (effects[i].Contains("*")) effects.Remove(effects[i]);
-        //        }
-        //        //add in the highest order interaction again
-        //        effects.Add(interactions[interactions.Count - 1].ToString());
-        //    }
-
-        //    return effects;
-        //}
+            => InteractionHelper.DetermineInteractions(listToCreateInteractionsFrom);
     }
 }

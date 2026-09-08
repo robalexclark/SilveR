@@ -70,9 +70,7 @@ namespace SilveR
 
             services.Configure<AppSettings>(configuration.GetSection("AppSettings"));
 
-            services.AddControllersWithViews().AddNewtonsoftJson();
-
-            services.AddRouting();
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -208,191 +206,73 @@ namespace SilveR
 
                 IEnumerable<Script> existingScripts = context.Scripts.ToList();
 
-                if (!existingScripts.Any(x => x.ScriptFileName == "SummaryStatistics"))
+                (string ScriptDisplayName, string ScriptFileName, bool RequiresDataset)[] scriptDefinitions =
                 {
-                    Script summaryStatistics = new Script() { ScriptDisplayName = "Summary Statistics", ScriptFileName = "SummaryStatistics", RequiresDataset = true };
-                    context.Scripts.Add(summaryStatistics);
-                }
+                    ("Summary Statistics", "SummaryStatistics", true),
+                    ("Single Measures Parametric Analysis", "SingleMeasuresParametricAnalysis", true),
+                    ("Repeated Measures Parametric Analysis", "RepeatedMeasuresParametricAnalysis", true),
+                    ("P-value Adjustment (User Based Inputs)", "PValueAdjustmentUserBasedInputs", false),
+                    ("P-value Adjustment (Dataset Based Inputs)", "PValueAdjustmentDatasetBasedInputs", true),
+                    ("Extended Paired t-test Analysis", "PairedTTestAnalysis", true),
+                    ("Unpaired t-test Analysis", "UnpairedTTestAnalysis", true),
+                    ("One-sample t-test Analysis", "OneSampleTTestAnalysis", true),
+                    ("Correlation Analysis", "CorrelationAnalysis", true),
+                    ("Linear Regression Analysis", "LinearRegressionAnalysis", true),
+                    ("Logistic Regression Analysis", "LogisticRegressionAnalysis", true),
+                    ("Dose-response and Non-linear Regression Analysis", "DoseResponseAndNonLinearRegressionAnalysis", true),
+                    ("Non-parametric Analysis", "NonParametricAnalysis", true),
+                    ("Chi-squared and Fisher's Exact Test", "ChiSquaredAndFishersExactTest", true),
+                    ("Survival Analysis", "SurvivalAnalysis", true),
+                    ("Graphical Analysis", "GraphicalAnalysis", true),
+                    ("'Comparison of Means' Power Analysis (Dataset Based Inputs)", "ComparisonOfMeansPowerAnalysisDatasetBasedInputs", true),
+                    ("'Comparison of Means' Power Analysis (User Based Inputs)", "ComparisonOfMeansPowerAnalysisUserBasedInputs", false),
+                    ("'Equivalence of Means' Power Analysis (Dataset Based Inputs)", "EquivalenceOfMeansPowerAnalysisDatasetBasedInputs", true),
+                    ("'Equivalence of Means' Power Analysis (User Based Inputs)", "EquivalenceOfMeansPowerAnalysisUserBasedInputs", false),
+                    ("'One-way ANOVA' Power Analysis (Dataset Based Inputs)", "OneWayANOVAPowerAnalysisDatasetBasedInputs", true),
+                    ("'One-way ANOVA' Power Analysis (User Based Inputs)", "OneWayANOVAPowerAnalysisUserBasedInputs", false),
+                    ("Multivariate Analysis", "MultivariateAnalysis", true),
+                    ("Hasse Diagram Generator", "HasseDiagramGenerator", true),
+                    ("Nested Design Analysis", "NestedDesignAnalysis", true),
+                    ("Incomplete Factorial Parametric Analysis", "IncompleteFactorialParametricAnalysis", true),
+                    ("Single Measures to Repeated Measures Data Transformation", "SingleMeasuresToRepeatedMeasuresDataTransformation", true),
+                    ("Area Under Curve Data Transformation", "AreaUnderCurveDataTransformation", true),
+                    ("Equivalence TOST Test", "EquivalenceTOSTTest", true),
+                    ("R-Runner", "RRunner", true)
+                };
 
-                if (!existingScripts.Any(x => x.ScriptFileName == "SingleMeasuresParametricAnalysis"))
+                foreach ((string scriptDisplayName, string scriptFileName, bool requiresDataset) in scriptDefinitions)
                 {
-                    Script singleMeasureGLM = new Script() { ScriptDisplayName = "Single Measures Parametric Analysis", ScriptFileName = "SingleMeasuresParametricAnalysis", RequiresDataset = true };
-                    context.Scripts.Add(singleMeasureGLM);
-                }
+                    if (scriptFileName == "HasseDiagramGenerator")
+                    {
+                        Script existingHasseDiagramGenerator = existingScripts.SingleOrDefault(x => x.ScriptFileName == "HasseDiagramGenerator" || x.ScriptFileName == "HasseDiagramsGenerator");
+                        if (existingHasseDiagramGenerator == null)
+                        {
+                            context.Scripts.Add(new Script
+                            {
+                                ScriptDisplayName = scriptDisplayName,
+                                ScriptFileName = scriptFileName,
+                                RequiresDataset = requiresDataset
+                            });
+                        }
+                        else
+                        {
+                            existingHasseDiagramGenerator.ScriptDisplayName = scriptDisplayName;
+                            existingHasseDiagramGenerator.ScriptFileName = scriptFileName;
+                            existingHasseDiagramGenerator.RequiresDataset = requiresDataset;
+                        }
 
-                if (!existingScripts.Any(x => x.ScriptFileName == "RepeatedMeasuresParametricAnalysis"))
-                {
-                    Script repeatedMeasures = new Script() { ScriptDisplayName = "Repeated Measures Parametric Analysis", ScriptFileName = "RepeatedMeasuresParametricAnalysis", RequiresDataset = true };
-                    context.Scripts.Add(repeatedMeasures);
-                }
+                        continue;
+                    }
 
-                if (!existingScripts.Any(x => x.ScriptFileName == "PValueAdjustmentUserBasedInputs"))
-                {
-                    Script pValueAdjustmentUserBasedInputs = new Script() { ScriptDisplayName = "P-value Adjustment (User Based Inputs)", ScriptFileName = "PValueAdjustmentUserBasedInputs", RequiresDataset = false };
-                    context.Scripts.Add(pValueAdjustmentUserBasedInputs);
-                }
-
-                if (!existingScripts.Any(x => x.ScriptFileName == "PValueAdjustmentDatasetBasedInputs"))
-                {
-                    Script pValueAdjustmentUserBasedInputs = new Script() { ScriptDisplayName = "P-value Adjustment (Dataset Based Inputs)", ScriptFileName = "PValueAdjustmentDatasetBasedInputs", RequiresDataset = true };
-                    context.Scripts.Add(pValueAdjustmentUserBasedInputs);
-                }
-
-                if (!existingScripts.Any(x => x.ScriptFileName == "PairedTTestAnalysis"))
-                {
-                    Script pairedTTest = new Script() { ScriptDisplayName = "Extended Paired t-test Analysis", ScriptFileName = "PairedTTestAnalysis", RequiresDataset = true };
-                    context.Scripts.Add(pairedTTest);
-                }
-
-                if (!existingScripts.Any(x => x.ScriptFileName == "UnpairedTTestAnalysis"))
-                {
-                    Script unpairedTTest = new Script() { ScriptDisplayName = "Unpaired t-test Analysis", ScriptFileName = "UnpairedTTestAnalysis", RequiresDataset = true };
-                    context.Scripts.Add(unpairedTTest);
-                }
-
-                if (!existingScripts.Any(x => x.ScriptFileName == "OneSampleTTestAnalysis"))
-                {
-                    Script oneSampleTTest = new Script() { ScriptDisplayName = "One-sample t-test Analysis", ScriptFileName = "OneSampleTTestAnalysis", RequiresDataset = true };
-                    context.Scripts.Add(oneSampleTTest);
-                }
-
-                if (!existingScripts.Any(x => x.ScriptFileName == "CorrelationAnalysis"))
-                {
-                    Script correlation = new Script() { ScriptDisplayName = "Correlation Analysis", ScriptFileName = "CorrelationAnalysis", RequiresDataset = true };
-                    context.Scripts.Add(correlation);
-                }
-
-                if (!existingScripts.Any(x => x.ScriptFileName == "LinearRegressionAnalysis"))
-                {
-                    Script linearRegression = new Script() { ScriptDisplayName = "Linear Regression Analysis", ScriptFileName = "LinearRegressionAnalysis", RequiresDataset = true };
-                    context.Scripts.Add(linearRegression);
-                }
-
-                if (!existingScripts.Any(x => x.ScriptFileName == "LogisticRegressionAnalysis"))
-                {
-                    Script logisticRegression = new Script() { ScriptDisplayName = "Logistic Regression Analysis", ScriptFileName = "LogisticRegressionAnalysis", RequiresDataset = true };
-                    context.Scripts.Add(logisticRegression);
-                }
-
-                if (!existingScripts.Any(x => x.ScriptFileName == "DoseResponseAndNonLinearRegressionAnalysis"))
-                {
-                    Script doseResponse = new Script() { ScriptDisplayName = "Dose-response and Non-linear Regression Analysis", ScriptFileName = "DoseResponseAndNonLinearRegressionAnalysis", RequiresDataset = true };
-                    context.Scripts.Add(doseResponse);
-                }
-
-                if (!existingScripts.Any(x => x.ScriptFileName == "NonParametricAnalysis"))
-                {
-                    Script nonParametrics = new Script() { ScriptDisplayName = "Non-parametric Analysis", ScriptFileName = "NonParametricAnalysis", RequiresDataset = true };
-                    context.Scripts.Add(nonParametrics);
-                }
-
-                if (!existingScripts.Any(x => x.ScriptFileName == "ChiSquaredAndFishersExactTest"))
-                {
-                    Script chiSquared = new Script() { ScriptDisplayName = "Chi-squared and Fisher's Exact Test", ScriptFileName = "ChiSquaredAndFishersExactTest", RequiresDataset = true };
-                    context.Scripts.Add(chiSquared);
-                }
-
-                if (!existingScripts.Any(x => x.ScriptFileName == "SurvivalAnalysis"))
-                {
-                    Script survivalAnalysis = new Script() { ScriptDisplayName = "Survival Analysis", ScriptFileName = "SurvivalAnalysis", RequiresDataset = true };
-                    context.Scripts.Add(survivalAnalysis);
-                }
-
-                if (!existingScripts.Any(x => x.ScriptFileName == "GraphicalAnalysis"))
-                {
-                    Script graphicalAnalysis = new Script() { ScriptDisplayName = "Graphical Analysis", ScriptFileName = "GraphicalAnalysis", RequiresDataset = true };
-                    context.Scripts.Add(graphicalAnalysis);
-                }
-
-                if (!existingScripts.Any(x => x.ScriptFileName == "ComparisonOfMeansPowerAnalysisDatasetBasedInputs"))
-                {
-                    Script meansComparison = new Script() { ScriptDisplayName = "'Comparison of Means' Power Analysis (Dataset Based Inputs)", ScriptFileName = "ComparisonOfMeansPowerAnalysisDatasetBasedInputs", RequiresDataset = true };
-                    context.Scripts.Add(meansComparison);
-                }
-
-                if (!existingScripts.Any(x => x.ScriptFileName == "ComparisonOfMeansPowerAnalysisUserBasedInputs"))
-                {
-                    Script meansComparison = new Script() { ScriptDisplayName = "'Comparison of Means' Power Analysis (User Based Inputs)", ScriptFileName = "ComparisonOfMeansPowerAnalysisUserBasedInputs", RequiresDataset = false };
-                    context.Scripts.Add(meansComparison);
-                }
-
-                if (!existingScripts.Any(x => x.ScriptFileName == "EquivalenceOfMeansPowerAnalysisDatasetBasedInputs"))
-                {
-                    Script meansComparison = new Script() { ScriptDisplayName = "'Equivalence of Means' Power Analysis (Dataset Based Inputs)", ScriptFileName = "EquivalenceOfMeansPowerAnalysisDatasetBasedInputs", RequiresDataset = true };
-                    context.Scripts.Add(meansComparison);
-                }
-
-                if (!existingScripts.Any(x => x.ScriptFileName == "EquivalenceOfMeansPowerAnalysisUserBasedInputs"))
-                {
-                    Script meansComparison = new Script() { ScriptDisplayName = "'Equivalence of Means' Power Analysis (User Based Inputs)", ScriptFileName = "EquivalenceOfMeansPowerAnalysisUserBasedInputs", RequiresDataset = false };
-                    context.Scripts.Add(meansComparison);
-                }
-
-                if (!existingScripts.Any(x => x.ScriptFileName == "OneWayANOVAPowerAnalysisDatasetBasedInputs"))
-                {
-                    Script meansComparison = new Script() { ScriptDisplayName = "'One-way ANOVA' Power Analysis (Dataset Based Inputs)", ScriptFileName = "OneWayANOVAPowerAnalysisDatasetBasedInputs", RequiresDataset = true };
-                    context.Scripts.Add(meansComparison);
-                }
-
-                if (!existingScripts.Any(x => x.ScriptFileName == "OneWayANOVAPowerAnalysisUserBasedInputs"))
-                {
-                    Script meansComparison = new Script() { ScriptDisplayName = "'One-way ANOVA' Power Analysis (User Based Inputs)", ScriptFileName = "OneWayANOVAPowerAnalysisUserBasedInputs", RequiresDataset = false };
-                    context.Scripts.Add(meansComparison);
-                }
-
-                if (!existingScripts.Any(x => x.ScriptFileName == "MultivariateAnalysis"))
-                {
-                    Script multivariate = new Script() { ScriptDisplayName = "Multivariate Analysis", ScriptFileName = "MultivariateAnalysis", RequiresDataset = true };
-                    context.Scripts.Add(multivariate);
-                }
-
-                Script existingHasseDiagramGenerator = existingScripts.SingleOrDefault(x => x.ScriptFileName == "HasseDiagramGenerator" || x.ScriptFileName == "HasseDiagramsGenerator");
-                if (existingHasseDiagramGenerator == null)
-                {
-                    Script hasseDiagramGenerator = new Script() { ScriptDisplayName = "Hasse Diagram Generator", ScriptFileName = "HasseDiagramGenerator", RequiresDataset = true };
-                    context.Scripts.Add(hasseDiagramGenerator);
-                }
-                else
-                {
-                    existingHasseDiagramGenerator.ScriptDisplayName = "Hasse Diagram Generator";
-                    existingHasseDiagramGenerator.ScriptFileName = "HasseDiagramGenerator";
-                    existingHasseDiagramGenerator.RequiresDataset = true;
-                }
-
-                if (!existingScripts.Any(x => x.ScriptFileName == "NestedDesignAnalysis"))
-                {
-                    Script nestedDesign = new Script() { ScriptDisplayName = "Nested Design Analysis", ScriptFileName = "NestedDesignAnalysis", RequiresDataset = true };
-                    context.Scripts.Add(nestedDesign);
-                }
-
-                if (!existingScripts.Any(x => x.ScriptFileName == "IncompleteFactorialParametricAnalysis"))
-                {
-                    Script incompleteFactorialAnalysis = new Script() { ScriptDisplayName = "Incomplete Factorial Parametric Analysis", ScriptFileName = "IncompleteFactorialParametricAnalysis", RequiresDataset = true };
-                    context.Scripts.Add(incompleteFactorialAnalysis);
-                }
-
-                if (!existingScripts.Any(x => x.ScriptFileName == "SingleMeasuresToRepeatedMeasuresDataTransformation"))
-                {
-                    Script singleMeasuresToRepeatedMeasuresDataTransformation = new Script() { ScriptDisplayName = "Single Measures to Repeated Measures Data Transformation", ScriptFileName = "SingleMeasuresToRepeatedMeasuresDataTransformation", RequiresDataset = true };
-                    context.Scripts.Add(singleMeasuresToRepeatedMeasuresDataTransformation);
-                }
-
-                if (!existingScripts.Any(x => x.ScriptFileName == "AreaUnderCurveDataTransformation"))
-                {
-                    Script areaUnderCurveDataTransformation = new Script() { ScriptDisplayName = "Area Under Curve Data Transformation", ScriptFileName = "AreaUnderCurveDataTransformation", RequiresDataset = true };
-                    context.Scripts.Add(areaUnderCurveDataTransformation);
-                }
-
-                if (!existingScripts.Any(x => x.ScriptFileName == "EquivalenceTOSTTest"))
-                {
-                    Script equivalenceTOSTTest = new Script() { ScriptDisplayName = "Equivalence TOST Test", ScriptFileName = "EquivalenceTOSTTest", RequiresDataset = true };
-                    context.Scripts.Add(equivalenceTOSTTest);
-                }
-
-                if (!existingScripts.Any(x => x.ScriptFileName == "RRunner"))
-                {
-                    Script rRunner = new Script() { ScriptDisplayName = "R-Runner", ScriptFileName = "RRunner", RequiresDataset = true };
-                    context.Scripts.Add(rRunner);
+                    if (!existingScripts.Any(x => x.ScriptFileName == scriptFileName))
+                    {
+                        context.Scripts.Add(new Script
+                        {
+                            ScriptDisplayName = scriptDisplayName,
+                            ScriptFileName = scriptFileName,
+                            RequiresDataset = requiresDataset
+                        });
+                    }
                 }
 
                 context.SaveChanges();

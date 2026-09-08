@@ -1,5 +1,4 @@
-﻿using Combinatorics.Collections;
-using SilveR.Helpers;
+﻿using SilveR.Helpers;
 using SilveR.Models;
 using SilveR.Validators;
 using System;
@@ -343,26 +342,7 @@ namespace SilveR.StatsModels
         }
 
         public static List<string> DetermineInteractions(List<string> listToCreateInteractionsFrom)
-        {
-            List<string> interactions = new List<string>();
-
-            //for each factor, determine the combinations
-            for (int i = 2; i <= listToCreateInteractionsFrom.Count; i++)
-            {
-                Combinations<string> combinations = new Combinations<string>(listToCreateInteractionsFrom, i, GenerateOption.WithoutRepetition);
-
-                //for each set of combinations we need to assemble the string, with each factor separated by a *
-                foreach (IList<string> combination in combinations)
-                {
-                    string interaction = String.Join(" * ", combination);
-
-                    //add the interaction to the list
-                    interactions.Add(interaction);
-                }
-            }
-
-            return interactions;
-        }
+            => InteractionHelper.DetermineInteractions(listToCreateInteractionsFrom);
 
         public static List<string> DetermineSelectedEffectsList(List<string> selectedTreatments)
         {

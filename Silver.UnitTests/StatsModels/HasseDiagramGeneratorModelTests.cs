@@ -106,7 +106,7 @@ namespace SilveR.UnitTests.StatsModels
 
             string result = sut.GetCommandLineArguments();
 
-            Assert.Equal("Treatment,Time Block Y blue Y Y Y red grey 2 orange 1.5 1 1 1", result);
+            Assert.Equal("Treatment,Time Block N blue Y Y Y red grey 2 orange 1.5 1 1 1", result);
         }
 
         private static HasseDiagramGeneratorModel GetModel()

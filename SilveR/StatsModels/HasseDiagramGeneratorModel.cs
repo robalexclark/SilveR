@@ -21,7 +21,7 @@ namespace SilveR.StatsModels
         [CheckUsedOnceOnly(SingularizeDisplayName = false)]
         public IEnumerable<string> RandomFactors { get; set; }
 
-        public bool CheckForConfoundedDegreesOfFreedom { get; set; } = true;
+        public bool CheckForConfoundedDegreesOfFreedom { get; set; } = false;
 
         public string ObjectColour { get; set; } = "blue";
 

@@ -26,6 +26,13 @@
         <script defer src="~/js/index.min.js"></script>
     </environment>
 
+    <environment names="Development">
+        <script defer src="~/js/openLinks.js"></script>
+    </environment>
+    <environment names="Production">
+        <script defer src="~/js/openLinks.min.js"></script>
+    </environment>
+
     @RenderSection("scripts", required: false)
 </head>
 <body>

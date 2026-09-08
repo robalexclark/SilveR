@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Threading;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 
 namespace SilveR.Services
@@ -14,31 +14,26 @@ namespace SilveR.Services
 
     public sealed class BackgroundTaskQueue : IBackgroundTaskQueue, IDisposable
     {
-        private readonly ConcurrentQueue<Func<CancellationToken, Task>> _workItems = new ConcurrentQueue<Func<CancellationToken, Task>>();
-        private readonly SemaphoreSlim _signal = new SemaphoreSlim(0);
+        private readonly Channel<Func<CancellationToken, Task>> _workItems = Channel.CreateUnbounded<Func<CancellationToken, Task>>();
 
         public void QueueBackgroundWorkItem(Func<CancellationToken, Task> workItem)
         {
-            if (workItem == null)
-            {
-                throw new ArgumentNullException(nameof(workItem));
-            }
+            ArgumentNullException.ThrowIfNull(workItem);
 
-            _workItems.Enqueue(workItem);
-            _signal.Release();
+            if (!_workItems.Writer.TryWrite(workItem))
+            {
+                throw new InvalidOperationException("The background task queue is closed.");
+            }
         }
 
         public async Task<Func<CancellationToken, Task>> DequeueAsync(CancellationToken cancellationToken)
         {
-            await _signal.WaitAsync(cancellationToken);
-            _workItems.TryDequeue(out var workItem);
-
-            return workItem;
+            return await _workItems.Reader.ReadAsync(cancellationToken);
         }
 
         public void Dispose()
         {
-            _signal.Dispose();
+            _workItems.Writer.TryComplete();
         }
     }
 }

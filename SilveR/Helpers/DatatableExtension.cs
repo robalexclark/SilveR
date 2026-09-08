@@ -364,14 +364,5 @@ namespace SilveR.Helpers
             }
         }
 
-
-        //WHEN CONVERTING VALIDATION TO LINQ UNCOMMENT THIS SO LINQ CAN BE USED
-        //public static IEnumerable<DataRow> AsEnumerable(this DataTable table)
-        //{
-        //    for (int i = 0; i < table.Rows.Count; i++)
-        //    {
-        //        yield return table.Rows[i];
-        //    }
-        //}
     }
 }
